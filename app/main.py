@@ -23,7 +23,6 @@ app.add_middleware(
 )
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
-
 templates = Jinja2Templates(directory="templates")
 
 app.include_router(init.router)
@@ -37,6 +36,34 @@ app.include_router(legal.router)
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/shop/products", response_class=HTMLResponse)
+def products_page(request: Request):
+    return templates.TemplateResponse("products.html", {"request": request})
+
+@app.get("/shop/product", response_class=HTMLResponse)
+def product_page(request: Request):
+    return templates.TemplateResponse("product.html", {"request": request})
+
+@app.get("/shop/cart", response_class=HTMLResponse)
+def cart_page(request: Request):
+    return templates.TemplateResponse("cart.html", {"request": request})
+
+@app.get("/shop/login", response_class=HTMLResponse)
+def login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+@app.get("/shop/register", response_class=HTMLResponse)
+def register_page(request: Request):
+    return templates.TemplateResponse("register.html", {"request": request})
+
+@app.get("/shop/orders", response_class=HTMLResponse)
+def orders_page(request: Request):
+    return templates.TemplateResponse("orders.html", {"request": request})
+
+@app.get("/shop/admin", response_class=HTMLResponse)
+def admin_page(request: Request):
+    return templates.TemplateResponse("admin.html", {"request": request})
 
 @app.get("/health")
 def health():

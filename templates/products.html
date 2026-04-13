@@ -3,25 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produkte - TestShopPython</title>
+    <title>Produkte | TestShopPython</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header>
-        <h1>Produkte</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/products">Produkte</a>
-            <a href="/cart">Warenkorb</a>
-            <a href="/login">Login</a>
-            <a href="/register">Registrieren</a>
-            <a href="/orders">Bestellungen</a>
-            <a href="/admin">Admin</a>
-        </nav>
+    <header class="site-header minimal">
+        <div class="nav-bar">
+            <div class="logo">TestShopPython</div>
+            <nav class="menu">
+                <a href="/">Home</a>
+                <a href="/shop/products">Shop</a>
+                <a href="/shop/cart">Warenkorb</a>
+                <a href="/shop/login">Login</a>
+            </nav>
+        </div>
     </header>
-    <main>
-        <div id="products-list"></div>
+
+    <main class="product-page">
+        <section class="page-intro">
+            <h1>Produkte</h1>
+            <p>Finde Lieblingsstücke, die dein Zuhause noch schöner machen.</p>
+        </section>
+
+        <section class="product-grid" id="products-list"></section>
     </main>
+
+    <footer class="site-footer">
+        <div>
+            <h4>TestShopPython</h4>
+            <p>Live the modern home style.</p>
+        </div>
+    </footer>
+
     <script src="/static/js/app.js"></script>
 </body>
 </html>
