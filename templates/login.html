@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | OWRE</title>
+    <title>Mein Konto | OWRE</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <header class="site-header">
+        <div class="top-bar">
+            <span>Kostenloser Versand ab €50 | 30 Tage Rückgaberecht</span>
+            <a href="/shop/login">Mein Konto</a>
+        </div>
         <div class="nav-bar">
             <div class="logo">OWRE</div>
             <nav class="menu">
@@ -16,14 +20,19 @@
                 <a href="/shop/cart">Warenkorb</a>
                 <a href="/shop/login">Mein Konto</a>
             </nav>
+            <div class="header-actions">
+                <button class="search-btn">🔍</button>
+                <a href="/shop/cart" class="cart-icon">🛒</a>
+            </div>
         </div>
     </header>
+
     <main class="page-content">
         <section class="page-hero compact">
             <div>
                 <span class="eyebrow">Mein Konto</span>
-                <h1>Anmelden</h1>
-                <p>Logge dich ein und verwalte deine Bestellungen.</p>
+                <h1>Willkommen zurück bei OWRE</h1>
+                <p>Logge dich ein, um deine Bestellungen, Wunschlisten und persönlichen Daten zu verwalten.</p>
             </div>
             <div class="form-card">
                 <h2>Login</h2>
@@ -41,13 +50,46 @@
                 <p class="small-note">Noch kein Konto? <a href="/shop/register">Registrieren</a></p>
             </div>
         </section>
+
+        <section class="usp-section">
+            <div class="usp-grid">
+                <div class="usp-item">
+                    <span>🚚</span>
+                    <h3>Kostenloser Versand</h3>
+                    <p>Ab €50 Bestellwert.</p>
+                </div>
+                <div class="usp-item">
+                    <span>🔄</span>
+                    <h3>30 Tage Rückgabe</h3>
+                    <p>Risikofrei einkaufen.</p>
+                </div>
+                <div class="usp-item">
+                    <span>🌱</span>
+                    <h3>Nachhaltig</h3>
+                    <p>Umweltfreundliche Materialien.</p>
+                </div>
+            </div>
+        </section>
     </main>
+
     <footer class="site-footer">
-        <div>
-            <h4>OWRE</h4>
-            <p>Premium Aufbewahrungslösungen für dein Zuhause.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>OWRE</h4>
+                <p>Premium Aufbewahrungslösungen für dein Zuhause.</p>
+            </div>
+            <div class="footer-section">
+                <a href="/">Home</a>
+                <a href="/shop/products">Shop</a>
+                <a href="/shop/cart">Warenkorb</a>
+                <a href="/info/impressum">Impressum</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 OWRE. Alle Rechte vorbehalten.</p>
         </div>
     </footer>
+
     <script src="/static/js/app.js"></script>
 </body>
 </html>

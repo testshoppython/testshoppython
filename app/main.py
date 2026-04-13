@@ -78,6 +78,11 @@ def admin_page(request: Request):
     return templates.TemplateResponse("admin.html", {"request": request})
 
 
+@app.get("/info/impressum", response_class=HTMLResponse)
+def impressum_page(request: Request):
+    return templates.TemplateResponse("impressum.html", {"request": request})
+
+
 @app.get("/health")
 def health():
     return {"status": "ok"}

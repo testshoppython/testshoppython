@@ -1,41 +1,17 @@
 <footer class="site-footer">
     <div class="footer-content">
         <div class="footer-section">
-            <h4>{{ i18n.t('brand_name') }}</h4>
-            <p>{{ i18n.t('brand_tagline') }}</p>
+            <h4>OWRE</h4>
+            <p>Premium Aufbewahrungslösungen für dein Zuhause.</p>
         </div>
         <div class="footer-section">
-            <h5>{{ i18n.t('nav_shop') }}</h5>
-            <ul>
-                <li><a href="/shop/products">{{ i18n.t('products') }}</a></li>
-                <li><a href="/shop/cart">{{ i18n.t('cart') }}</a></li>
-                <li><a href="/user/orders">{{ i18n.t('orders') }}</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h5>{{ i18n.t('legal') }}</h5>
-            <ul>
-                <li><a href="/legal/imprint">{{ i18n.t('imprint') }}</a></li>
-                <li><a href="/legal/privacy">{{ i18n.t('privacy') }}</a></li>
-                <li><a href="/legal/terms">{{ i18n.t('terms') }}</a></li>
-                <li><a href="/legal/shipping">{{ i18n.t('shipping') }}</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h5>{{ i18n.t('contact') }}</h5>
-            <p>Email: contact@owre.shop</p>
-            <p>Phone: +49 (0) 123 456789</p>
+            <a href="/">Home</a>
+            <a href="/shop/products">Shop</a>
+            <a href="/shop/cart">Warenkorb</a>
+            <a href="/info/impressum">Impressum</a>
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2026 {{ i18n.t('brand_name') }}. {{ i18n.t('all_rights_reserved') }}</p>
+        <p>&copy; 2024 OWRE. Alle Rechte vorbehalten.</p>
     </div>
 </footer>
-
-<script>
-function changeLanguage(lang) {
-    const url = new URL(window.location);
-    url.searchParams.set('lang', lang);
-    window.location.href = url.toString();
-}
-</script>

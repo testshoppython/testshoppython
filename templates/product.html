@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ i18n.t('product_name') }} | {{ i18n.t('brand_name') }}</title>
+    <title>Produktdetails | OWRE</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -12,16 +12,15 @@
     <main class="page-content">
         <section class="page-hero compact">
             <div>
-                <span class="eyebrow">{{ i18n.t('product_name') }}</span>
-                <h1>Produktdetails</h1>
-                <p>Hier findest du alle Informationen zum ausgewählten Produkt.</p>
+                <span class="eyebrow">Produktdetails</span>
+                <h1>Produktinformation</h1>
+                <p>Hier findest du alle Details zu deinem ausgewählten Produkt.</p>
             </div>
         </section>
 
         <section class="product-detail">
-            <div class="product-detail-card">
-                <div id="product-detail"></div>
-                <button class="btn-primary" id="add-to-cart">{{ i18n.t('add_to_cart') }}</button>
+            <div id="product-detail" class="product-detail-card">
+                <p class="small-note">Produkt wird geladen …</p>
             </div>
         </section>
     </main>

@@ -7,50 +7,31 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="nav-bar">
-            <div class="logo">OWRE</div>
-            <nav class="menu">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/shop/login">Mein Konto</a>
-            </nav>
-            <div class="header-actions">
-                <button class="search-btn">🔍</button>
-                <a href="/shop/cart" class="cart-icon">🛒</a>
-            </div>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <main class="product-page">
-        <div class="page-header">
+        <section class="page-header">
             <h1>Unsere Produkte</h1>
             <p>Entdecken Sie unsere komplette Kollektion an Aufbewahrungslösungen.</p>
-        </div>
+        </section>
 
-        <div class="filters">
+        <section class="filters">
             <button class="filter-btn active">Alle</button>
             <button class="filter-btn">Körbe</button>
             <button class="filter-btn">Boxen</button>
             <button class="filter-btn">Organizer</button>
-        </div>
+        </section>
 
-        <div class="products-grid" id="products-list"></div>
+        <section class="products-grid" id="products-list">
+            <div class="product-card">
+                <div class="content">
+                    <p class="small-note">Produkte werden geladen …</p>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>OWRE</h4>
-                <p>Premium Aufbewahrungslösungen.</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 OWRE.</p>
-        </div>
-    </footer>
-
+    {% include "footer.html" %}
     <script src="/static/js/app.js"></script>
 </body>
 </html>
