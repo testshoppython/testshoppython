@@ -1,6 +1,6 @@
 const API_BASE = window.location.origin;
 
-// Load products
+// Load products with links to details
 async function loadProducts() {
     try {
         const response = await fetch(`${API_BASE}/products/`);
@@ -19,27 +19,6 @@ async function loadProducts() {
     }
 }
 
-// Add to cart
-async function addToCart(productId) {
-    // Implement cart logic here
-    alert('Produkt zum Warenkorb hinzugefügt!');
-}
-
-// Load cart
-async function loadCart() {
-    // Implement cart loading
-}
-
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('products-list')) {
-        loadProducts();
-    }
-    if (document.getElementById('cart-items')) {
-        loadCart();
-    }
-});
-
 // Load product detail
 async function loadProductDetail(productId) {
     try {
@@ -56,6 +35,17 @@ async function loadProductDetail(productId) {
     } catch (error) {
         console.error('Error loading product:', error);
     }
+}
+
+// Add to cart
+async function addToCart(productId) {
+    // Implement cart logic here
+    alert('Produkt zum Warenkorb hinzugefügt!');
+}
+
+// Load cart
+async function loadCart() {
+    // Implement cart loading
 }
 
 // Login
@@ -139,7 +129,12 @@ async function loadAdminStats() {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    // ... existing code ...
+    if (document.getElementById('products-list')) {
+        loadProducts();
+    }
+    if (document.getElementById('cart-items')) {
+        loadCart();
+    }
     if (document.getElementById('product-detail')) {
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');

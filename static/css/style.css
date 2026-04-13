@@ -50,3 +50,19 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-top: 1rem;
+}
+
+input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+}
