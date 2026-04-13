@@ -3,23 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop | OWRE</title>
+    <title>Garten & Aufbewahrung | OWRE</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     {% include "header.html" %}
 
-    <main class="product-page">
-        <section class="page-header">
-            <h1>Unsere Produkte</h1>
-            <p>Entdecken Sie unsere komplette Kollektion an Aufbewahrungslösungen.</p>
+    <main class="product-page garden-page">
+        <section class="garden-hero">
+            <div class="garden-hero-copy">
+                <span class="eyebrow">Outdoor & Garten</span>
+                <h1>Schöne Aufbewahrung für Garten, Terrasse und Balkon</h1>
+                <p>Entdecken Sie jetzt hochwertige, stilvolle Körbe, Boxen und Organizer für Ihr Outdoor-Living.</p>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn-primary">Jetzt shoppen</a>
+                    <a href="#categories" class="btn-secondary btn-ghost">Kategorien entdecken</a>
+                </div>
+            </div>
+            <div class="garden-hero-image">
+                <img src="/static/images/garden-hero.jpg" alt="Garten Aufbewahrung">
+            </div>
         </section>
 
-        <section class="filters">
-            <button class="filter-btn active">Alle</button>
-            <button class="filter-btn">Körbe</button>
-            <button class="filter-btn">Boxen</button>
-            <button class="filter-btn">Organizer</button>
+        <section id="categories" class="garden-categories">
+            <div class="section-header">
+                <h2>Kategorien</h2>
+                <p>Finden Sie passende Aufbewahrungslösungen für jeden Außenbereich.</p>
+            </div>
+            <div class="category-grid">
+                <article class="category-card">
+                    <h3>Körbe</h3>
+                    <p>Flexible, natürliche Aufbewahrungslösungen.</p>
+                </article>
+                <article class="category-card">
+                    <h3>Boxen</h3>
+                    <p>Stauraum im modernen Outdoor-Look.</p>
+                </article>
+                <article class="category-card">
+                    <h3>Organizer</h3>
+                    <p>Praktische Helfer für Balkon und Garten.</p>
+                </article>
+                <article class="category-card">
+                    <h3>Accessoires</h3>
+                    <p>Schöne Details für das Outdoor-Ambiente.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="products" class="section-header">
+            <h2>Unsere Garten-Produkte</h2>
+            <p>Stilvolle Aufbewahrung für ein schönes Zuhause im Freien.</p>
         </section>
 
         <section class="products-grid" id="products-list">

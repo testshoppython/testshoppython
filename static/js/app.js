@@ -3,24 +3,31 @@ const API_BASE = window.location.origin;
 const sampleProducts = [
     {
         id: 1,
-        name: "OWRE Aufbewahrungskorb",
-        description: "Großer Stoffkorb für Wohnzimmer und Schlafzimmer.",
+        name: "OWRE Outdoor Aufbewahrungskorb",
+        description: "Großer, atmungsaktiver Stoffkorb für Garten und Terrasse.",
         price: 29.90,
-        image: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1560185127-6acf6f5f5d3e?auto=format&fit=crop&w=900&q=80"
     },
     {
         id: 2,
-        name: "OWRE Box mit Deckel",
-        description: "Praktische Aufbewahrungsbox für Regale und Schränke.",
-        price: 24.90,
-        image: "https://images.unsplash.com/photo-1505692794403-196b8e6f7d22?auto=format&fit=crop&w=800&q=80"
+        name: "OWRE Deckelbox",
+        description: "Stabile Aufbewahrungsbox für Kissen, Decken und Gartendeko.",
+        price: 34.90,
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80"
     },
     {
         id: 3,
-        name: "OWRE Organizer",
-        description: "Eleganter Organizer für Schreibtisch und Büro.",
+        name: "OWRE Outdoor Organizer",
+        description: "Praktischer Organizer für Balkon und Home-Office.",
         price: 18.50,
-        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+        id: 4,
+        name: "OWRE Korb-Set",
+        description: "Set aus zwei geflochtenen Körben für stilvolle Ordnung.",
+        price: 39.90,
+        image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80"
     }
 ];
 
@@ -41,23 +48,6 @@ function renderProducts(products) {
     `).join('');
 }
 
-function renderProductDetail(product) {
-    const container = document.getElementById('product-detail');
-    if (!container) return;
-
-    container.innerHTML = `
-        <div class="product-detail-card">
-            <img src="${product.image}" alt="${product.name}">
-            <div class="content">
-                <h2>${product.name}</h2>
-                <p>${product.description}</p>
-                <p class="price">€${product.price.toFixed(2)}</p>
-                <button class="btn-primary" onclick="addToCart(${product.id})">In den Warenkorb</button>
-            </div>
-        </div>
-    `;
-}
-
 async function loadProducts() {
     let products = [];
     try {
@@ -66,7 +56,7 @@ async function loadProducts() {
             products = await response.json();
         }
     } catch (error) {
-        console.warn("Produkt-API nicht erreichbar, Fallback verwenden.", error);
+        console.warn("Produkt-API nicht erreichbar:", error);
     }
 
     if (!products || !products.length) {
@@ -75,48 +65,8 @@ async function loadProducts() {
     renderProducts(products);
 }
 
-async function loadProductDetail(productId) {
-    let product = null;
-
-    try {
-        const response = await fetch(`${API_BASE}/products/${productId}`);
-        if (response.ok) {
-            product = await response.json();
-        }
-    } catch (error) {
-        console.warn("Produkt-API nicht erreichbar, Fallback verwenden.", error);
-    }
-
-    if (!product) {
-        product = sampleProducts.find(item => item.id === Number(productId));
-    }
-
-    if (product) {
-        renderProductDetail(product);
-    } else {
-        const container = document.getElementById('product-detail');
-        if (container) {
-            container.innerHTML = `<p class="small-note">Produkt nicht gefunden.</p>`;
-        }
-    }
-}
-
-function addToCart(productId) {
-    alert(`Produkt ${productId} wurde dem Warenkorb hinzugefügt.`);
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('products-list')) {
         loadProducts();
-    }
-
-    if (document.getElementById('product-detail')) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
-        if (productId) {
-            loadProductDetail(productId);
-        } else {
-            document.getElementById('product-detail').innerHTML = '<p class="small-note">Kein Produkt gewählt.</p>';
-        }
     }
 });
