@@ -1,0 +1,31 @@
+<header class="site-header">
+    <div class="top-bar">
+        <span>{{ settings.app_name }}</span>
+        <div class="top-bar-actions">
+            <select id="language-select" onchange="changeLanguage(this.value)">
+                <option value="de" {% if request.state.lang == 'de' %}selected{% endif %}>Deutsch</option>
+                <option value="en" {% if request.state.lang == 'en' %}selected{% endif %}>English</option>
+                <option value="fr" {% if request.state.lang == 'fr' %}selected{% endif %}>Français</option>
+                <option value="es" {% if request.state.lang == 'es' %}selected{% endif %}>Español</option>
+            </select>
+            <div class="header-auth-links">
+                <a href="/user/login" id="login-link">{{ i18n.t('nav_login') }}</a>
+                <a href="/user/register" id="register-link">{{ i18n.t('nav_register') }}</a>
+                <a href="#" id="logout-link" class="hidden">{{ i18n.t('nav_logout') }}</a>
+            </div>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <div class="logo">
+            <a href="/">{{ i18n.t('brand_name') }}</a>
+        </div>
+        <nav class="menu">
+            <a href="/">{{ i18n.t('nav_home') }}</a>
+            <a href="/shop/products">{{ i18n.t('nav_shop') }}</a>
+            <a href="/shop/cart">{{ i18n.t('nav_cart') }}</a>
+            <a href="/user/orders" id="orders-link" class="hidden">{{ i18n.t('nav_orders') }}</a>
+            <a href="/admin" id="admin-link" class="hidden">{{ i18n.t('nav_admin') }}</a>
+        </nav>
+        <a href="/shop/cart" class="btn-outline">🛒 {{ i18n.t('nav_cart') }}</a>
+    </div>
+</header>

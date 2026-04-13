@@ -3,46 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produktdetails | TestShopPython</title>
+    <title>{{ i18n.t('product_name') }} | {{ i18n.t('brand_name') }}</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="nav-bar">
-            <div class="logo">TestShopPython</div>
-            <nav class="menu">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/shop/login">Login</a>
-            </nav>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <main class="page-content">
         <section class="page-hero compact">
             <div>
-                <span class="eyebrow">Produktdetails</span>
-                <h1>Einzelansicht</h1>
-                <p>Alle Details zu deinem ausgewählten Artikel auf einen Blick.</p>
+                <span class="eyebrow">{{ i18n.t('product_name') }}</span>
+                <h1>Produktdetails</h1>
+                <p>Hier findest du alle Informationen zum ausgewählten Produkt.</p>
             </div>
         </section>
 
         <section class="product-detail">
             <div class="product-detail-card">
                 <div id="product-detail"></div>
-                <button class="btn-primary" id="add-to-cart">In den Warenkorb</button>
+                <button class="btn-primary" id="add-to-cart">{{ i18n.t('add_to_cart') }}</button>
             </div>
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div>
-            <h4>TestShopPython</h4>
-            <p>Modernes Shopping im Wohnstil.</p>
-        </div>
-    </footer>
-
+    {% include "footer.html" %}
     <script src="/static/js/app.js"></script>
 </body>
 </html>

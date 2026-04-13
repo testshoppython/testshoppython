@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from ..database import SessionLocal
@@ -65,7 +66,7 @@ def add_to_cart(user_id: int, item: schemas.CartItemCreate, db: Session = Depend
     db.refresh(cart_item)
     return cart_item
 
-@router.put("/{user_id}/items/{item_id}", response_model=schemas.CartItem)
+@router.put("/{user_id}/items/{item_id}", response_model=Optional[schemas.CartItem])
 def update_cart_item(user_id: int, item_id: int, item_update: schemas.CartItemCreate, db: Session = Depends(get_db)):
     # Verify cart belongs to user
     cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()

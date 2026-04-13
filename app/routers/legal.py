@@ -1,22 +1,22 @@
 from fastapi import APIRouter
 
-router = APIRouter(prefix="/info", tags=["Legal"])
+router = APIRouter(prefix="/legal", tags=["Legal"])
 
 @router.get("/impressum")
 def impressum():
     return {
-        "shop_name": "TestShopPython",
-        "company": "Your Company Name",
-        "address": "Street 1, 12345 City, Deutschland",
-        "representing": "Your Name",
+        "shop_name": "OWRE",
+        "company": "OWRE GmbH",
+        "address": "Mustergasse 12, 10115 Berlin, Deutschland",
+        "representing": "Max Mustermann",
         "contact": {
-            "email": "info@testshop.de",
-            "phone": "+49 123 456789",
-            "website": "https://testshop.de"
+            "email": "info@owre.shop",
+            "phone": "+49 30 12345678",
+            "website": "https://owre.shop"
         },
         "tax_id": "DE123456789",
         "commercial_register": "HRB 123456",
-        "responsible_content": "Your Name"
+        "responsible_content": "Max Mustermann"
     }
 
 @router.get("/imprint")
@@ -105,10 +105,10 @@ def shipping_information():
 @router.get("/contact")
 def contact_information():
     return {
-        "company": "TestShopPython",
-        "email": "contact@testshop.de",
-        "phone": "+49 123 456789",
+        "company": "OWRE GmbH",
+        "email": "contact@owre.shop",
+        "phone": "+49 30 12345678",
         "hours": "Mo-Fr 9:00-17:00 Uhr",
-        "address": "Street 1, 12345 City, Deutschland",
+        "address": "Mustergasse 12, 10115 Berlin, Deutschland",
         "response_time": "24 Stunden"
     }

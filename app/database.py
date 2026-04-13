@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-import os
+from .config import settings
 
-# Database URL - use PostgreSQL in production, SQLite in development
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./webshop.db")
+# OWRE Database URL - SQLite by default, PostgreSQL in production
+DATABASE_URL = settings.database_url
 
 # For SQLite, we need to set check_same_thread=False
 if DATABASE_URL.startswith("sqlite"):
@@ -11,7 +11,7 @@ if DATABASE_URL.startswith("sqlite"):
         DATABASE_URL, connect_args={"check_same_thread": False}
     )
 else:
-    # For PostgreSQL
+    # For PostgreSQL or other databases
     engine = create_engine(
         DATABASE_URL,
         pool_pre_ping=True,

@@ -20,19 +20,19 @@ def hash_password(password: str) -> str:
 
 @router.post("/seed-data")
 def seed_database(db: Session = Depends(get_db)):
-    """Initialize database with sample product data"""
+    """Initialize database with OWRE product data"""
     
     # Check if data already exists
     if db.query(models.Category).count() > 0:
         return {"detail": "Database already initialized"}
     
-    # Create categories
+    # Create OWRE categories
     categories_data = [
-        {"name": "Elektronik", "description": "Computer, Smartphones und Zubehör"},
-        {"name": "Kleidung", "description": "Fashion und Bekleidung"},
-        {"name": "Bücher", "description": "E-Books und gedruckte Bücher"},
-        {"name": "Haushalt", "description": "Haushaltswaren und Dekorationen"},
-        {"name": "Sport", "description": "Sportausrüstung und Fitness"},
+        {"name": "Große Aufbewahrungsboxen", "description": "Geräumige Boxen mit stilvollem Design für größere Gegenstände"},
+        {"name": "Kleine Aufbewahrungskörbe", "description": "Kompakte Körbe für Organisation und Ordnung"},
+        {"name": "Stoff-Behälter", "description": "Weiches Material für sanfte Aufbewahrung"},
+        {"name": "Sets & Bundles", "description": "Komplette Lösungen für verschiedene Räume"},
+        {"name": "Zubehör", "description": "Ergänzungen und Zubehör für perfekte Organisation"},
     ]
     
     categories = []
@@ -42,100 +42,100 @@ def seed_database(db: Session = Depends(get_db)):
         categories.append(category)
     db.flush()
     
-    # Create products
+    # Create OWRE products with local images
     products_data = [
-        # Elektronik
+        # Große Aufbewahrungsboxen
         {
-            "name": "Wireless Kopfhörer",
-            "description": "Premium Bluetooth Kopfhörer mit Noise Cancellation",
-            "price": 149.99,
+            "name": "OWRE Premium Aufbewahrungsbox Groß",
+            "description": "Premium Aufbewahrungsbox aus robustem Material mit modernem Design. Perfekt für Wohnzimmer, Schlafzimmer oder Kinderzimmer.",
+            "price": 49.99,
             "stock": 50,
             "category_id": categories[0].id,
-            "image_url": "https://via.placeholder.com/300?text=Kopfhörer"
+            "image_url": "/static/images/baskets_001.png"
         },
         {
-            "name": "USB-C Hub",
-            "description": "7-in-1 USB-C Hub mit HDMI, USB 3.0 und SD Card Reader",
-            "price": 49.99,
-            "stock": 100,
+            "name": "OWRE Storage Lux - Große Variante",
+            "description": "Elegante große Aufbewahrungsbox mit hochwertigen Griffen und stabilem Rahmen. Ideal zur Aufbewahrung von Decken, Accessoires oder Spielzeug.",
+            "price": 59.99,
+            "stock": 40,
             "category_id": categories[0].id,
-            "image_url": "https://via.placeholder.com/300?text=USB-Hub"
+            "image_url": "/static/images/baskets_002.png"
         },
         {
-            "name": "Externe SSD 1TB",
-            "description": "Schnelle externe SSD mit 1TB Speicherkapazität",
-            "price": 89.99,
+            "name": "OWRE Raumwunder Box",
+            "description": "Raumsparende Design-Box für intelligente Aufbewahrung. Mit praktischen Trennern und großem Fassungsvermögen.",
+            "price": 69.99,
             "stock": 30,
             "category_id": categories[0].id,
-            "image_url": "https://via.placeholder.com/300?text=SSD"
+            "image_url": "/static/images/room_001.png"
         },
-        # Kleidung
+        # Kleine Aufbewahrungskörbe
         {
-            "name": "Premium T-Shirt",
-            "description": "100% Baumwolle, hautfreundlich und langlebig",
-            "price": 29.99,
-            "stock": 200,
+            "name": "OWRE Mini Korb Set (2er)",
+            "description": "Zwei kleine Aufbewahrungskörbe im Set. Perfekt für Schreibtisch, Nachttisch oder Regal.",
+            "price": 24.99,
+            "stock": 100,
             "category_id": categories[1].id,
-            "image_url": "https://via.placeholder.com/300?text=T-Shirt"
+            "image_url": "/static/images/baskets_003.png"
         },
         {
-            "name": "Laufschuhe Pro",
-            "description": "Professionelle Laufschuhe mit Gel-Dämpfung",
-            "price": 119.99,
+            "name": "OWRE Compact Organizer",
+            "description": "Kompakter Korb mit mehreren Fächern für perfekte Dekoration und Ordnung.",
+            "price": 34.99,
             "stock": 75,
             "category_id": categories[1].id,
-            "image_url": "https://via.placeholder.com/300?text=Laufschuhe"
+            "image_url": "/static/images/room_002.png"
         },
-        # Bücher
+        # Stoff-Behälter
         {
-            "name": "Python Programmierung Grundlagen",
-            "description": "Umfassendes Lehrbuch für Python-Anfänger",
+            "name": "OWRE Stoff-Container Premium",
+            "description": "Weicher Stoff-Container in zeitlosem Grau. Leichtgewichtig aber stabil, perfekt für empfindliche Gegenstände.",
             "price": 39.99,
-            "stock": 150,
+            "stock": 60,
             "category_id": categories[2].id,
-            "image_url": "https://via.placeholder.com/300?text=Python+Buch"
+            "image_url": "/static/images/baskets_001.png"
         },
         {
-            "name": "Web Development mit FastAPI",
-            "description": "Modernes Web Development mit Python und FastAPI",
-            "price": 49.99,
-            "stock": 100,
-            "category_id": categories[2].id,
-            "image_url": "https://via.placeholder.com/300?text=FastAPI+Buch"
-        },
-        # Haushalt
-        {
-            "name": "Küchenorganizer Set",
-            "description": "5-teiliges Organisier-Set für die Küche",
-            "price": 24.99,
-            "stock": 250,
-            "category_id": categories[3].id,
-            "image_url": "https://via.placeholder.com/300?text=Organizer"
-        },
-        {
-            "name": "LED Schreibtischlampe",
-            "description": "Moderne LED Lampe mit 3 Helligkeitsstufen",
-            "price": 34.99,
-            "stock": 80,
-            "category_id": categories[3].id,
-            "image_url": "https://via.placeholder.com/300?text=Lampe"
-        },
-        # Sport
-        {
-            "name": "Yoga Matte Premium",
-            "description": "Rutschfeste Yoga Matte, 6mm dick",
+            "name": "OWRE Textil Box Deluxe",
+            "description": "Hochwertige Textil-Box mit verstärktem Boden und eleganten Details. Passt in jeden Wohnstil.",
             "price": 44.99,
-            "stock": 120,
-            "category_id": categories[4].id,
-            "image_url": "https://via.placeholder.com/300?text=Yoga+Matte"
+            "stock": 50,
+            "category_id": categories[2].id,
+            "image_url": "/static/images/baskets_002.png"
+        },
+        # Sets & Bundles
+        {
+            "name": "OWRE Premium Set 4-teilig",
+            "description": "Komplettes 4-teiliges Set mit verschiedenen Größen für komplette Raum-Organisation. Perfekt zum Sparen!",
+            "price": 129.99,
+            "stock": 25,
+            "category_id": categories[3].id,
+            "image_url": "/static/images/room_001.png"
         },
         {
-            "name": "Hanteln Set 20kg",
-            "description": "Verstellbare Hanteln mit Ständer, insgesamt 20kg",
-            "price": 79.99,
-            "stock": 40,
+            "name": "OWRE Family Bundle 6-teilig",
+            "description": "Großes Bundle mit 6 Aufbewahrungsboxen in verschiedenen Größen und Farben. Ideal für Familien.",
+            "price": 189.99,
+            "stock": 15,
+            "category_id": categories[3].id,
+            "image_url": "/static/images/room_002.png"
+        },
+        # Zubehör
+        {
+            "name": "OWRE Griffe Premium Set",
+            "description": "Ersatz- und zusätzliche hochwertige Griffe. Kompatibel mit allen OWRE Boxen.",
+            "price": 14.99,
+            "stock": 200,
             "category_id": categories[4].id,
-            "image_url": "https://via.placeholder.com/300?text=Hanteln"
+            "image_url": "/static/images/baskets_003.png"
+        },
+        {
+            "name": "OWRE Etiketten & Beschriftung",
+            "description": "Elegante Etiketten zur Beschriftung Ihrer OWRE Boxen. 50er Set in verschiedenen Designs.",
+            "price": 9.99,
+            "stock": 300,
+            "category_id": categories[4].id,
+            "image_url": "/static/images/baskets_001.png"
         },
     ]
     
@@ -144,12 +144,12 @@ def seed_database(db: Session = Depends(get_db)):
         db.add(product)
     db.flush()
     
-    # Create admin user
+    # Create admin user for OWRE
     admin_user = models.User(
-        email="admin@testshop.de",
+        email="admin@owre.shop",
         username="admin",
         firstname="Admin",
-        lastname="User",
+        lastname="OWRE",
         hashed_password=hash_password("admin123"),
         is_admin=True,
         is_active=True
@@ -163,11 +163,11 @@ def seed_database(db: Session = Depends(get_db)):
     
     # Create demo user
     demo_user = models.User(
-        email="demo@testshop.de",
+        email="demo@owre.shop",
         username="demo",
         firstname="Demo",
-        lastname="User",
-        phone="+49 123 456789",
+        lastname="Kunde",
+        phone="+49 (0) 123 456789",
         hashed_password=hash_password("demo123"),
         is_active=True
     )
@@ -181,7 +181,7 @@ def seed_database(db: Session = Depends(get_db)):
     # Create demo address
     demo_address = models.Address(
         user_id=demo_user.id,
-        street="Beispielstraße 123",
+        street="Musterstraße 123",
         city="Berlin",
         postal_code="10115",
         country="Deutschland",
@@ -192,11 +192,11 @@ def seed_database(db: Session = Depends(get_db)):
     db.commit()
     
     return {
-        "detail": "Database initialized successfully",
+        "detail": "OWRE Database initialized successfully",
         "categories_created": len(categories_data),
         "products_created": len(products_data),
-        "admin_user": "admin@testshop.de (Password: admin123)",
-        "demo_user": "demo@testshop.de (Password: demo123)"
+        "admin_user": "admin@owre.shop (Password: admin123)",
+        "demo_user": "demo@owre.shop (Password: demo123)"
     }
 
 @router.get("/check-data")

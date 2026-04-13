@@ -30,6 +30,7 @@ class ProductCreate(ProductBase):
 class Product(ProductBase):
     id: int
     created_at: datetime
+    category: Optional[Category] = None
     class Config:
         orm_mode = True
 
@@ -133,7 +134,7 @@ class OrderBase(BaseModel):
     payment_method: str
 
 class OrderCreate(OrderBase):
-    items: List[CartItemBase]
+    items: Optional[List[CartItemBase]] = None
     shipping_address_id: Optional[int] = None
 
 class Order(OrderBase):

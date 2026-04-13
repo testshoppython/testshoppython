@@ -40,8 +40,14 @@ def get_category(category_id: int, db: Session = Depends(get_db)):
 
 # Product Endpoints
 @router.get("/", response_model=list[schemas.Product])
-def list_products(category_id: int = None, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def list_products(search: str = None, category_id: int = None, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     query = db.query(models.Product)
+    if search:
+        search_term = f"%{search}%"
+        query = query.filter(
+            (models.Product.name.ilike(search_term)) |
+            (models.Product.description.ilike(search_term))
+        )
     if category_id:
         query = query.filter(models.Product.category_id == category_id)
     return query.offset(skip).limit(limit).all()

@@ -69,12 +69,25 @@ def create_order(user_id: int, order: schemas.OrderCreate, db: Session = Depends
     # Create order
     order_number = f"ORD-{datetime.utcnow().strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
     
+    shipping_address_id = None
+    if order.shipping_address_id:
+        shipping_address = db.query(models.Address).filter(
+            models.Address.id == order.shipping_address_id,
+            models.Address.user_id == user_id
+        ).first()
+        if not shipping_address:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Versandadresse nicht gefunden"
+            )
+        shipping_address_id = order.shipping_address_id
+
     db_order = models.Order(
         user_id=user_id,
         order_number=order_number,
         total_price=total_price,
         payment_method=order.payment_method,
-        shipping_address_id=order.shipping_address_id,
+        shipping_address_id=shipping_address_id,
         status="pending"
     )
     db.add(db_order)

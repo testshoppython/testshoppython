@@ -1,14 +1,14 @@
-# TestShopPython - Kompletter E-Commerce Shop mit Python
+# OWRE - Premium Storage Solutions
 
-Ein vollständiger, produktionsreifer Online-Shop, gebaut mit **FastAPI** und **SQLAlchemy**, ready für die Deployment auf **Render.com**.
+Ein vollständiger Online-Shop für OWRE-Aufbewahrungslösungen, gebaut mit **FastAPI**, **SQLAlchemy** und **SQLite**. Das Projekt ist für lokale Entwicklung und Render.com Deployment vorbereitet.
 
 ## Features 🎯
 
 ✅ **Produkt Management**
 - Kategorien und Produkte
-- Produktsuche und Filterung
-- Lagerverwaltung
-- Produktbilder/URLs
+- Produktbilder aus dem Ordner `static/images`
+- Produkt hinzufügen per Admin-API
+- OWRE-Design und mehrsprachige Texte
 
 ✅ **Benutzer Management**
 - Benutzerregistrierung
@@ -171,11 +171,11 @@ curl -X POST http://localhost:8000/init/seed-data
 ```
 
 **Testkonto - Administrator:**
-- Email: `admin@testshop.de`
+- Email: `admin@owre.shop`
 - Passwort: `admin123`
 
 **Testkonto - Demo-Benutzer:**
-- Email: `demo@testshop.de`
+- Email: `demo@owre.shop`
 - Passwort: `demo123`
 
 ## Deployment auf Render.com 🌐
@@ -282,7 +282,7 @@ flake8 app/
 ### Database Fehler
 ```bash
 # DB reset
-rm webshop.db
+rm owre.db
 python -c "from app.database import Base, engine; Base.metadata.create_all(bind=engine)"
 ```
 

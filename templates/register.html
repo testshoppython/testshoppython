@@ -3,58 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrieren | TestShopPython</title>
+    <title>{{ i18n.t('register') }} | {{ i18n.t('brand_name') }}</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="nav-bar">
-            <div class="logo">TestShopPython</div>
-            <nav class="menu">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/shop/login">Login</a>
-            </nav>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <main class="page-content">
         <section class="page-hero compact">
             <div>
-                <span class="eyebrow">Neu hier?</span>
-                <h1>Erstelle dein Konto</h1>
-                <p>Registriere dich und speichere deine Lieblingsprodukte im Warenkorb.</p>
+                <span class="eyebrow">{{ i18n.t('register') }}</span>
+                <h1>{{ i18n.t('register') }}</h1>
+                <p>Erstelle dein OWRE Konto und shoppe mit persönlichem Warenkorb.</p>
             </div>
             <div class="form-card">
-                <h2>Registrieren</h2>
+                <h2>{{ i18n.t('register') }}</h2>
                 <form id="register-form">
                     <div class="input-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" required>
+                        <label for="firstname">{{ i18n.t('firstname') }}</label>
+                        <input type="text" id="firstname" required>
                     </div>
                     <div class="input-group">
-                        <label for="email">E-Mail</label>
+                        <label for="lastname">{{ i18n.t('lastname') }}</label>
+                        <input type="text" id="lastname" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="username">{{ i18n.t('username') }}</label>
+                        <input type="text" id="username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">{{ i18n.t('email') }}</label>
                         <input type="email" id="email" required>
                     </div>
                     <div class="input-group">
-                        <label for="password">Passwort</label>
+                        <label for="password">{{ i18n.t('password') }}</label>
                         <input type="password" id="password" required>
                     </div>
-                    <button class="btn-primary" type="submit">Registrieren</button>
+                    <button class="btn-primary" type="submit">{{ i18n.t('register') }}</button>
                 </form>
-                <p class="small-note">Hast du schon ein Konto? <a href="/shop/login">Login</a></p>
+                <p class="small-note">{{ i18n.t('login') }}?<a href="/user/login">{{ i18n.t('nav_login') }}</a></p>
             </div>
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div>
-            <h4>TestShopPython</h4>
-            <p>Stilvolle Einrichtung leicht gemacht.</p>
-        </div>
-    </footer>
-
+    {% include "footer.html" %}
     <script src="/static/js/app.js"></script>
 </body>
 </html>

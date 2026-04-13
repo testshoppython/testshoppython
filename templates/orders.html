@@ -3,28 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bestellungen | TestShopPython</title>
+    <title>{{ i18n.t('orders') }} | {{ i18n.t('brand_name') }}</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="nav-bar">
-            <div class="logo">TestShopPython</div>
-            <nav class="menu">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/shop/login">Login</a>
-            </nav>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <main class="page-content">
         <section class="page-hero compact">
             <div>
-                <span class="eyebrow">Bestellungen</span>
-                <h1>Deine letzten Bestellungen</h1>
-                <p>Hier siehst du alle Bestellungen in einer übersichtlichen Darstellung.</p>
+                <span class="eyebrow">{{ i18n.t('orders') }}</span>
+                <h1>{{ i18n.t('orders') }}</h1>
+                <p>Hier siehst du deine letzten Bestellungen.</p>
             </div>
         </section>
 
@@ -35,13 +25,7 @@
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div>
-            <h4>TestShopPython</h4>
-            <p>Schöner wohnen mit smarter Bestellung.</p>
-        </div>
-    </footer>
-
+    {% include "footer.html" %}
     <script src="/static/js/app.js"></script>
 </body>
 </html>

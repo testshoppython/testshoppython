@@ -3,93 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TestShopPython | Modernes Wohnshop</title>
+    <title>{{ i18n.t('brand_name') }} - {{ i18n.t('brand_tagline') }}</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="top-bar">
-            <span>Interior & Living</span>
-            <a href="/shop/login">Login</a>
-        </div>
-        <div class="nav-bar">
-            <div class="logo">TestShopPython</div>
-            <nav class="menu">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/shop/orders">Bestellungen</a>
-            </nav>
-            <button class="btn-outline">Jetzt entdecken</button>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <main>
         <section class="hero">
             <div class="hero-copy">
-                <span class="eyebrow">Luxus-Wohnen | Interior Trends</span>
-                <h1>Moderne Wohnideen für dein Zuhause</h1>
-                <p>Entdecke handverlesene Möbel, Dekoration und Wohn-Accessoires in einem klaren, eleganten Shop-Design.</p>
+                <span class="eyebrow">{{ i18n.t('brand_name') }}</span>
+                <h1>{{ i18n.t('brand_tagline') }}</h1>
+                <p>Entdecke hochwertige Aufbewahrungslösungen für dein Zuhause mit OWRE - stilvolle Boxen und Körbe in modernem Design.</p>
                 <div class="hero-actions">
-                    <a href="/shop/products" class="btn-primary">Zu den Produkten</a>
-                    <a href="/shop/login" class="btn-secondary">Jetzt anmelden</a>
+                    <a href="/shop/products" class="btn-primary">{{ i18n.t('nav_shop') }}</a>
+                    <a href="/user/register" class="btn-secondary">{{ i18n.t('nav_register') }}</a>
                 </div>
             </div>
             <div class="hero-image">
-                <div class="hero-card">
-                    <span>Beliebt</span>
-                    <h2>Skandinavische Aufbewahrungsbox</h2>
-                    <p>stilvoll, praktisch und nachhaltig</p>
-                    <strong>€29,90</strong>
-                </div>
+                <img src="/static/images/room_001.png" alt="OWRE Aufbewahrungsbox" class="hero-img">
             </div>
         </section>
 
         <section class="category-section">
             <div class="section-header">
-                <h2>Wohnwelten entdecken</h2>
-                <p>Shoppe Möbel & Dekoration für dein Zuhause.</p>
+                <h2>{{ i18n.t('products') }} erkunden</h2>
+                <p>Premium Aufbewahrungslösungen für jeden Raum und Stil.</p>
             </div>
             <div class="category-grid">
                 <article class="category-card">
-                    <h3>Wohnzimmer</h3>
-                    <p>Bequeme Sofas, Tische und Comfort-Design.</p>
+                    <img src="/static/images/baskets_001.png" alt="Kategorie" class="category-img">
+                    <h3>Große Boxen</h3>
+                    <p>Geräumige Aufbewahrung mit modernem Design.</p>
                 </article>
                 <article class="category-card">
-                    <h3>Schlafzimmer</h3>
-                    <p>Stilvolle Textilien und entspannte Atmosphäre.</p>
+                    <img src="/static/images/baskets_002.png" alt="Kategorie" class="category-img">
+                    <h3>Kleine Körbe</h3>
+                    <p>Perfekt für Organisation und Ordnung.</p>
                 </article>
                 <article class="category-card">
-                    <h3>Home Office</h3>
-                    <p>Moderne Schreibtische, Regale und Leuchten.</p>
+                    <img src="/static/images/baskets_003.png" alt="Kategorie" class="category-img">
+                    <h3>Stoff-Behälter</h3>
+                    <p>Stilvolle und praktische Aufbewahrungslösungen.</p>
                 </article>
                 <article class="category-card">
-                    <h3>Accessoires</h3>
-                    <p>Dekorative Details für ein perfektes Zuhause.</p>
+                    <img src="/static/images/room_002.png" alt="Kategorie" class="category-img">
+                    <h3>Sets & Bundles</h3>
+                    <p>Komplette Lösungen für dein Zuhause.</p>
                 </article>
             </div>
         </section>
 
         <section class="featured-products">
             <div class="section-header">
-                <h2>Beliebte Produkte</h2>
-                <p>Unsere Beststeller im modernen Wohnstil.</p>
+                <h2>{{ i18n.t('featured') }}</h2>
+                <p>Unsere beliebtesten Produkte.</p>
             </div>
             <div id="products-list" class="product-grid"></div>
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div>
-            <h4>TestShopPython</h4>
-            <p>Modernes Wohnen. Klarer Stil. Einfache Bestellung.</p>
-        </div>
-        <div class="footer-links">
-            <a href="/shop/products">Shop</a>
-            <a href="/shop/cart">Warenkorb</a>
-            <a href="/shop/login">Login</a>
-        </div>
-    </footer>
+    {% include "footer.html" %}
 
     <script src="/static/js/app.js"></script>
 </body>

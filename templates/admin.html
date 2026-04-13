@@ -3,55 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | TestShopPython</title>
+    <title>{{ i18n.t('admin') }} | {{ i18n.t('brand_name') }}</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="nav-bar">
-            <div class="logo">TestShopPython</div>
-            <nav class="menu">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/shop/login">Login</a>
-            </nav>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <main class="page-content">
         <section class="page-hero compact">
             <div>
-                <span class="eyebrow">Admin</span>
-                <h1>Dashboard</h1>
-                <p>Übersicht über Nutzer, Produkte und Bestellungen.</p>
+                <span class="eyebrow">{{ i18n.t('admin') }}</span>
+                <h1>{{ i18n.t('manage_products') }}</h1>
+                <p>Verwalte Produkte, Kategorien und Shop-Statistiken.</p>
             </div>
         </section>
 
         <section class="grid-list admin-grid">
             <div class="panel">
-                <h2>Statistiken</h2>
+                <h2>{{ i18n.t('statistics') }}</h2>
                 <div id="admin-stats" class="panel-content">
                     <p class="small-note">Lade Daten …</p>
                 </div>
             </div>
             <div class="panel">
-                <h2>Produktverwaltung</h2>
-                <button class="btn-secondary" id="add-product">Neues Produkt</button>
-                <div class="panel-content" id="products-admin-list">
-                    <p class="small-note">Keine Produkte vorhanden.</p>
+                <h2>{{ i18n.t('add_product') }}</h2>
+                <form id="admin-product-form" class="panel-content admin-form">
+                    <div class="input-group">
+                        <label for="product-name">{{ i18n.t('product_name') }}</label>
+                        <input type="text" id="product-name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="product-description">{{ i18n.t('product_description') }}</label>
+                        <textarea id="product-description" rows="3" required></textarea>
+                    </div>
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="product-price">{{ i18n.t('product_price') }}</label>
+                            <input type="number" id="product-price" step="0.01" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="product-stock">{{ i18n.t('product_stock') }}</label>
+                            <input type="number" id="product-stock" required>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="product-category">{{ i18n.t('product_category') }}</label>
+                        <input type="number" id="product-category" placeholder="Category ID" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="product-image">{{ i18n.t('product_image') }}</label>
+                        <input type="file" id="product-image" accept="image/*">
+                    </div>
+                    <button class="btn-primary" type="submit">{{ i18n.t('add_product') }}</button>
+                </form>
+                <div id="products-admin-list" class="panel-content">
+                    <p class="small-note">{{ i18n.t('loading') }} …</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div>
-            <h4>TestShopPython</h4>
-            <p>Verwaltung im modernen Look.</p>
-        </div>
-    </footer>
-
+    {% include "footer.html" %}
     <script src="/static/js/app.js"></script>
 </body>
 </html>
