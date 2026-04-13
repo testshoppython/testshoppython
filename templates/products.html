@@ -3,29 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ i18n.t('products') }} | {{ i18n.t('brand_name') }}</title>
+    <title>Shop | OWRE</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    {% include "header.html" %}
-
-    <main class="page-content">
-        <section class="page-hero compact">
-            <div>
-                <span class="eyebrow">{{ i18n.t('products') }}</span>
-                <h1>{{ i18n.t('products') }}</h1>
-                <p>Entdecke unsere OWRE Aufbewahrungskollektion mit echten Produktbildern.</p>
+    <header class="site-header">
+        <div class="nav-bar">
+            <div class="logo">OWRE</div>
+            <nav class="menu">
+                <a href="/">Home</a>
+                <a href="/shop/products">Shop</a>
+                <a href="/shop/cart">Warenkorb</a>
+                <a href="/shop/login">Mein Konto</a>
+            </nav>
+            <div class="header-actions">
+                <button class="search-btn">🔍</button>
+                <a href="/shop/cart" class="cart-icon">🛒</a>
             </div>
-        </section>
+        </div>
+    </header>
 
-        <section class="product-grid" id="products-list">
-            <div class="product-card">
-                <p class="small-note">Produkte werden geladen …</p>
-            </div>
-        </section>
+    <main class="product-page">
+        <div class="page-header">
+            <h1>Unsere Produkte</h1>
+            <p>Entdecken Sie unsere komplette Kollektion an Aufbewahrungslösungen.</p>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active">Alle</button>
+            <button class="filter-btn">Körbe</button>
+            <button class="filter-btn">Boxen</button>
+            <button class="filter-btn">Organizer</button>
+        </div>
+
+        <div class="products-grid" id="products-list"></div>
     </main>
 
-    {% include "footer.html" %}
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>OWRE</h4>
+                <p>Premium Aufbewahrungslösungen.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 OWRE.</p>
+        </div>
+    </footer>
+
     <script src="/static/js/app.js"></script>
 </body>
 </html>

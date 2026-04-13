@@ -28,14 +28,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 # Set global template context
-@app.middleware("http")
-async def add_i18n_to_context(request: Request, call_next):
-    language = request.query_params.get("lang", settings.default_language)
-    i18n.set_language(language)
-    request.state.i18n = i18n
-    request.state.lang = language
-    response = await call_next(request)
-    return response
+templates.env.globals.update(i18n=i18n)
 
 app.include_router(init.router)
 app.include_router(products.router)
@@ -48,67 +41,35 @@ app.include_router(auth.router)
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "i18n": i18n,
-        "settings": settings
-    })
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.get("/shop/products", response_class=HTMLResponse)
 def products_page(request: Request):
-    return templates.TemplateResponse("products.html", {
-        "request": request,
-        "i18n": i18n,
-        "settings": settings
-    })
+    return templates.TemplateResponse("products.html", {"request": request})
 
 @app.get("/shop/product", response_class=HTMLResponse)
 def product_page(request: Request):
-    return templates.TemplateResponse("product.html", {
-        "request": request,
-        "i18n": i18n,
-        "settings": settings
-    })
+    return templates.TemplateResponse("product.html", {"request": request})
 
 @app.get("/shop/cart", response_class=HTMLResponse)
 def cart_page(request: Request):
-    return templates.TemplateResponse("cart.html", {
-        "request": request,
-        "i18n": i18n,
-        "settings": settings
-    })
+    return templates.TemplateResponse("cart.html", {"request": request})
 
-@app.get("/admin", response_class=HTMLResponse)
-def admin_page(request: Request):
-    return templates.TemplateResponse("admin.html", {
-        "request": request,
-        "i18n": i18n,
-        "settings": settings
-    })
-
-@app.get("/user/orders", response_class=HTMLResponse)
-def orders_page(request: Request):
-    return templates.TemplateResponse("orders.html", {
-        "request": request,
-        "i18n": i18n,
-        "settings": settings
-    })
-
-@app.get("/user/login", response_class=HTMLResponse)
+@app.get("/shop/login", response_class=HTMLResponse)
 def login_page(request: Request):
-    return templates.TemplateResponse("login.html", {
-        "request": request,
-        "i18n": i18n,
-        "settings": settings
-    })
+    return templates.TemplateResponse("login.html", {"request": request})
 
-@app.get("/user/register", response_class=HTMLResponse)
+@app.get("/shop/register", response_class=HTMLResponse)
 def register_page(request: Request):
-    return templates.TemplateResponse("register.html", {
-        "request": request,
-        "i18n": i18n,
-        "settings": settings
-    })
+    return templates.TemplateResponse("register.html", {"request": request})
+
+@app.get("/shop/orders", response_class=HTMLResponse)
+def orders_page(request: Request):
+    return templates.TemplateResponse("orders.html", {"request": request})
+
+@app.get("/shop/admin", response_class=HTMLResponse)
+def admin_page(request: Request):
+    return templates.TemplateResponse("admin.html", {"request": request})
 
 @app.get("/health")
 def health():

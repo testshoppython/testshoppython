@@ -3,67 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ i18n.t('brand_name') }} - {{ i18n.t('brand_tagline') }}</title>
+    <title>OWRE - Premium Aufbewahrungslösungen</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    {% include "header.html" %}
+    <header class="site-header">
+        <div class="top-bar">
+            <span>Kostenloser Versand ab €50 | 30 Tage Rückgaberecht</span>
+            <a href="/shop/login">Mein Konto</a>
+        </div>
+        <div class="nav-bar">
+            <div class="logo">OWRE</div>
+            <nav class="menu">
+                <a href="/">Home</a>
+                <a href="/shop/products">Shop</a>
+                <a href="/shop/cart">Warenkorb</a>
+                <a href="/shop/orders">Bestellungen</a>
+            </nav>
+            <div class="header-actions">
+                <button class="search-btn">🔍</button>
+                <a href="/shop/cart" class="cart-icon">🛒</a>
+            </div>
+        </div>
+    </header>
 
     <main>
         <section class="hero">
-            <div class="hero-copy">
-                <span class="eyebrow">{{ i18n.t('brand_name') }}</span>
-                <h1>{{ i18n.t('brand_tagline') }}</h1>
-                <p>Entdecke hochwertige Aufbewahrungslösungen für dein Zuhause mit OWRE - stilvolle Boxen und Körbe in modernem Design.</p>
+            <div class="hero-content">
+                <h1>Premium Aufbewahrung für Ihr Zuhause</h1>
+                <p>Entdecken Sie unsere stilvollen Aufbewahrungslösungen – von Körben bis zu Boxen in skandinavischer Eleganz.</p>
                 <div class="hero-actions">
-                    <a href="/shop/products" class="btn-primary">{{ i18n.t('nav_shop') }}</a>
-                    <a href="/user/register" class="btn-secondary">{{ i18n.t('nav_register') }}</a>
+                    <a href="/shop/products" class="btn-primary">Jetzt shoppen</a>
+                    <a href="#categories" class="btn-secondary">Kategorien entdecken</a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="/static/images/room_001.png" alt="OWRE Aufbewahrungsbox" class="hero-img">
+                <img src="/static/images/hero-storage.jpg" alt="OWRE Aufbewahrungskorb" loading="lazy">
             </div>
         </section>
 
-        <section class="category-section">
+        <section id="categories" class="categories-section">
             <div class="section-header">
-                <h2>{{ i18n.t('products') }} erkunden</h2>
-                <p>Premium Aufbewahrungslösungen für jeden Raum und Stil.</p>
+                <h2>Shoppen nach Kategorie</h2>
+                <p>Finden Sie die perfekte Lösung für Ihre Aufbewahrungsbedürfnisse.</p>
             </div>
-            <div class="category-grid">
+            <div class="categories-grid">
                 <article class="category-card">
-                    <img src="/static/images/baskets_001.png" alt="Kategorie" class="category-img">
-                    <h3>Große Boxen</h3>
-                    <p>Geräumige Aufbewahrung mit modernem Design.</p>
+                    <img src="/static/images/category-baskets.jpg" alt="Aufbewahrungskörbe">
+                    <h3>Aufbewahrungskörbe</h3>
+                    <p>Stilvolle Körbe für jeden Raum.</p>
+                    <a href="/shop/products" class="btn-outline">Entdecken</a>
                 </article>
                 <article class="category-card">
-                    <img src="/static/images/baskets_002.png" alt="Kategorie" class="category-img">
-                    <h3>Kleine Körbe</h3>
-                    <p>Perfekt für Organisation und Ordnung.</p>
+                    <img src="/static/images/category-boxes.jpg" alt="Aufbewahrungsboxen">
+                    <h3>Aufbewahrungsboxen</h3>
+                    <p>Praktische Boxen mit Deckel.</p>
+                    <a href="/shop/products" class="btn-outline">Entdecken</a>
                 </article>
                 <article class="category-card">
-                    <img src="/static/images/baskets_003.png" alt="Kategorie" class="category-img">
-                    <h3>Stoff-Behälter</h3>
-                    <p>Stilvolle und praktische Aufbewahrungslösungen.</p>
+                    <img src="/static/images/category-organizers.jpg" alt="Organizer">
+                    <h3>Organizer</h3>
+                    <p>Schubladen und Regale für Ordnung.</p>
+                    <a href="/shop/products" class="btn-outline">Entdecken</a>
                 </article>
                 <article class="category-card">
-                    <img src="/static/images/room_002.png" alt="Kategorie" class="category-img">
-                    <h3>Sets & Bundles</h3>
-                    <p>Komplette Lösungen für dein Zuhause.</p>
+                    <img src="/static/images/category-accessories.jpg" alt="Zubehör">
+                    <h3>Zubehör</h3>
+                    <p>Labels und weitere Helfer.</p>
+                    <a href="/shop/products" class="btn-outline">Entdecken</a>
                 </article>
             </div>
         </section>
 
         <section class="featured-products">
             <div class="section-header">
-                <h2>{{ i18n.t('featured') }}</h2>
-                <p>Unsere beliebtesten Produkte.</p>
+                <h2>Beliebte Produkte</h2>
+                <p>Unsere Bestseller für stilvolle Aufbewahrung.</p>
             </div>
-            <div id="products-list" class="product-grid"></div>
+            <div id="products-list" class="products-grid"></div>
+        </section>
+
+        <section class="usp-section">
+            <div class="usp-grid">
+                <div class="usp-item">
+                    <span>🚚</span>
+                    <h3>Kostenloser Versand</h3>
+                    <p>Ab €50 Bestellwert.</p>
+                </div>
+                <div class="usp-item">
+                    <span>🔄</span>
+                    <h3>30 Tage Rückgabe</h3>
+                    <p>Risikofrei einkaufen.</p>
+                </div>
+                <div class="usp-item">
+                    <span>🌱</span>
+                    <h3>Nachhaltig</h3>
+                    <p>Umweltfreundliche Materialien.</p>
+                </div>
+            </div>
         </section>
     </main>
 
-    {% include "footer.html" %}
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>OWRE</h4>
+                <p>Premium Aufbewahrungslösungen für Ihr Zuhause.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Shop</h4>
+                <a href="/shop/products">Alle Produkte</a>
+                <a href="/shop/cart">Warenkorb</a>
+                <a href="/shop/orders">Bestellungen</a>
+            </div>
+            <div class="footer-section">
+                <h4>Service</h4>
+                <a href="/shop/login">Mein Konto</a>
+                <a href="/shop/register">Registrieren</a>
+                <a href="/info/imprint">Impressum</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 OWRE. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
 
     <script src="/static/js/app.js"></script>
 </body>
