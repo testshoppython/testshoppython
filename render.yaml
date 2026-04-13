@@ -7,7 +7,7 @@ services:
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port 10000
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11
+        value: 3.11.7
       - key: DATABASE_URL
         value: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
       - key: ENVIRONMENT
