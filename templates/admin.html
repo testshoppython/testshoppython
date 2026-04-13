@@ -3,28 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - TestShopPython</title>
+    <title>Admin | TestShopPython</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header>
-        <h1>Admin-Dashboard</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/products">Produkte</a>
-        </nav>
+    <header class="site-header">
+        <div class="nav-bar">
+            <div class="logo">TestShopPython</div>
+            <nav class="menu">
+                <a href="/">Home</a>
+                <a href="/shop/products">Shop</a>
+                <a href="/shop/cart">Warenkorb</a>
+                <a href="/shop/login">Login</a>
+            </nav>
+        </div>
     </header>
-    <main>
-        <section id="stats">
-            <h3>Statistiken</h3>
-            <div id="admin-stats"></div>
+
+    <main class="page-content">
+        <section class="page-hero compact">
+            <div>
+                <span class="eyebrow">Admin</span>
+                <h1>Dashboard</h1>
+                <p>Übersicht über Nutzer, Produkte und Bestellungen.</p>
+            </div>
         </section>
-        <section id="manage-products">
-            <h3>Produkte verwalten</h3>
-            <button id="add-product">Neues Produkt</button>
-            <div id="products-admin-list"></div>
+
+        <section class="grid-list admin-grid">
+            <div class="panel">
+                <h2>Statistiken</h2>
+                <div id="admin-stats" class="panel-content">
+                    <p class="small-note">Lade Daten …</p>
+                </div>
+            </div>
+            <div class="panel">
+                <h2>Produktverwaltung</h2>
+                <button class="btn-secondary" id="add-product">Neues Produkt</button>
+                <div class="panel-content" id="products-admin-list">
+                    <p class="small-note">Keine Produkte vorhanden.</p>
+                </div>
+            </div>
         </section>
     </main>
+
+    <footer class="site-footer">
+        <div>
+            <h4>TestShopPython</h4>
+            <p>Verwaltung im modernen Look.</p>
+        </div>
+    </footer>
+
     <script src="/static/js/app.js"></script>
 </body>
 </html>

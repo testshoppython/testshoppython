@@ -287,6 +287,118 @@ a {
     flex-wrap: wrap;
 }
 
+.page-hero.compact {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+    background: #fff;
+    padding: 2.4rem;
+    border-radius: 32px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.page-hero.compact h1 {
+    font-size: clamp(2.3rem, 3vw, 3.4rem);
+}
+
+.page-content {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.form-card,
+.panel,
+.product-detail-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.input-group {
+    display: grid;
+    gap: 0.55rem;
+    margin-bottom: 1.1rem;
+}
+
+.input-group label {
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+.input-group input {
+    width: 100%;
+    border: 1px solid rgba(34,34,34,0.12);
+    border-radius: 16px;
+    padding: 0.95rem 1rem;
+    font-size: 1rem;
+    background: #faf8f4;
+    color: var(--text);
+}
+
+.small-note {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-top: 1rem;
+}
+
+.panel-grid,
+.admin-grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.panel {
+    min-height: 240px;
+}
+
+.panel-content {
+    margin-top: 1rem;
+}
+
+.product-detail {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.product-detail-card {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.order-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 1.5rem;
+    box-shadow: 0 18px 40px rgba(16,24,40,0.05);
+}
+
+.order-card h4 {
+    margin: 0 0 0.75rem;
+}
+
+.grid-list {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.product-card {
+    min-height: 270px;
+}
+
 @media (max-width: 900px) {
     .hero {
         grid-template-columns: 1fr;
@@ -313,5 +425,23 @@ a {
     }
     .hero-card {
         padding: 1.4rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .page-hero.compact {
+        padding: 1.8rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .page-content {
+        padding: 1.2rem;
+    }
+    .site-header {
+        padding: 1rem;
+    }
+    .nav-bar {
+        gap: 0.75rem;
     }
 }

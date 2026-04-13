@@ -3,22 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produkt - TestShopPython</title>
+    <title>Produktdetails | TestShopPython</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header>
-        <h1>Produkt-Details</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/products">Produkte</a>
-            <a href="/cart">Warenkorb</a>
-        </nav>
+    <header class="site-header">
+        <div class="nav-bar">
+            <div class="logo">TestShopPython</div>
+            <nav class="menu">
+                <a href="/">Home</a>
+                <a href="/shop/products">Shop</a>
+                <a href="/shop/cart">Warenkorb</a>
+                <a href="/shop/login">Login</a>
+            </nav>
+        </div>
     </header>
-    <main>
-        <div id="product-detail"></div>
-        <button id="add-to-cart">In den Warenkorb</button>
+
+    <main class="page-content">
+        <section class="page-hero compact">
+            <div>
+                <span class="eyebrow">Produktdetails</span>
+                <h1>Einzelansicht</h1>
+                <p>Alle Details zu deinem ausgewählten Artikel auf einen Blick.</p>
+            </div>
+        </section>
+
+        <section class="product-detail">
+            <div class="product-detail-card">
+                <div id="product-detail"></div>
+                <button class="btn-primary" id="add-to-cart">In den Warenkorb</button>
+            </div>
+        </section>
     </main>
+
+    <footer class="site-footer">
+        <div>
+            <h4>TestShopPython</h4>
+            <p>Modernes Shopping im Wohnstil.</p>
+        </div>
+    </footer>
+
     <script src="/static/js/app.js"></script>
 </body>
 </html>

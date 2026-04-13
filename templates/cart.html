@@ -3,22 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warenkorb - TestShopPython</title>
+    <title>Warenkorb | TestShopPython</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header>
-        <h1>Warenkorb</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/products">Produkte</a>
-            <a href="/cart">Warenkorb</a>
-        </nav>
+    <header class="site-header">
+        <div class="nav-bar">
+            <div class="logo">TestShopPython</div>
+            <nav class="menu">
+                <a href="/">Home</a>
+                <a href="/shop/products">Shop</a>
+                <a href="/shop/cart">Warenkorb</a>
+                <a href="/shop/login">Login</a>
+            </nav>
+        </div>
     </header>
-    <main>
-        <div id="cart-items"></div>
-        <button id="checkout">Zur Kasse</button>
+
+    <main class="page-content">
+        <section class="page-hero compact">
+            <div>
+                <span class="eyebrow">Dein Warenkorb</span>
+                <h1>Bereit für den Checkout</h1>
+                <p>Überprüfe deine Produkte und fahre mit der Bestellung fort.</p>
+            </div>
+        </section>
+
+        <section class="panel-grid">
+            <div class="panel">
+                <h2>Artikel</h2>
+                <div id="cart-items" class="panel-content">
+                    <p class="small-note">Der Warenkorb ist noch leer.</p>
+                </div>
+            </div>
+            <div class="panel summary-panel">
+                <h2>Bestellübersicht</h2>
+                <div class="panel-content">
+                    <p>Zwischensumme: <strong>€0.00</strong></p>
+                    <button class="btn-primary" id="checkout">Zur Kasse</button>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <footer class="site-footer">
+        <div>
+            <h4>TestShopPython</h4>
+            <p>Dein Shop für moderne Wohnideen.</p>
+        </div>
+    </footer>
+
     <script src="/static/js/app.js"></script>
 </body>
 </html>
