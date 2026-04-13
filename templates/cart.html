@@ -3,39 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ i18n.t('cart') }} | {{ i18n.t('brand_name') }}</title>
+    <title>Warenkorb | OWRE</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    {% include "header.html" %}
-
+    <header class="site-header">
+        <div class="nav-bar">
+            <div class="logo">OWRE</div>
+            <nav class="menu">
+                <a href="/">Home</a>
+                <a href="/shop/products">Shop</a>
+                <a href="/shop/cart">Warenkorb</a>
+                <a href="/shop/login">Mein Konto</a>
+            </nav>
+        </div>
+    </header>
     <main class="page-content">
         <section class="page-hero compact">
             <div>
-                <span class="eyebrow">{{ i18n.t('cart') }}</span>
-                <h1>{{ i18n.t('cart') }}</h1>
-                <p>Überprüfe deine ausgewählten Produkte und fahre zur Kasse.</p>
+                <span class="eyebrow">Warenkorb</span>
+                <h1>Dein Warenkorb</h1>
+                <p>Hier findest du alle Artikel, die du ausgewählt hast.</p>
             </div>
         </section>
-
         <section class="panel-grid">
             <div class="panel">
-                <h2>{{ i18n.t('products') }}</h2>
+                <h2>Artikel im Warenkorb</h2>
                 <div id="cart-items" class="panel-content">
-                    <p class="small-note">{{ i18n.t('cart_empty') }}</p>
+                    <p class="small-note">Der Warenkorb ist noch leer.</p>
                 </div>
             </div>
             <div class="panel summary-panel">
-                <h2>{{ i18n.t('cart_total') }}</h2>
-                <div class="panel-content" id="cart-summary">
-                    <p>{{ i18n.t('cart_subtotal') }}: <strong>{{ i18n.t('currency') }}0.00</strong></p>
-                    <button class="btn-primary" id="checkout">{{ i18n.t('proceed_checkout') }}</button>
+                <h2>Bestellübersicht</h2>
+                <div class="panel-content">
+                    <p>Zwischensumme: <strong>€0.00</strong></p>
+                    <button class="btn-primary" id="checkout">Zur Kasse</button>
                 </div>
             </div>
         </section>
     </main>
-
-    {% include "footer.html" %}
+    <footer class="site-footer">
+        <div>
+            <h4>OWRE</h4>
+            <p>Premium Aufbewahrungslösungen für dein Zuhause.</p>
+        </div>
+    </footer>
     <script src="/static/js/app.js"></script>
 </body>
 </html>
