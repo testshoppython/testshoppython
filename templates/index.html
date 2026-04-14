@@ -12,15 +12,27 @@
 <body>
     {% include "header.html" %}
     <main>
-        <section class="hero">
+        <section class="hero main-hero">
             <div class="hero-content">
-                <div class="panel-content">
-                    <h1>Premium Aufbewahrung für Ihr Zuhause</h1>
-                    <p>Entdecken Sie unsere stilvollen Aufbewahrungslösungen – von Körben bis zu Boxen in skandinavischer Eleganz.</p>
+                <div class="panel-content animate-in">
+                    <span class="eyebrow">Dein Zuhause, dein Rückzugsort</span>
+                    <h1>Wärme & Ruhe für deinen Alltag</h1>
+                    <p>Entdecke handgefertigte Designs aus natürlichen Materialien, die mediterrane Wärme und skandinavische Ruhe in dein Zuhause bringen.</p>
                     <div class="hero-actions">
-                        <a href="/shop/products" class="btn-primary">Jetzt shoppen</a>
-                        <a href="#categories" class="btn-secondary btn-ghost">Kategorien entdecken</a>
+                        <a href="/shop/products" class="btn-primary">Kollektionen entdecken</a>
+                        <a href="/info/about" class="btn-secondary btn-ghost">Unsere Mission</a>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="story-section">
+            <div class="container-narrow">
+                <span class="eyebrow center">Vom Handwerk in dein Wohnzimmer</span>
+                <h2 class="center">Wahre Ästhetik liegt in der Wertschätzung</h2>
+                <p>Wir glauben, dass wahre Ästhetik in der Wertschätzung liegt. Deshalb verzichtet OWRE auf Zwischenhändler und arbeitet direkt mit den Kunsthandwerkern zusammen, die ihr Wissen über Generationen weitergeben. Hochwertige Materialien treffen auf faire Entlohnung – für ein Zuhause, das sich nicht nur gut anfühlt, sondern auch Gutes bewirkt.</p>
+                <div class="center" style="margin-top: 2rem;">
+                    <a href="/info/about" class="btn-outline">Mehr über unsere Mission erfahren</a>
                 </div>
             </div>
         </section>
@@ -73,23 +85,43 @@
             <div id="products-list" class="products-grid"></div>
         </section>
 
-        <section class="usp-section">
-            <div class="usp-grid">
-                <div class="usp-item">
-                    <span>🚚</span>
-                    <h3>Kostenloser Versand</h3>
-                    <p>Ab €50 Bestellwert.</p>
+        <section class="feeling-section">
+            <div class="feeling-grid">
+                <div class="feeling-image">
+                    <img src="/static/images/room_001.png" alt="Inspiration">
                 </div>
-                <div class="usp-item">
-                    <span>🔄</span>
-                    <h3>30 Tage Rückgabe</h3>
-                    <p>Risikofrei einkaufen.</p>
+                <div class="feeling-content">
+                    <span class="eyebrow">Das OWRE-Gefühl</span>
+                    <h2>Natur, die man spüren kann</h2>
+                    <p>Unsere Auswahl konzentriert sich auf authentische Texturen und dezente Muster. Inspiriert von der Gelassenheit des Südens, schaffen wir Akzente, die Stress reduzieren und den Raum zum Atmen bringen.</p>
+                    <p style="margin-top:1rem; font-style: italic; color: var(--text-secondary);">Baumwolle, Seegras, Leinen – Materialität, die verbindet.</p>
+                    <a href="/shop/products" class="btn-primary" style="margin-top: 2rem;">Inspiration finden</a>
                 </div>
-                <div class="usp-item">
-                    <span>🌱</span>
-                    <h3>Nachhaltig</h3>
-                    <p>Umweltfreundliche Materialien.</p>
+            </div>
+        </section>
+
+        <section class="newsletter-section">
+            <div class="newsletter-container">
+                <div class="newsletter-header">
+                    <span class="eyebrow">Your Daily Escape</span>
+                    <h2>Werde Teil der OWRE-Community</h2>
+                    <p>Melde dich an und erhalte exklusive Einblicke in unsere Manufakturen, Wohntipps für ein mediterranes Zuhause und 10% Willkommensrabatt.</p>
                 </div>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); auth.toast('Vielen Dank! Bitte bestätige Deine E-Mail.', 'success');">
+                    <div class="interest-selection">
+                        <p>Ich interessiere mich besonders für:</p>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="interest" value="living"> Home & Living Inspiration</label>
+                            <label><input type="checkbox" name="interest" value="news"> Produktneuheiten & Angebote</label>
+                            <label><input type="checkbox" name="interest" value="behind"> Hinter den Kulissen</label>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" placeholder="Deine E-Mail-Adresse" required>
+                        <button type="submit" class="btn-primary">Jetzt exklusiv anmelden</button>
+                    </div>
+                    <p class="dsgvo-note">Durch Absenden erklärst du dich mit unserer <a href="/info/privacy">Datenschutzerklärung</a> einverstanden. Wir nutzen Double-Opt-In.</p>
+                </form>
             </div>
         </section>
     </main>

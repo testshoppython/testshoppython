@@ -12,13 +12,12 @@
 <body>
     {% include "header.html" %}
     <main class="product-page garden-page">
-        <section class="garden-hero">
-            <div class="garden-hero-copy">
-                <h1>Schöne Aufbewahrung für Ihr Zuhause</h1>
-                <p>Entdecken Sie jetzt hochwertige, stilvolle Körbe, Boxen und Organizer für Ihr Outdoor-Living.</p>
-                <div class="hero-buttons">
-                    <a href="#products" class="btn-primary">Jetzt shoppen</a>
-                    <a href="#categories" class="btn-secondary btn-ghost">Kategorien entdecken</a>
+        <section class="page-hero compact">
+            <div class="hero-content">
+                <h1>Ordnung in ihrer schönsten Form</h1>
+                <p>Entdecke unsere Auswahl an handgefertigten Unikaten, die Funktionalität mit dem zeitlosen Design des Südens vereinen. Jedes Stück erzählt eine Geschichte von Handwerkskunst und natürlicher Ruhe.</p>
+                <div class="hero-actions">
+                    <a href="#products" class="btn-primary">Kollektionen entdecken</a>
                 </div>
             </div>
         </section>
@@ -57,10 +56,35 @@
             <p id="category-description">Stilvolle Aufbewahrung für ein schönes Zuhause im Freien.</p>
         </section>
 
-        <section class="products-grid" id="products-list">
-            <div class="product-card">
-                <div class="content">
-                    <p class="small-note">Produkte werden geladen …</p>
+        <section class="products-grid-container">
+            <div class="products-grid" id="products-list"></div>
+        </section>
+
+        <section class="storytelling-blocks">
+            <div class="story-block">
+                <h3>Design & Ästhetik</h3>
+                <p>Unsere Farbpalette ist inspiriert von Sand, Olivenhainen und kalkweißen Häusern. So fügt sich jedes Teil harmonisch in dein Zuhause ein, ohne Unruhe zu stiften.</p>
+            </div>
+            <div class="story-block">
+                <h3>Ehrlichkeit & Nachhaltigkeit</h3>
+                <p>Vom Erzeuger direkt zu dir. Durch den Verzicht auf Zwischenhändler garantieren wir die höchste Qualität für dich. Ehrlich und transparent.</p>
+            </div>
+            <div class="story-block">
+                <h3>Funktionale Ruhe</h3>
+                <p>Ein Platz für alles. Unsere Maße sind so konzipiert, dass sie in gängige Regalsysteme passen, aber auch frei stehend eine skulpturale Wirkung entfalten.</p>
+            </div>
+        </section>
+
+        <section class="shop-footer-inspiration">
+            <div class="panel">
+                <div class="panel-content center">
+                    <h2>Nicht sicher, was dir passt?</h2>
+                    <p>Lass dich von unserem Lookbook inspirieren oder schreibe uns. Wir helfen dir gerne, die richtige Auswahl für dein Wohlfühlzuhause zu treffen.</p>
+                    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="#" class="btn-outline">Lookbook ansehen</a>
+                        <a href="https://instagram.com" class="btn-outline">Instagram</a>
+                        <a href="/info/contact" class="btn-primary">Kontakt aufnehmen</a>
+                    </div>
                 </div>
             </div>
         </section>

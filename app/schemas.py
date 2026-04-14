@@ -148,6 +148,6 @@ class Order(OrderBase):
     items: List[OrderItemWithProduct] = []
     class Config:
         orm_mode = True
-
+# Order Update Schema
 class OrderUpdate(BaseModel):
     status: str

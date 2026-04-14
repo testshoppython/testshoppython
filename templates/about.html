@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Über uns | OWRE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {% include "header.html" %}
+    <main class="page-content">
+        <section class="page-hero">
+            <div class="hero-content">
+                <span class="eyebrow">Unsere Geschichte</span>
+                <h1>Über OWRE</h1>
+                <p>Wir bringen das entspannte Lebensgefühl des Mittelmeers, sanft gepaart mit skandinavischer Ruhe, direkt in dein Zuhause.</p>
+            </div>
+        </section>
+
+        <section class="panel-grid" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
+            <div class="panel">
+                <div class="panel-content storytelling">
+                    <p>Bei OWRE kreieren wir hochwertige Home & Living Produkte, die durch edle Naturmaterialien und ein beruhigendes, mediterran-skandinavisches Design überzeugen.</p>
+                    
+                    <p style="margin-top: 2rem;">Durch unseren direkten Kontakt zu ausgewählten Manufakturen garantieren wir dir nicht nur authentische, hochwertige Naturmaterialien, sondern auch eine rundum faire Herstellung. Weil uns Mensch und Natur gleichermaßen am Herzen liegen, arbeiten wir im Direktvertrieb eng mit unseren Produzenten zusammen.</p>
+                    
+                    <p style="margin-top: 2rem;">Spüre die Qualität nachhaltiger Handwerkskunst und lass jeden Tag zu einem kleinen Urlaub werden. Verwandle deine Räume in einen natürlichen Rückzugsort, an dem du dem Alltag entfliehen und pure Erholung finden kannst.</p>
+                    
+                    <div style="margin-top: 3rem; text-align: center;">
+                        <a href="/shop/products" class="btn-primary">Kollektion entdecken</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="usp-section">
+            <div class="usp-grid">
+                <div class="usp-item"><span>🚚</span><h3>Direktvertrieb</h3><p>Vom Handwerk direkt zu dir.</p></div>
+                <div class="usp-item"><span>🌱</span><h3>Naturmaterialien</h3><p>Baumwolle, Seegras, Leinen.</p></div>
+                <div class="usp-item"><span>🤝</span><h3>Faire Löhne</h3><p>Respekt für das Handwerk.</p></div>
+            </div>
+        </section>
+    </main>
+    {% include "footer.html" %}
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

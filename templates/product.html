@@ -32,7 +32,7 @@
     </div>
     
     <div class="product-info">
-      <span class="category-badge">{{ product.category.name if product.category else 'Aufbewahrung' }}</span>
+      <span class="category-badge">{{ product.category.name if product and product.category else 'Aufbewahrung' }}</span>
       <h1>{{ product.name if product else 'Produktname' }}</h1>
       
       <!-- Bewertungen (Amazon-Style) -->
@@ -89,15 +89,38 @@
     </div>
   </section>
 
+  <!-- NEU: Storytelling-Bereich -->
+  <section class="product-story-highlight">
+    <div class="container-narrow">
+      <span class="eyebrow center">Mehr als nur Ordnung</span>
+      <h2 class="center">Ein Stück Gelassenheit für dein Zuhause</h2>
+      <p class="center">Wir haben dieses OWRE Design entworfen, um den visuellen Lärm des Alltags zu reduzieren. Die dezenten, von Hand eingearbeiteten Muster erinnern an die sanften Strukturen mediterraner Küstenlandschaften. Er ist nicht nur ein Aufbewahrungsort, sondern ein Statement für ein entschleunigtes Leben.</p>
+    </div>
+  </section>
+
   <!-- Details-Tabs -->
   <section class="product-details">
     <div class="tabs">
       <button class="tab-btn active" data-tab="description">Beschreibung</button>
-      <button class="tab-btn" data-tab="specs">Produktdetails</button>
-      <button class="tab-btn" data-tab="reviews">Bewertungen</button>
+      <button class="tab-btn" data-tab="material">Material & Herkunft</button>
+      <button class="tab-btn" data-tab="care">Maße & Pflege</button>
     </div>
     <div class="tab-content active" id="description">
       <p>{{ product.description if product else 'Ausführliche Beschreibung...' }}</p>
+      <p style="margin-top: 1rem;">Gefertigt aus 100% nachhaltigen Materialien, bringt dieses Stück die sanfte Textur des Südens in dein Wohnzimmer. Ideal für ein aufgeräumtes und stilvolles Ambiente.</p>
+    </div>
+    <div class="tab-content" id="material">
+      <ul>
+        <li>100% zertifizierte, nachhaltige Rohstoffe</li>
+        <li>Handgefertigt in enger Zusammenarbeit mit unseren Partner-Manufakturen</li>
+        <li>Farbstoffe auf Naturbasis, schadstofffrei und sicher für die ganze Familie</li>
+      </ul>
+    </div>
+    <div class="tab-content" id="care">
+      <ul>
+        <li>Maße: Standardmaße passend für gängige Regalsysteme</li>
+        <li>Pflege: Mit einem feuchten Tuch abwischbar oder Handwäsche bei 30°C</li>
+      </ul>
     </div>
   </section>
 </main>

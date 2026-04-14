@@ -16,6 +16,7 @@
       <nav class="menu">
         <a href="/">Home</a>
         <a href="/shop/products">Shop</a>
+        <a href="/info/about">Über uns</a>
         <a href="/shop/cart">Warenkorb</a>
         <a href="/shop/orders" class="user-only" style="display:none;">Bestellungen</a>
         <a href="/shop/admin" class="admin-only" style="display:none;">Admin</a>
@@ -33,20 +34,34 @@
       </a>
     </div>
     
-    <!-- Professional Search Overlay -->
+    <!-- Westwing Style Search Overlay -->
     <div id="search-overlay" class="search-overlay">
       <div class="search-modal-content">
-        <div class="search-header">
-          <span class="search-label">Produktsuche</span>
-          <button id="close-search" class="close-search">&times;</button>
-        </div>
         <div class="search-input-wrapper">
           <input type="text" id="search-input" placeholder="" autocomplete="off">
+          <button id="close-search" class="close-search">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
         </div>
-        <div class="search-tips">
-          Tipp: Such nach Artikeln, Kategorien, Marken
+        <div id="search-results-container" class="search-results-container">
+          <div class="search-top-row">
+            <div class="search-column">
+              <h4 class="search-col-title">VORSCHLÄGE</h4>
+              <div id="search-suggestions" class="search-list">
+                <p class="search-muted">Tippe etwas ein...</p>
+              </div>
+            </div>
+            <div class="search-column">
+              <h4 class="search-col-title">KATEGORIEN</h4>
+              <div id="search-categories" class="search-list">
+              </div>
+            </div>
+          </div>
+          <div class="search-bottom-row" id="search-products-section">
+            <h4 class="search-col-title">PRODUKTE</h4>
+            <div id="search-products-grid" class="search-products-grid"></div>
+          </div>
         </div>
-        <div id="quick-results" class="quick-results"></div>
       </div>
     </div>
   </div>

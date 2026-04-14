@@ -124,16 +124,34 @@ class CartManager {
   }
 
   async changeQty(itemId, delta) {
+    this.userId = auth.getUserId(); // Immer aktuelle ID holen
     const item = this.cart.items.find(i => i.id == itemId);
-    if (!item) return;
+    if (!item) {
+        console.error(`Item mit id ${itemId} nicht im lokalen Warenkorb gefunden`);
+        return;
+    }
+    
     const newQty = item.quantity + delta;
     if (newQty <= 0) return this.removeItem(itemId);
-    const res = await fetch(`${this.apiBase}/cart/${this.userId}/items/${itemId}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ product_id: 0, quantity: newQty })
-    });
-    if (res.ok) { await this.loadCart(); this.updateUI(); }
+    
+    try {
+        const res = await fetch(`${this.apiBase}/cart/${this.userId}/items/${itemId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ product_id: item.product_id, quantity: newQty })
+        });
+        
+        if (res.ok) { 
+            await this.loadCart(); 
+            this.updateUI(); 
+        } else {
+            const errData = await res.json();
+            auth.toast(`Fehler: ${errData.detail || 'Konnte Menge nicht ändern'}`, 'error');
+        }
+    } catch (e) {
+        console.error(e);
+        auth.toast('Netzwerkfehler beim Aktualisieren', 'error');
+    }
   }
 
   async removeItem(itemId) {
@@ -188,10 +206,16 @@ class CartManager {
   calculateTotals() {
     const subtotalEl = document.querySelector('.summary-panel .subtotal');
     const totalEl = document.querySelector('.summary-panel .total');
+    const shippingEl = document.querySelector('.summary-panel .shipping');
+    
     if (!subtotalEl || !this.cart?.items.length) return;
+    
     const subtotal = this.cart.items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
+    const shipping = subtotal >= 50 ? 0 : 4.99;
+    
     subtotalEl.textContent = `€${subtotal.toFixed(2)}`;
-    totalEl.textContent = `€${(subtotal + (subtotal >= 50 ? 0 : 4.99)).toFixed(2)}`;
+    if (shippingEl) shippingEl.textContent = shipping === 0 ? 'kostenlos' : `€${shipping.toFixed(2)}`;
+    if (totalEl) totalEl.textContent = `€${(subtotal + shipping).toFixed(2)}`;
   }
 
   updateBadge() {
@@ -391,8 +415,9 @@ class SearchManager {
   }
 
   async handleSearch(query) {
+    const container = document.getElementById('search-results-container');
     if (!query.trim()) {
-        document.getElementById('quick-results').innerHTML = '';
+        if (container) container.style.display = 'none';
         return;
     }
 
@@ -403,34 +428,75 @@ class SearchManager {
             p.description.toLowerCase().includes(query.toLowerCase())
         );
         products.render(filtered);
-    } else {
-        // Show quick results if elsewhere
-        try {
-            const res = await fetch(`${API_BASE}/products/?search=${encodeURIComponent(query)}&limit=5`);
-            const data = await res.json();
-            this.renderQuickResults(data);
-        } catch (e) {}
     }
+    
+    // Show quick results (even on products page for the overlay)
+    try {
+        const res = await fetch(`${API_BASE}/products/?search=${encodeURIComponent(query)}&limit=10`);
+        const data = await res.json();
+        this.renderQuickResults(query, data);
+    } catch (e) {}
   }
 
-  renderQuickResults(items) {
-    const container = document.getElementById('quick-results');
+  renderQuickResults(query, items) {
+    const container = document.getElementById('search-results-container');
+    const suggContainer = document.getElementById('search-suggestions');
+    const catContainer = document.getElementById('search-categories');
+    const prodContainer = document.getElementById('search-products-grid');
+
+    if (!container) return;
+
     if (!items.length) {
-        container.innerHTML = '<p style="padding:1rem;color:var(--text-muted);">Keine Treffer</p>';
+        container.style.display = 'block';
+        suggContainer.innerHTML = '<p class="search-muted">Keine Vorschläge</p>';
+        catContainer.innerHTML = '<p class="search-muted">Keine Kategorien</p>';
+        prodContainer.innerHTML = '<p class="search-muted" style="grid-column: 1/-1;">Konnte nichts für "' + query + '" finden.</p>';
         return;
     }
-    container.innerHTML = `
-      <div style="font-size:0.85rem; color:var(--text-muted); padding:0.5rem 0.75rem;">Schnellansicht:</div>
-      ${items.map(p => `
-        <a href="/shop/product?id=${p.id}" class="quick-result-item">
-            <img src="${p.image_url || '/static/images/baskets_001.png'}" alt="${p.name}">
-            <div>
-                <div style="font-weight:600;color:var(--text-primary);">${p.name}</div>
-                <div style="font-size:0.85rem;color:var(--accent);">€${p.price.toFixed(2)}</div>
-            </div>
+
+    container.style.display = 'block';
+
+    const lowerQuery = query.toLowerCase();
+    
+    // Highlight helper
+    const highlight = (text) => {
+        const idx = text.toLowerCase().indexOf(lowerQuery);
+        if (idx === -1) return text;
+        return text.substring(0, idx) + '<strong>' + text.substring(idx, idx + lowerQuery.length) + '</strong>' + text.substring(idx + lowerQuery.length);
+    };
+
+    // 1. Suggestions: Extract distinct names and highlight
+    const uniqueNames = [...new Set(items.map(p => p.name))].slice(0, 5);
+    suggContainer.innerHTML = uniqueNames.map(name => `
+        <a href="/shop/products?search=${encodeURIComponent(name)}" class="search-item">
+            ${highlight(name.toLowerCase())}
         </a>
-      `).join('')}
-    `;
+    `).join('');
+
+    // 2. Categories: Extract distinct categories
+    const categories = [];
+    items.forEach(p => {
+        if (p.category && p.category.name && !categories.some(c => c.id === p.category.id)) {
+            categories.push(p.category);
+        }
+    });
+
+    if (categories.length) {
+        catContainer.innerHTML = categories.slice(0, 4).map(c => `
+            <a href="/shop/products?category=${c.id}" class="search-item">
+                ${c.name.toLowerCase().includes(lowerQuery) ? highlight(c.name.toLowerCase()) : c.name.toLowerCase()}
+            </a>
+        `).join('');
+    } else {
+        catContainer.innerHTML = '<p class="search-muted">Keine zugehörigen Kategorien</p>';
+    }
+
+    // 3. Products: Render minimal grid
+    prodContainer.innerHTML = items.slice(0, 8).map(p => `
+        <a href="/shop/product?id=${p.id}" class="search-product-card">
+            <img src="${p.image_url || '/static/images/baskets_001.png'}" alt="${p.name}" class="search-product-image">
+        </a>
+    `).join('');
   }
 }
 
@@ -455,7 +521,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Home Page Specific Logic: Limit to 4 products
-  const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html' || window.location.pathname === '';
+  const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
   if (isHomePage) {
     setTimeout(() => {
         if (products.allProducts && products.allProducts.length > 0) {

@@ -1,9 +1,11 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-from .database import Base, engine
+from sqlalchemy.orm import Session
+from .database import Base, engine, SessionLocal
+from . import models
 from .routers import products, legal, users, cart, orders, admin, init, auth
 from .config import settings
 from .i18n import i18n
@@ -48,9 +50,19 @@ def products_page(request: Request):
     return templates.TemplateResponse("products.html", {"request": request})
 
 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 @app.get("/shop/product", response_class=HTMLResponse)
-def product_page(request: Request):
-    return templates.TemplateResponse("product.html", {"request": request})
+def product_page(request: Request, id: int = None, db: Session = Depends(get_db)):
+    product = None
+    if id:
+        product = db.query(models.Product).filter(models.Product.id == id).first()
+    return templates.TemplateResponse("product.html", {"request": request, "product": product})
 
 
 @app.get("/shop/cart", response_class=HTMLResponse)
@@ -81,6 +93,11 @@ def admin_page(request: Request):
 @app.get("/info/impressum", response_class=HTMLResponse)
 def impressum_page(request: Request):
     return templates.TemplateResponse("impressum.html", {"request": request})
+
+
+@app.get("/info/about", response_class=HTMLResponse)
+def about_page(request: Request):
+    return templates.TemplateResponse("about.html", {"request": request})
 
 
 @app.get("/health")

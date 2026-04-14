@@ -5,7 +5,6 @@ from .. import models, schemas
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
-import bcrypt
 import hashlib
 
 def get_db():
@@ -15,33 +14,21 @@ def get_db():
     finally:
         db.close()
 
-# bcrypt truncation fix: we manually SHA256 the password before bcrypt
-# and use the raw bcrypt library to bypass passlib's buggy bug-detection.
-def _get_safe_password(password: str) -> str:
-    """Returns a SHA256 hex digest of the password for safe bcrypt hashing."""
-    return hashlib.sha256(password.encode('utf-8')).hexdigest().encode('utf-8')
-
 def hash_password(password: str) -> str:
-    salt = bcrypt.gensalt()
-    # Use SHA256 digest as input to bcrypt
-    hashed = bcrypt.hashpw(_get_safe_password(password), salt)
-    return hashed.decode('utf-8')
+    # Einfacher Hash ohne externe bcrypt oder passlib Abhängigkeiten
+    salt = "owre_salt_"
+    return hashlib.sha256((salt + password).encode('utf-8')).hexdigest()
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    try:
-        # Try the new SHA256 pattern first
-        safe_p = _get_safe_password(plain_password)
-        h = hashed_password.encode('utf-8')
-        if bcrypt.checkpw(safe_p, h):
-            return True
-    except:
-        pass
+    # Vergleiche neuen Hash
+    if hash_password(plain_password) == hashed_password:
+        return True
     
-    # Fallback for old plain-bcrypt entries if any
-    try:
-        return bcrypt.checkpw(plain_password[:72].encode('utf-8'), hashed_password.encode('utf-8'))
-    except:
-        return False
+    # Fallback für etwaige alte ungesalzene Plain-SHA256 Hashes
+    if hashlib.sha256(plain_password.encode('utf-8')).hexdigest() == hashed_password:
+        return True
+        
+    return False
 
 @router.post("/register", response_model=schemas.User)
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
