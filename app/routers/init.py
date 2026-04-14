@@ -2,21 +2,9 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from ..database import SessionLocal
 from .. import models
-from passlib.context import CryptContext
+from .users import hash_password, get_db
 
 router = APIRouter(prefix="/init", tags=["Initialization"])
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
 
 @router.post("/seed-data")
 def seed_database(db: Session = Depends(get_db)):

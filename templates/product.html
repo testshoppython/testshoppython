@@ -32,7 +32,7 @@
     </div>
     
     <div class="product-info">
-      <span class="category-badge">{{ product.category.name if product?.category else 'Aufbewahrung' }}</span>
+      <span class="category-badge">{{ product.category.name if product.category else 'Aufbewahrung' }}</span>
       <h1>{{ product.name if product else 'Produktname' }}</h1>
       
       <!-- Bewertungen (Amazon-Style) -->

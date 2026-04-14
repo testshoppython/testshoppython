@@ -2,12 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from ..database import SessionLocal
 from .. import models, schemas
-from passlib.context import CryptContext
-from datetime import datetime
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+import bcrypt
+import hashlib
 
 def get_db():
     db = SessionLocal()
@@ -16,11 +15,33 @@ def get_db():
     finally:
         db.close()
 
+# bcrypt truncation fix: we manually SHA256 the password before bcrypt
+# and use the raw bcrypt library to bypass passlib's buggy bug-detection.
+def _get_safe_password(password: str) -> str:
+    """Returns a SHA256 hex digest of the password for safe bcrypt hashing."""
+    return hashlib.sha256(password.encode('utf-8')).hexdigest().encode('utf-8')
+
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    salt = bcrypt.gensalt()
+    # Use SHA256 digest as input to bcrypt
+    hashed = bcrypt.hashpw(_get_safe_password(password), salt)
+    return hashed.decode('utf-8')
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    return pwd_context.verify(plain_password, hashed_password)
+    try:
+        # Try the new SHA256 pattern first
+        safe_p = _get_safe_password(plain_password)
+        h = hashed_password.encode('utf-8')
+        if bcrypt.checkpw(safe_p, h):
+            return True
+    except:
+        pass
+    
+    # Fallback for old plain-bcrypt entries if any
+    try:
+        return bcrypt.checkpw(plain_password[:72].encode('utf-8'), hashed_password.encode('utf-8'))
+    except:
+        return False
 
 @router.post("/register", response_model=schemas.User)
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):

@@ -1,7 +1,7 @@
 <header class="site-header">
   <div class="top-bar">
     <span>Kostenloser Versand ab €50 | 30 Tage Rückgaberecht</span>
-    <a href="/shop/login">Mein Konto</a>
+    <a href="/shop/login" class="auth-link">Mein Konto</a>
   </div>
   <div class="nav-bar">
     <!-- Logo Block -->
@@ -17,6 +17,8 @@
         <a href="/">Home</a>
         <a href="/shop/products">Shop</a>
         <a href="/shop/cart">Warenkorb</a>
+        <a href="/shop/orders" class="user-only" style="display:none;">Bestellungen</a>
+        <a href="/shop/admin" class="admin-only" style="display:none;">Admin</a>
         <a href="/info/impressum">Impressum</a>
       </nav>
     </div>
@@ -24,11 +26,28 @@
     <!-- Header Actions Block -->
     <div class="header-actions-block">
       <button class="search-btn" title="Suchen">🔍</button>
-      <a href="/shop/login" class="btn-ghost" title="Mein Konto">👤</a>
+      <a href="/shop/login" class="btn-ghost auth-link" title="Mein Konto">👤</a>
       <a href="/shop/cart" class="cart-icon" title="Warenkorb">
         🛒
         <span class="badge" id="cart-badge">0</span>
       </a>
+    </div>
+    
+    <!-- Professional Search Overlay -->
+    <div id="search-overlay" class="search-overlay">
+      <div class="search-modal-content">
+        <div class="search-header">
+          <span class="search-label">Produktsuche</span>
+          <button id="close-search" class="close-search">&times;</button>
+        </div>
+        <div class="search-input-wrapper">
+          <input type="text" id="search-input" placeholder="" autocomplete="off">
+        </div>
+        <div class="search-tips">
+          Tipp: Such nach Artikeln, Kategorien, Marken
+        </div>
+        <div id="quick-results" class="quick-results"></div>
+      </div>
     </div>
   </div>
 </header>

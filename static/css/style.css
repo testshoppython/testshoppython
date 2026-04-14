@@ -89,12 +89,16 @@ img {
 
 /* ===== HEADER & NAVIGATION ===== */
 .site-header {
-  background: rgba(255, 255, 255, 0.98);
+  background: #ffffff !important;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 2000;
   border-bottom: 1px solid var(--border);
   transition: all 0.3s ease;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .site-header.scrolled {
@@ -334,13 +338,9 @@ img {
 
 /* ===== HERO SECTION ===== */
 .hero {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-2xl);
-  padding: var(--spacing-3xl) var(--spacing-xl);
   max-width: var(--container-max);
   margin: 0 auto;
-  align-items: center;
+  padding: var(--spacing-3xl) var(--spacing-xl);
 }
 
 .hero-content h1 {
@@ -1180,9 +1180,15 @@ img {
 
 /* ===== GARDEN/PRODUCTS PAGE ===== */
 .product-page .garden-hero {
-  background: var(--bg-secondary);
+  background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), url('/static/images/room_001.png');
+  background-size: cover;
+  background-position: center;
   padding: var(--spacing-3xl) var(--spacing-xl);
   border-bottom: 1px solid var(--border);
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .garden-hero-copy {
@@ -1318,9 +1324,14 @@ img {
 }
 
 .hero {
-  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/static/images/hero-bg.jpg');
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/static/images/hero-bg.jpg');
   background-size: cover;
   background-position: center;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .site-footer {
@@ -1378,10 +1389,11 @@ img {
 }
 
 .logo-image {
-  height: 100px;
+  max-height: 50px;
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
+  display: block;
 }
 
 .logo-image:hover {
@@ -1393,4 +1405,98 @@ img {
   .logo-image {
     height: 40px;
   }
+}
+
+/* ===== SEARCH OVERLAY (PROFESSIONAL) ===== */
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  z-index: 3000;
+  display: none;
+  animation: slideFromTop 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: var(--shadow-md);
+  padding: 4rem 0;
+}
+
+.search-overlay.active {
+  display: block;
+}
+
+.search-modal-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+}
+
+.search-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.search-label {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-weight: 400;
+}
+
+.search-input-wrapper {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+#search-input {
+  width: 100%;
+  border: none !important;
+  outline: none !important;
+  font-size: 1.25rem;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: transparent;
+  padding: 0;
+}
+
+#search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-tips {
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-top: 0.5rem;
+  font-family: var(--font-body);
+}
+
+.close-search {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.close-search:hover {
+  color: var(--text-primary);
+}
+
+.quick-results {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+@keyframes slideFromTop {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
