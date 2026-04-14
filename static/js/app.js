@@ -322,55 +322,83 @@ class AdminManager {
     const stats = document.getElementById('admin-stats');
     if (!stats) return;
     try {
-      const res = await fetch(`${this.apiBase}/init/check-data`);
+      const res = await fetch(`${this.apiBase}/admin/stats`);
       const d = await res.json();
-      stats.innerHTML = `<p>Produkte: ${d.products} | Bestellungen: ${d.orders} | Nutzer: ${d.users}</p>`;
-    } catch (e) { stats.innerHTML = 'Fehler'; }
+      stats.innerHTML = `
+        <div class="admin-stats-grid">
+            <div class="stat-card"><h4>Produkte</h4><div class="value">${d.total_products}</div></div>
+            <div class="stat-card"><h4>Nutzer</h4><div class="value">${d.total_users}</div></div>
+            <div class="stat-card"><h4>Bestellungen</h4><div class="value">${d.total_orders}</div></div>
+            <div class="stat-card"><h4>Umsatz</h4><div class="value">€${d.total_revenue.toFixed(2)}</div></div>
+        </div>
+      `;
+    } catch (e) { stats.innerHTML = 'Fehler beim Laden der Statistiken'; }
   }
 
   async loadAllProducts() {
     const list = document.getElementById('admin-products-list');
     if (!list) return;
     try {
-      const res = await fetch(`${this.apiBase}/products/`);
+      const res = await fetch(`${this.apiBase}/admin/products`);
       const pList = await res.json();
       list.innerHTML = pList.map(p => `
-        <div class="admin-item" style="display:flex; justify-content:space-between; margin-bottom:0.5rem; padding:0.5rem; background:#f9f9f9; border-radius:8px;">
-          <span>${p.name} - €${p.price.toFixed(2)}</span>
-          <button onclick="admin.deleteProduct(${p.id})" style="background:none; border:none; cursor:pointer;">🗑️</button>
+        <div class="admin-item">
+          <span>${p.name} - <span style="color:var(--accent);">€${p.price.toFixed(2)}</span> (Lager: ${p.stock})</span>
+          <button onclick="admin.deleteProduct(${p.id})" class="delete-btn" title="Löschen">🗑️</button>
         </div>
       `).join('');
-    } catch (e) { list.innerHTML = 'Fehler'; }
+    } catch (e) { list.innerHTML = 'Fehler beim Laden der Produkte'; }
   }
 
   async loadAllOrders() {
     const list = document.getElementById('admin-orders-list');
     if (!list) return;
     try {
-      const res = await fetch(`${this.apiBase}/orders/`);
-      const oList = await res.json();
-      list.innerHTML = oList.map(o => `
-        <div class="admin-item" style="padding:0.5rem; background:#f9f9f9; border-radius:8px; margin-bottom:0.5rem;">
-          <strong>#${o.order_number}</strong> (${o.status}) - €${o.total_price.toFixed(2)}
+      const res = await fetch(`${this.apiBase}/admin/orders/revenue`);
+      const data = await res.json();
+      list.innerHTML = `
+        <div class="stat-card" style="margin-bottom:1rem;">
+            <h4>Gesamtumsatz (Bezahlt)</h4>
+            <div class="value">€${data.total_revenue.toFixed(2)}</div>
+            <p class="small-note">${data.total_orders} Bestellungen gesamt</p>
         </div>
-      `).join('');
-    } catch (e) { list.innerHTML = 'Fehler'; }
+      `;
+    } catch (e) { list.innerHTML = 'Fehler beim Laden der Bestellungen'; }
   }
 
   async deleteProduct(id) {
-    if (!confirm('Löschen?')) return;
-    const res = await fetch(`${this.apiBase}/products/${id}`, { method: 'DELETE' });
-    if (res.ok) { auth.toast('Gelöscht', 'info'); this.loadAllProducts(); }
+    if (!confirm('Produkt wirklich löschen?')) return;
+    const res = await fetch(`${this.apiBase}/admin/products/${id}`, { 
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
+    });
+    if (res.ok) { auth.toast('🗑️ Produkt gelöscht', 'info'); this.loadAllProducts(); this.loadStats(); }
   }
 
-  async addProduct(data) {
-    const res = await fetch(`${this.apiBase}/products/`, {
+  async addProduct(formData) {
+    const res = await fetch(`${this.apiBase}/admin/products`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+      },
+      body: formData
     });
-    if (!res.ok) throw new Error('Fehler');
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || 'Fehler beim Erstellen');
+    }
     return await res.json();
+  }
+
+  async loadCategoriesDropdown() {
+    const select = document.getElementById('product-category');
+    if (!select) return;
+    try {
+      const res = await fetch(`${this.apiBase}/products/categories/`);
+      const cats = await res.json();
+      select.innerHTML = '<option value="" disabled selected>Kategorie wählen...</option>' + 
+        cats.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    } catch (e) { console.error('Kategorien konnten nicht geladen werden', e); }
   }
 }
 
@@ -533,20 +561,31 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (document.getElementById('admin-products-list')) {
     if (!auth.user?.is_admin) { window.location.href = '/'; return; }
-    admin.loadStats(); admin.loadAllProducts(); admin.loadAllOrders();
+    admin.loadStats(); admin.loadAllProducts(); admin.loadAllOrders(); admin.loadCategoriesDropdown();
     const form = document.getElementById('admin-product-form');
     if (form) form.onsubmit = async (e) => {
       e.preventDefault();
       try {
-        await admin.addProduct({
-          name: document.getElementById('product-name').value,
-          description: document.getElementById('product-description').value,
-          price: parseFloat(document.getElementById('product-price').value),
-          stock: parseInt(document.getElementById('product-stock').value),
-          category_id: parseInt(document.getElementById('product-category').value)
-        });
-        auth.toast('✅ Produkt erstellt', 'success'); form.reset(); admin.loadAllProducts(); admin.loadStats();
-      } catch (e) { auth.toast('Fehler', 'error'); }
+        const formData = new FormData();
+        formData.append('name', document.getElementById('product-name').value);
+        formData.append('description', document.getElementById('product-description').value);
+        formData.append('price', document.getElementById('product-price').value);
+        formData.append('stock', document.getElementById('product-stock').value);
+        formData.append('category_id', document.getElementById('product-category').value);
+        
+        const imageFile = document.getElementById('product-image').files[0];
+        if (imageFile) {
+            formData.append('file', imageFile);
+        }
+
+        await admin.addProduct(formData);
+        auth.toast('✅ Produkt erfolgreich erstellt', 'success'); 
+        form.reset(); 
+        admin.loadAllProducts(); 
+        admin.loadStats();
+      } catch (err) { 
+        auth.toast(`Error: ${err.message}`, 'error'); 
+      }
     };
   }
 

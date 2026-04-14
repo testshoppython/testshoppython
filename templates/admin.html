@@ -50,8 +50,11 @@
                         </div>
                     </div>
                     <div class="input-group">
-                        <label for="product-category">{{ i18n.t('product_category') }}</label>
-                        <input type="number" id="product-category" placeholder="Category ID" required>
+                        <label for="product-category">Kategorie</label>
+                        <select id="product-category" required>
+                            <option value="" disabled selected>Kategorie wählen...</option>
+                            <!-- Dynamisch geladen -->
+                        </select>
                     </div>
                     <div class="input-group">
                         <label for="product-image">{{ i18n.t('product_image') }}</label>

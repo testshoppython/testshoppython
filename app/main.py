@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request, Depends
+from fastapi.openapi.utils import get_openapi
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -16,7 +17,25 @@ app = FastAPI(
     title="OWRE - Premium Storage Solutions",
     description="Premium Aufbewahrungslösungen mit FastAPI und SQLite",
     version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+    redoc_js_url="https://cdn.jsdelivr.net/npm/redoc@2.0.0-rc.77/bundles/redoc.standalone.js",
 )
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title=app.title,
+        version=app.version,
+        description=app.description,
+        routes=app.routes,
+        openapi_version="3.0.3",
+    )
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
 
 app.add_middleware(
     CORSMiddleware,
