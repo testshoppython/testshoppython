@@ -4,28 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OWRE - Premium Aufbewahrungslösungen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="top-bar">
-            <span>Kostenloser Versand ab €50 | 30 Tage Rückgaberecht</span>
-            <a href="/shop/login">Mein Konto</a>
-        </div>
-        <div class="nav-bar">
-            <div class="logo">OWRE</div>
-            <nav class="menu">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/shop/orders">Bestellungen</a>
-            </nav>
-            <div class="header-actions">
-                <button class="search-btn">🔍</button>
-                <a href="/shop/cart" class="cart-icon">🛒</a>
-            </div>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <main>
         <section class="hero">
@@ -36,9 +21,6 @@
                     <a href="/shop/products" class="btn-primary">Jetzt shoppen</a>
                     <a href="#categories" class="btn-secondary btn-ghost">Kategorien entdecken</a>
                 </div>
-            </div>
-            <div class="hero-image">
-                <img src="/static/images/hero-storage.jpg" alt="OWRE Aufbewahrungskorb" loading="lazy">
             </div>
         </section>
 
@@ -104,29 +86,7 @@
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>OWRE</h4>
-                <p>Premium Aufbewahrungslösungen für Ihr Zuhause.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Shop</h4>
-                <a href="/shop/products">Alle Produkte</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/shop/orders">Bestellungen</a>
-            </div>
-            <div class="footer-section">
-                <h4>Service</h4>
-                <a href="/shop/login">Mein Konto</a>
-                <a href="/shop/register">Registrieren</a>
-                <a href="/info/imprint">Impressum</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 OWRE. Alle Rechte vorbehalten.</p>
-        </div>
-    </footer>
+    {% include "footer.html" %}
 
     <script src="/static/js/app.js"></script>
 </body>

@@ -4,28 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mein Konto | OWRE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="top-bar">
-            <span>Kostenloser Versand ab €50 | 30 Tage Rückgaberecht</span>
-            <a href="/shop/login">Mein Konto</a>
-        </div>
-        <div class="nav-bar">
-            <div class="logo">OWRE</div>
-            <nav class="menu">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/shop/login">Mein Konto</a>
-            </nav>
-            <div class="header-actions">
-                <button class="search-btn">🔍</button>
-                <a href="/shop/cart" class="cart-icon">🛒</a>
-            </div>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <main class="page-content">
         <section class="page-hero compact">
@@ -36,10 +21,11 @@
             </div>
             <div class="form-card">
                 <h2>Login</h2>
+                <!-- login.html – Formular -->
                 <form id="login-form">
                     <div class="input-group">
-                        <label for="email">E-Mail</label>
-                        <input type="email" id="email" required>
+                        <label for="username_or_email">E‑Mail oder Benutzername</label>
+                        <input type="text" id="username_or_email" required>
                     </div>
                     <div class="input-group">
                         <label for="password">Passwort</label>
@@ -72,23 +58,7 @@
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>OWRE</h4>
-                <p>Premium Aufbewahrungslösungen für dein Zuhause.</p>
-            </div>
-            <div class="footer-section">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/info/impressum">Impressum</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 OWRE. Alle Rechte vorbehalten.</p>
-        </div>
-    </footer>
+    {% include "footer.html" %}
 
     <script src="/static/js/app.js"></script>
 </body>

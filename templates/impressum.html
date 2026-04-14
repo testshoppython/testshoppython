@@ -4,20 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Impressum | OWRE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="nav-bar">
-            <div class="logo">OWRE</div>
-            <nav class="menu">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/shop/login">Mein Konto</a>
-            </nav>
-        </div>
-    </header>
+    {% include "header.html" %}
 
     <main class="page-content">
         <section class="page-hero compact">
@@ -28,7 +21,7 @@
             </div>
         </section>
 
-        <section class="panel-grid">
+        <section class="panel-impressum">
             <div class="panel">
                 <h2>Betreiber</h2>
                 <p>OWRE GmbH</p>
@@ -60,13 +53,7 @@
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div>
-            <h4>OWRE</h4>
-            <p>Premium Aufbewahrungslösungen für dein Zuhause.</p>
-            <a href="/info/impressum" class="btn-outline">Impressum</a>
-        </div>
-    </footer>
+    {% include "footer.html" %}
 
     <script src="/static/js/app.js"></script>
 </body>

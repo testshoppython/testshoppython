@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Versandinformationen | OWRE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {% include "header.html" %}
+    <main class="page-content">
+        <section class="page-hero compact">
+            <div>
+                <span class="eyebrow">Versand</span>
+                <h1>Versandinformationen</h1>
+                <p>Alles Wichtige zu Lieferzeiten, Versandkosten und Sendungsverfolgung.</p>
+            </div>
+        </section>
+        
+        <section class="panel-grid" style="grid-template-columns: 1fr;">
+            <div class="panel">
+                <h2>Lieferzeiten & Versandarten</h2>
+                <div class="panel-content">
+                    <h3>Standardversand (DHL)</h3>
+                    <p><strong>Lieferzeit:</strong> 2-3 Werktage</p>
+                    <p><strong>Kosten:</strong> €5,99 (kostenlos ab €50 Bestellwert)</p>
+                    <p>Die Lieferung erfolgt werktags zwischen 8:00 und 18:00 Uhr.</p>
+                    
+                    <h3 style="margin-top: 2rem;">Expressversand (DHL Express)</h3>
+                    <p><strong>Lieferzeit:</strong> 1 Werktag (bei Bestellung bis 14:00 Uhr)</p>
+                    <p><strong>Kosten:</strong> €9,99</p>
+                    <p>Lieferung von Montag bis Samstag.</p>
+                    
+                    <h3 style="margin-top: 2rem;">Speditionslieferung</h3>
+                    <p>Bei besonders großen oder schweren Artikeln erfolgt die Lieferung per Spedition.</p>
+                    <p><strong>Lieferzeit:</strong> 5-7 Werktage</p>
+                    <p><strong>Kosten:</strong> Wird im Checkout berechnet</p>
+                    <p>Die Lieferung erfolgt bis zur Bordsteinkante.</p>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Sendungsverfolgung</h2>
+                <div class="panel-content">
+                    <p>Nachdem Ihre Bestellung versandt wurde, erhalten Sie eine E-Mail mit Ihrer Sendungsnummer. Damit können Sie Ihre Lieferung online verfolgen:</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+                        <li>DHL Sendungsverfolgung: <a href="https://www.dhl.de" target="_blank" style="color: var(--accent);">www.dhl.de</a></li>
+                        <li>Alternativ können Sie sich auch in Ihrem Kundenkonto einloggen und den Status Ihrer Bestellung einsehen.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Lieferadresse</h2>
+                <div class="panel-content">
+                    <p>Wir liefern ausschließlich innerhalb Deutschlands und Österreichs.</p>
+                    <p style="margin-top: 1rem;"><strong>Wichtig:</strong> Eine Lieferung an Packstationen ist nicht möglich.</p>
+                    <p>Bitte stellen Sie sicher, dass die Lieferadresse korrekt ist. Nachträgliche Änderungen sind nur begrenzt möglich.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include "footer.html" %}
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

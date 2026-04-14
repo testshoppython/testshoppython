@@ -1,107 +1,56 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warenkorb | OWRE</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warenkorb | OWRE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="top-bar">
-            <span>Kostenloser Versand ab €50 | 30 Tage Rückgaberecht</span>
-            <a href="/shop/login">Mein Konto</a>
+  {% include "header.html" %}
+  <main class="page-content">
+    <section class="page-hero compact">
+      <div>
+        <span class="eyebrow">Warenkorb</span>
+        <h1>Dein Warenkorb</h1>
+        <p>Überprüfe deine Artikel, passe Mengen an und fahre mit der Bestellung fort.</p>
+      </div>
+    </section>
+
+    <section class="panel-grid">
+      <div class="panel">
+        <h2>Artikel im Warenkorb</h2>
+        <!-- WICHTIG: Dieser Container wird vom JS dynamisch befüllt -->
+        <div id="cart-items" class="panel-content">
+          <p class="small-note">Warenkorb wird geladen...</p>
         </div>
-        <div class="nav-bar">
-            <div class="logo">OWRE</div>
-            <nav class="menu">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/cart">Warenkorb</a>
-                <a href="/shop/login">Mein Konto</a>
-            </nav>
-            <div class="header-actions">
-                <button class="search-btn">🔍</button>
-                <a href="/shop/cart" class="cart-icon">🛒</a>
-            </div>
+      </div>
+
+      <div class="panel summary-panel">
+        <h2>Bestellübersicht</h2>
+        <div class="panel-content">
+          <p>Zwischensumme: <strong class="subtotal">€0.00</strong></p>
+          <p>Versand: <strong class="shipping">wird berechnet...</strong></p>
+          <hr style="margin: 1rem 0; border: 0; border-top: 1px solid var(--border);">
+          <p>Gesamt: <strong class="total" style="font-size: 1.25rem; color: var(--accent-dark);">€0.00</strong></p>
+          <button class="btn-primary" id="checkout" style="width: 100%; margin-top: 1.5rem;">Zur Kasse</button>
+          <p class="small-note" style="text-align: center; margin-top: 1rem;">Kostenloser Versand ab €50</p>
         </div>
-    </header>
+      </div>
+    </section>
 
-    <main class="page-content">
-        <section class="page-hero compact">
-            <div>
-                <span class="eyebrow">Warenkorb</span>
-                <h1>Dein Warenkorb</h1>
-                <p>Überprüfe deine Artikel, passe Mengen an und fahre mit der Bestellung fort.</p>
-            </div>
-        </section>
-
-        <section class="panel-grid">
-            <div class="panel">
-                <h2>Artikel im Warenkorb</h2>
-                <div id="cart-items" class="panel-content">
-                    <div class="product-card">
-                        <div class="content">
-                            <h3>Produktname Platzhalter</h3>
-                            <p>Beschreibung des Produkts oder Variante.</p>
-                            <p class="price">€29,90</p>
-                            <button class="btn-outline">Entfernen</button>
-                        </div>
-                    </div>
-                    <p class="small-note">Der Warenkorb ist noch leer, wenn hier nichts angezeigt wird.</p>
-                </div>
-            </div>
-
-            <div class="panel summary-panel">
-                <h2>Bestellübersicht</h2>
-                <div class="panel-content">
-                    <p>Zwischensumme: <strong>€0.00</strong></p>
-                    <p>Versand: <strong>€0.00</strong></p>
-                    <p>Gesamt: <strong>€0.00</strong></p>
-                    <button class="btn-primary" id="checkout">Zur Kasse</button>
-                </div>
-            </div>
-        </section>
-
-        <section class="usp-section">
-            <div class="usp-grid">
-                <div class="usp-item">
-                    <span>🚚</span>
-                    <h3>Kostenloser Versand</h3>
-                    <p>Ab €50 Bestellwert.</p>
-                </div>
-                <div class="usp-item">
-                    <span>🔄</span>
-                    <h3>30 Tage Rückgabe</h3>
-                    <p>Risikofrei einkaufen.</p>
-                </div>
-                <div class="usp-item">
-                    <span>🌱</span>
-                    <h3>Nachhaltig</h3>
-                    <p>Umweltfreundliche Materialien.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>OWRE</h4>
-                <p>Premium Aufbewahrungslösungen für dein Zuhause.</p>
-            </div>
-            <div class="footer-section">
-                <a href="/">Home</a>
-                <a href="/shop/products">Shop</a>
-                <a href="/shop/login">Mein Konto</a>
-                <a href="/info/impressum">Impressum</a>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2026 OWRE. Alle Rechte vorbehalten.</p>
-        </div>
-    </footer>
-
-    <script src="/static/js/app.js"></script>
+    <section class="usp-section">
+      <div class="usp-grid">
+        <div class="usp-item"><span>🚚</span><h3>Kostenloser Versand</h3><p>Ab €50 Bestellwert.</p></div>
+        <div class="usp-item"><span>🔄</span><h3>30 Tage Rückgabe</h3><p>Risikofrei einkaufen.</p></div>
+        <div class="usp-item"><span>🌱</span><h3>Nachhaltig</h3><p>Umweltfreundliche Materialien.</p></div>
+      </div>
+    </section>
+  </main>
+  {% include "footer.html" %}
+  <script src="/static/js/app.js"></script>
 </body>
 </html>

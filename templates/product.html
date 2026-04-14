@@ -1,31 +1,124 @@
+<!-- Ersetze den gesamten product.html-Inhalt durch: -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produktdetails | OWRE</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ product.name if product else 'Produkt' }} | OWRE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    {% include "header.html" %}
+{% include "header.html" %}
 
-    <main class="page-content">
-        <section class="page-hero compact">
-            <div>
-                <span class="eyebrow">Produktdetails</span>
-                <h1>Produktinformation</h1>
-                <p>Hier findest du alle Details zu deinem ausgewählten Produkt.</p>
-            </div>
-        </section>
+<main class="page-content product-page">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Startseite</a> › 
+    <a href="/shop/products">Shop</a> › 
+    <span>{{ product.name if product else 'Produkt' }}</span>
+  </nav>
 
-        <section class="product-detail">
-            <div id="product-detail" class="product-detail-card">
-                <p class="small-note">Produkt wird geladen …</p>
-            </div>
-        </section>
-    </main>
+  <!-- Produkt-Hero: Bild + Info (Amazon-Layout) -->
+  <section class="product-hero">
+    <div class="product-gallery">
+      <img id="main-image" src="{{ product.image_url if product else '/static/images/baskets_001.png' }}" 
+           alt="{{ product.name if product else 'Produktbild' }}" class="main-image">
+      <div class="thumbnail-strip">
+        <!-- Weitere Bilder dynamisch -->
+        <img src="{{ product.image_url if product else '/static/images/baskets_001.png' }}" 
+             class="thumbnail active" onclick="changeMainImage(this.src)">
+      </div>
+    </div>
+    
+    <div class="product-info">
+      <span class="category-badge">{{ product.category.name if product?.category else 'Aufbewahrung' }}</span>
+      <h1>{{ product.name if product else 'Produktname' }}</h1>
+      
+      <!-- Bewertungen (Amazon-Style) -->
+      <div class="rating">
+        <span class="stars">★★★★☆</span>
+        <span class="count">(128 Bewertungen)</span>
+      </div>
+      
+      <!-- Preis-Block -->
+      <div class="price-block">
+        <span class="current-price">€{{ "%.2f"|format(product.price) if product else '0.00' }}</span>
+        {% if product and product.original_price %}
+          <span class="original-price">€{{ "%.2f"|format(product.original_price) }}</span>
+          <span class="discount">−{{ ((1 - product.price/product.original_price)*100)|int }}%</span>
+        {% endif %}
+      </div>
+      
+      <!-- Lagerbestand -->
+      <p class="stock {% if product and product.stock < 5 %}low-stock{% endif %}">
+        {% if product %}
+          {% if product.stock > 10 %}
+            ✅ Auf Lager – Versand in 1-2 Werktagen
+          {% elif product.stock > 0 %}
+            ⚠️ Nur noch {{ product.stock }} auf Lager
+          {% else %}
+            ❌ Nicht vorrätig
+          {% endif %}
+        {% else %}
+          ℹ️ Verfügbarkeit wird geprüft...
+        {% endif %}
+      </p>
+      
+      <!-- Aktionen -->
+      <div class="action-buttons">
+        <button class="btn-primary add-to-cart-btn" 
+                data-product-id="{{ product.id if product else '' }}"
+                {% if product and product.stock <= 0 %}disabled{% endif %}>
+          🛒 {{ i18n.t('add_to_cart') }}
+        </button>
+        <button class="btn-secondary">❤️ Auf Merkzettel</button>
+      </div>
+      
+      <!-- Trust-Badges -->
+      <ul class="trust-badges">
+        <li>🚚 Kostenloser Versand ab €50</li>
+        <li>🔄 30 Tage Rückgaberecht</li>
+        <li>🔒 Sicher bezahlen</li>
+      </ul>
+      
+      <!-- Kurzbeschreibung -->
+      <div class="short-description">
+        <p>{{ product.description if product else 'Produktbeschreibung folgt...' }}</p>
+      </div>
+    </div>
+  </section>
 
-    {% include "footer.html" %}
-    <script src="/static/js/app.js"></script>
+  <!-- Details-Tabs -->
+  <section class="product-details">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="description">Beschreibung</button>
+      <button class="tab-btn" data-tab="specs">Produktdetails</button>
+      <button class="tab-btn" data-tab="reviews">Bewertungen</button>
+    </div>
+    <div class="tab-content active" id="description">
+      <p>{{ product.description if product else 'Ausführliche Beschreibung...' }}</p>
+    </div>
+  </section>
+</main>
+
+{% include "footer.html" %}
+<script src="/static/js/app.js"></script>
+<script>
+// Mini-Skript für Bild-Galerie & Tabs
+function changeMainImage(src) {
+  document.getElementById('main-image').src = src;
+  document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  };
+});
+</script>
 </body>
 </html>

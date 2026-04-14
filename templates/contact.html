@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt | OWRE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {% include "header.html" %}
+    <main class="page-content">
+        <section class="page-hero compact">
+            <div>
+                <span class="eyebrow">Kontakt</span>
+                <h1>Wir sind für Sie da</h1>
+                <p>Haben Sie Fragen? Kontaktieren Sie uns gerne.</p>
+            </div>
+        </section>
+        
+        <section class="panel-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="panel">
+                <h2>Kontaktinformationen</h2>
+                <div class="panel-content">
+                    <p><strong>OWRE GmbH</strong><br>
+                    Musterstraße 12<br>
+                    10115 Berlin<br>
+                    Deutschland</p>
+                    
+                    <p style="margin-top: 1.5rem;">
+                    📧 E-Mail: <a href="mailto:service@owre.shop" style="color: var(--accent);">service@owre.shop</a><br>
+                    📞 Telefon: +49 30 12345678<br>
+                    🕐 Öffnungszeiten: Mo-Fr 9:00 - 17:00 Uhr
+                    </p>
+                    
+                    <p style="margin-top: 1.5rem;"><strong>Antwortzeit:</strong> Wir antworten in der Regel innerhalb von 24 Stunden.</p>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Nachricht senden</h2>
+                <div class="panel-content">
+                    <form>
+                        <div class="input-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="email">E-Mail</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="subject">Betreff</label>
+                            <input type="text" id="subject" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="message">Nachricht</label>
+                            <textarea id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Nachricht senden</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% include "footer.html" %}
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
