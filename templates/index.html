@@ -11,15 +11,16 @@
 </head>
 <body>
     {% include "header.html" %}
-
     <main>
         <section class="hero">
             <div class="hero-content">
-                <h1>Premium Aufbewahrung für Ihr Zuhause</h1>
-                <p>Entdecken Sie unsere stilvollen Aufbewahrungslösungen – von Körben bis zu Boxen in skandinavischer Eleganz.</p>
-                <div class="hero-actions">
-                    <a href="/shop/products" class="btn-primary">Jetzt shoppen</a>
-                    <a href="#categories" class="btn-secondary btn-ghost">Kategorien entdecken</a>
+                <div class="panel-content">
+                    <h1>Premium Aufbewahrung für Ihr Zuhause</h1>
+                    <p>Entdecken Sie unsere stilvollen Aufbewahrungslösungen – von Körben bis zu Boxen in skandinavischer Eleganz.</p>
+                    <div class="hero-actions">
+                        <a href="/shop/products" class="btn-primary">Jetzt shoppen</a>
+                        <a href="#categories" class="btn-secondary btn-ghost">Kategorien entdecken</a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -30,26 +31,33 @@
                 <p>Finden Sie die perfekte Lösung für Ihre Aufbewahrungsbedürfnisse.</p>
             </div>
             <div class="categories-grid">
+                <!-- Kategorie 1: Aufbewahrungskörbe -->
                 <article class="category-card">
-                    <img src="/static/images/category-baskets.jpg" alt="Aufbewahrungskörbe">
+                    <img src="/static/images/baskets_001.png" alt="Aufbewahrungskörbe">
                     <h3>Aufbewahrungskörbe</h3>
                     <p>Stilvolle Körbe für jeden Raum.</p>
                     <a href="/shop/products" class="btn-outline">Entdecken</a>
                 </article>
+
+                <!-- Kategorie 2: Aufbewahrungsboxen -->
                 <article class="category-card">
-                    <img src="/static/images/category-boxes.jpg" alt="Aufbewahrungsboxen">
+                    <img src="/static/images/baskets_002.png" alt="Aufbewahrungsboxen">
                     <h3>Aufbewahrungsboxen</h3>
                     <p>Praktische Boxen mit Deckel.</p>
                     <a href="/shop/products" class="btn-outline">Entdecken</a>
                 </article>
+
+                <!-- Kategorie 3: Organizer -->
                 <article class="category-card">
-                    <img src="/static/images/category-organizers.jpg" alt="Organizer">
+                    <img src="/static/images/room_001.png" alt="Organizer">
                     <h3>Organizer</h3>
                     <p>Schubladen und Regale für Ordnung.</p>
                     <a href="/shop/products" class="btn-outline">Entdecken</a>
                 </article>
+
+                <!-- Kategorie 4: Zubehör -->
                 <article class="category-card">
-                    <img src="/static/images/category-accessories.jpg" alt="Zubehör">
+                    <img src="/static/images/baskets_003.png" alt="Zubehör">
                     <h3>Zubehör</h3>
                     <p>Labels und weitere Helfer.</p>
                     <a href="/shop/products" class="btn-outline">Entdecken</a>
@@ -85,9 +93,7 @@
             </div>
         </section>
     </main>
-
     {% include "footer.html" %}
-
     <script src="/static/js/app.js"></script>
 </body>
 </html>
