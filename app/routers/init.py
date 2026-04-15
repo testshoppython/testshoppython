@@ -43,7 +43,7 @@ def seed_database(db: Session = Depends(get_db)):
         },
         {
             "name": "OWRE Storage Lux - Große Variante",
-            "description": "Elegante große Aufbewahrungsbox mit hochwertigen Griffen und stabilem Rahmen. Ideal zur Aufbewahrung von Decken, Accessoires oder Spielzeug.",
+            "description": "Elegante große Aufbewahrungsbox mit hochwertigen Griffen und stabilem Rahmen. Ideal zur Aufbewahrung von Decken, Zubehör oder Spielzeug.",
             "price": 59.99,
             "stock": 40,
             "category_id": categories[0].id,

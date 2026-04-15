@@ -29,7 +29,7 @@ TRANSLATIONS: Dict[str, Dict[str, str]] = {
         
         # General
         "brand_name": "OWRE",
-        "brand_tagline": "Premium Aufbewahrungslösungen für dein Zuhause",
+        "brand_tagline": "Premium Aufbewahrungslösungen für Ihr Zuhause",
         "currency": "€",
         "language": "Sprache",
         

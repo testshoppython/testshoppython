@@ -182,7 +182,7 @@ class CartManager {
     const container = document.getElementById('cart-items');
     if (!container) return;
     if (!this.cart?.items.length) {
-      container.innerHTML = `<p class="empty-cart">🛒 Dein Warenkorb ist leer.<br><a href="/shop/products" class="btn-secondary">Weiter einkaufen</a></p>`;
+      container.innerHTML = `<p class="empty-cart">🛒 Ihr Warenkorb ist leer.<br><a href="/shop/products" class="btn-secondary">Weiter einkaufen</a></p>`;
       return;
     }
     container.innerHTML = this.cart.items.map(item => `
@@ -627,6 +627,35 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const checkoutBtn = document.getElementById('checkout');
   if (checkoutBtn) checkoutBtn.onclick = () => cart.placeOrder();
+
+  // Mobile Menu Logic
+  const mobileToggle = document.getElementById('mobile-menu-toggle');
+  const navLinks = document.querySelector('.nav-links-block');
+  const menuIconPath = document.getElementById('menu-icon-path');
+
+  if (mobileToggle && navLinks) {
+    mobileToggle.addEventListener('click', () => {
+      const isActive = navLinks.classList.toggle('mobile-active');
+      
+      // Toggle Icon between Hamburger and Close (X)
+      if (isActive) {
+        menuIconPath.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+      } else {
+        menuIconPath.setAttribute('d', 'M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // Close menu when clicking on a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('mobile-active');
+        menuIconPath.setAttribute('d', 'M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5');
+        document.body.style.overflow = '';
+      });
+    });
+  }
 
   await cart.loadCart(); cart.updateUI();
 });

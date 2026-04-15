@@ -244,6 +244,22 @@ img {
   display: flex;
 }
 
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+  z-index: 2100;
+}
+
+.mobile-menu-toggle:hover {
+  color: var(--accent);
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 968px) {
   .nav-bar {
@@ -263,14 +279,63 @@ img {
 
 @media (max-width: 768px) {
   .nav-bar {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto auto; /* Logo | Toggle | Actions */
     gap: var(--spacing-sm);
+    padding: 1rem 1.5rem;
   }
   
+  .mobile-menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    order: 2;
+  }
+
+  .header-actions-block {
+    order: 3;
+    gap: 0.75rem;
+  }
+
+  .logo-block {
+    order: 1;
+  }
+
   .nav-links-block {
-    display: none; /* Mobile: Navigation ausblenden oder Hamburger-Menü */
+    position: fixed;
+    top: -100%; /* Gestartet außerhalb des Sichtfelds oben */
+    left: 0;
+    width: 100%;
+    height: auto;
+    background: #ffffff;
+    z-index: 1999;
+    padding: 6rem 2rem 3rem;
+    box-shadow: var(--shadow-md);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex !important; /* Immer flex, aber durch Position gesteuert */
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .nav-links-block.mobile-active {
+    top: 0;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    align-items: flex-start;
   }
   
+  .menu a {
+    font-size: 1.1rem;
+    width: 100%;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
   .logo {
     font-size: 1.5rem;
   }
