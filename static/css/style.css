@@ -20,8 +20,10 @@
   --shadow-lg: 0 16px 48px rgba(0,0,0,0.12);
   
   /* Typografie */
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Montserrat', sans-serif;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
   
   /* Abstände */
   --spacing-xs: 0.5rem;
@@ -49,6 +51,7 @@ html {
 
 body {
   font-family: var(--font-body);
+  font-weight: var(--font-weight-light);
   font-size: 1rem;
   line-height: 1.7;
   color: var(--text-primary);
@@ -391,7 +394,8 @@ img {
 
 .categories-section,
 .products-section,
-.usp-section {
+.usp-section,
+.container {
   padding: var(--spacing-3xl) var(--spacing-xl);
   max-width: var(--container-max);
   margin: 0 auto;
@@ -1363,6 +1367,11 @@ img {
   padding: 1rem 2rem;
   margin: 0;
   line-height: 1.8;
+}
+
+.hero-content .eyebrow {
+    color: #ffffff;
+    opacity: 0.9;
 }
 
 .hero-content h1 {
