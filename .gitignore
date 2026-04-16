@@ -1,0 +1,19 @@
+# Environment Variables (Secrets)
+.env
+
+# Database
+*.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE & Tools
+.gemini/
+.vscode/
+.idea/
+
+# Temp & Scratch
+scratch/
+temp/

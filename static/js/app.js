@@ -270,13 +270,17 @@ class ProductManager {
     const searchQuery = urlParams.get('search') || urlParams.get('q');
     
     try {
+      const timestamp = new Date().getTime();
       const endpoint = searchQuery 
-        ? `${API_BASE}/products/?search=${encodeURIComponent(searchQuery)}`
-        : `${API_BASE}/products/`;
+        ? `${API_BASE}/products/?search=${encodeURIComponent(searchQuery)}&_t=${timestamp}`
+        : `${API_BASE}/products/?_t=${timestamp}`;
       
+      console.log(`Fetching products from: ${endpoint}`);
       const res = await fetch(endpoint);
       this.allProducts = await res.json();
+      console.log('Products loaded:', this.allProducts.length);
       this.render();
+
       this.initFilters();
       
       if (searchQuery) {
@@ -426,7 +430,50 @@ class AdminManager {
         cats.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
     } catch (e) { console.error('Kategorien konnten nicht geladen werden', e); }
   }
+
+  async loadNewsletterSubscribers() {
+    const tbody = document.getElementById('subscribers-table-body');
+    if (!tbody) return;
+    try {
+      const res = await fetch(`${this.apiBase}/admin/newsletter/subscribers`, {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
+      });
+      const subs = await res.json();
+      if (!subs.length) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Keine Abonnenten gefunden.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = subs.map(s => `
+        <tr>
+          <td>${s.email}</td>
+          <td><span class="small-note">${s.interests || '-'}</span></td>
+          <td>${new Date(s.created_at).toLocaleDateString()}</td>
+          <td>
+            <button onclick="admin.deleteSubscriber(${s.id})" class="btn-ghost" style="color:red; padding:2px 5px;" title="Löschen">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+    } catch (e) { 
+        console.error('Newsletter konnten nicht geladen werden', e);
+        tbody.innerHTML = '<tr><td colspan="4">Fehler beim Laden.</td></tr>';
+    }
+  }
+
+  async deleteSubscriber(id) {
+    if (!confirm('Abonnent wirklich löschen?')) return;
+    try {
+      const res = await fetch(`${this.apiBase}/admin/newsletter/subscribers/${id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
+      });
+      if (res.ok) {
+        auth.toast('Abonnent gelöscht', 'info');
+        this.loadNewsletterSubscribers();
+      }
+    } catch (e) { auth.toast('Fehler beim Löschen', 'error'); }
+  }
 }
+
 
 // === 4. SEARCH-MANAGER ===
 class SearchManager {
@@ -653,10 +700,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, 500);
   }
 
-  if (document.getElementById('admin-products-list')) {
+  if (document.getElementById('admin-newsletter-list')) {
     if (!auth.user?.is_admin) { window.location.href = '/'; return; }
-    admin.loadStats(); admin.loadAllProducts(); admin.loadAllOrders(); admin.loadCategoriesDropdown();
+    
+    // Initial data load
+    admin.loadStats(); 
+    admin.loadAllProducts(); 
+    admin.loadAllOrders(); 
+    admin.loadCategoriesDropdown();
+    admin.loadNewsletterSubscribers();
+
+    // Admin Tabs Logic
+    const tabs = document.querySelectorAll('.profile-tab');
+    const contents = document.querySelectorAll('.profile-tab-content');
+    tabs.forEach(tab => {
+        tab.onclick = () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(tc => tc.classList.remove('active'));
+            tab.classList.add('active');
+            const target = document.getElementById(`tab-${tab.dataset.tab}`);
+            if (target) target.classList.add('active');
+        };
+    });
+
+
     const form = document.getElementById('admin-product-form');
+
+
     if (form) form.onsubmit = async (e) => {
       e.preventDefault();
       try {
@@ -787,6 +857,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     };
   }
+
+  // Active Link Highlighting Logic
+  const currentPath = window.location.pathname;
+  const navLinksList = document.querySelectorAll('.menu a');
+  navLinksList.forEach(link => {
+    const linkPath = link.getAttribute('href');
+    if (linkPath === currentPath) {
+      link.classList.add('active');
+    } else if (currentPath.startsWith('/shop/product') && linkPath === '/shop/products') {
+        // Highlight 'Shop' if on a product detail page
+        link.classList.add('active');
+    }
+  });
 
   await cart.loadCart(); cart.updateUI();
 });

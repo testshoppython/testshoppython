@@ -328,3 +328,21 @@ def clear_all_data(confirm: str = None, db: Session = Depends(get_db)):
     db.commit()
     
     return {"detail": "All data deleted"}
+
+# ===== NEWSLETTER MANAGEMENT =====
+
+@router.get("/newsletter/subscribers")
+def list_newsletter_subscribers(db: Session = Depends(get_db)):
+    """List all newsletter subscribers"""
+    return db.query(models.NewsletterSubscriber).order_by(models.NewsletterSubscriber.created_at.desc()).all()
+
+@router.delete("/newsletter/subscribers/{sub_id}")
+def delete_subscriber(sub_id: int, db: Session = Depends(get_db)):
+    """Delete a subscriber"""
+    sub = db.query(models.NewsletterSubscriber).filter(models.NewsletterSubscriber.id == sub_id).first()
+    if not sub:
+        raise HTTPException(status_code=404, detail="Subscriber not found")
+    db.delete(sub)
+    db.commit()
+    return {"status": "deleted"}
+

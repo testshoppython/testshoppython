@@ -189,13 +189,16 @@ img {
   transition: width 0.3s ease;
 }
 
-.menu a:hover {
+.menu a:hover,
+.menu a.active {
   color: var(--accent);
 }
 
-.menu a:hover::after {
+.menu a:hover::after,
+.menu a.active::after {
   width: 100%;
 }
+
 
 /* Header Actions Block */
 .header-actions-block {
@@ -2085,11 +2088,6 @@ img {
 }
 
 /* ===== ADMIN DASHBOARD PREMIUM STYLES ===== */
-
-.admin-grid {
-  gap: 2rem;
-  align-items: start;
-}
 
 .admin-form {
   display: flex;

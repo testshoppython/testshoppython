@@ -55,8 +55,9 @@ def seed_database(db: Session = Depends(get_db)):
             "price": 69.99,
             "stock": 30,
             "category_id": categories[0].id,
-            "image_url": "/static/images/room_001.png"
+            "image_url": "/static/images/room_boxes.png"
         },
+
         # Kleine Aufbewahrungskörbe
         {
             "name": "OWRE Mini Korb Set (2er)",
@@ -72,8 +73,9 @@ def seed_database(db: Session = Depends(get_db)):
             "price": 34.99,
             "stock": 75,
             "category_id": categories[1].id,
-            "image_url": "/static/images/room_002.png"
+            "image_url": "/static/images/compact_organizer.png"
         },
+
         # Stoff-Behälter
         {
             "name": "OWRE Stoff-Container Premium",
@@ -98,16 +100,18 @@ def seed_database(db: Session = Depends(get_db)):
             "price": 129.99,
             "stock": 25,
             "category_id": categories[3].id,
-            "image_url": "/static/images/room_001.png"
+            "image_url": "/static/images/cat_boxes.jpg"
         },
+
         {
             "name": "OWRE Family Bundle 6-teilig",
             "description": "Großes Bundle mit 6 Aufbewahrungsboxen in verschiedenen Größen und Farben. Ideal für Familien.",
             "price": 189.99,
             "stock": 15,
             "category_id": categories[3].id,
-            "image_url": "/static/images/room_002.png"
+            "image_url": "/static/images/cat_all.png"
         },
+
         # Zubehör
         {
             "name": "OWRE Griffe Premium Set",

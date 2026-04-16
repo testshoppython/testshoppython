@@ -21,56 +21,108 @@
             </div>
         </section>
 
-        <section class="grid-list admin-grid container">
-            <div class="panel">
-                <h2>{{ i18n.t('statistics') }}</h2>
-                <div id="admin-stats" class="panel-content">
-                    <p class="small-note">Lade Daten …</p>
-                </div>
-            </div>
-            <div class="panel">
-                <h2>{{ i18n.t('add_product') }}</h2>
-                <form id="admin-product-form" class="panel-content admin-form">
-                    <div class="input-group">
-                        <label for="product-name">{{ i18n.t('product_name') }}</label>
-                        <input type="text" id="product-name" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="product-description">{{ i18n.t('product_description') }}</label>
-                        <textarea id="product-description" rows="3" required></textarea>
-                    </div>
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label for="product-price">{{ i18n.t('product_price') }}</label>
-                            <input type="number" id="product-price" step="0.01" required>
+        <section class="container" style="padding-top: 4rem; padding-bottom: 4rem;">
+            <div class="profile-layout">
+                <!-- Sidebar -->
+                <aside class="profile-sidebar">
+                    <nav class="profile-nav">
+                        <button class="profile-tab active" data-tab="stats">
+                            <span class="material-icons" style="font-size: 1.2rem; vertical-align: middle; margin-right: 8px;">insights</span> {{ i18n.t('statistics') }}
+                        </button>
+                        <button class="profile-tab" data-tab="products">
+                            <span class="material-icons" style="font-size: 1.2rem; vertical-align: middle; margin-right: 8px;">inventory_2</span> {{ i18n.t('add_product') }}
+                        </button>
+                        <button class="profile-tab" data-tab="orders">
+                            <span class="material-icons" style="font-size: 1.2rem; vertical-align: middle; margin-right: 8px;">shopping_bag</span> Bestellungen 
+                        </button>
+                        <button class="profile-tab" data-tab="newsletter">
+                            <span class="material-icons" style="font-size: 1.2rem; vertical-align: middle; margin-right: 8px;">mail</span> Newsletter
+                        </button>
+                    </nav>
+                </aside>
+
+                <!-- Content Area -->
+                <div class="profile-content-area">
+                    
+                    <!-- Statistics Tab -->
+                    <div id="tab-stats" class="profile-tab-content active">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">{{ i18n.t('statistics') }}</h2>
+                        <div id="admin-stats">
+                            <p class="small-note">Lade Daten …</p>
                         </div>
-                        <div class="input-group">
-                            <label for="product-stock">{{ i18n.t('product_stock') }}</label>
-                            <input type="number" id="product-stock" required>
+                    </div>
+
+                    <!-- Products Tab -->
+                    <div id="tab-products" class="profile-tab-content">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Produkte verwalten</h2>
+                        <div class="panel" style="background:#fff; border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin-bottom: 2rem;">
+                            <h3 style="font-size: 1.1rem; margin-bottom: 1.5rem;">{{ i18n.t('add_product') }}</h3>
+                            <form id="admin-product-form" class="admin-form">
+                                <div class="input-group">
+                                    <label for="product-name">{{ i18n.t('product_name') }}</label>
+                                    <input type="text" id="product-name" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="product-description">{{ i18n.t('product_description') }}</label>
+                                    <textarea id="product-description" rows="3" required></textarea>
+                                </div>
+                                <div class="input-row">
+                                    <div class="input-group">
+                                        <label for="product-price">{{ i18n.t('product_price') }}</label>
+                                        <input type="number" id="product-price" step="0.01" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="product-stock">{{ i18n.t('product_stock') }}</label>
+                                        <input type="number" id="product-stock" required>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="product-category">Kategorie</label>
+                                    <select id="product-category" required>
+                                        <option value="" disabled selected>Kategorie wählen...</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label for="product-image">{{ i18n.t('product_image') }}</label>
+                                    <input type="file" id="product-image" accept="image/*">
+                                </div>
+                                <button class="btn-primary" type="submit" style="width: 100%;">{{ i18n.t('add_product') }}</button>
+                            </form>
+                        </div>
+                        <div id="admin-products-list">
+                            <p class="small-note">Lade Produkte …</p>
                         </div>
                     </div>
-                    <div class="input-group">
-                        <label for="product-category">Kategorie</label>
-                        <select id="product-category" required>
-                            <option value="" disabled selected>Kategorie wählen...</option>
-                            <!-- Dynamisch geladen -->
-                        </select>
+                    
+                    <!-- Orders Tab -->
+                    <div id="tab-orders" class="profile-tab-content">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Bestellungen verwalten</h2>
+                        <div id="admin-orders-list">
+                            <p class="small-note">Lade Bestellungen …</p>
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <label for="product-image">{{ i18n.t('product_image') }}</label>
-                        <input type="file" id="product-image" accept="image/*">
+
+                    <!-- Newsletter Tab -->
+                    <div id="tab-newsletter" class="profile-tab-content">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Newsletter Abonnenten</h2>
+                        <div id="admin-newsletter-list">
+                            <div class="table-responsive">
+                                <table class="admin-table">
+                                    <thead>
+                                        <tr>
+                                            <th>E-Mail</th>
+                                            <th>Interessen</th>
+                                            <th>Datum</th>
+                                            <th>Aktion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="subscribers-table-body">
+                                        <!-- Dynamisch geladen -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <button class="btn-primary" type="submit">{{ i18n.t('add_product') }}</button>
-                </form>
-                <div id="admin-products-list" class="panel-content">
-                    <p class="small-note">Lade Produkte …</p>
-                </div>
-            </div>
-            
-            <div class="panel">
-                <h2>Bestellungen verwalten</h2>
-                <div id="admin-orders-list" class="panel-content">
-                    <p class="small-note">Lade Bestellungen …</p>
                 </div>
             </div>
         </section>
