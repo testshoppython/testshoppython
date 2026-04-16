@@ -34,6 +34,13 @@ class Settings(BaseSettings):
     # Render.com
     render_deployment: bool = os.getenv("RENDER", "False").lower() == "true"
     
+    # Brevo Newsletter
+    brevo_api_key: Optional[str] = os.getenv("BREVO_API_KEY")
+    
+    # Stripe Payments
+    stripe_secret_key: Optional[str] = os.getenv("STRIPE_SECRET_KEY")
+    stripe_publishable_key: Optional[str] = os.getenv("STRIPE_PUBLISHABLE_KEY", "pk_test_...")
+    
     class Config:
         env_file = ".env"
         case_sensitive = False

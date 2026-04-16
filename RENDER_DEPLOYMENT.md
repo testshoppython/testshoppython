@@ -69,6 +69,9 @@ DATABASE_URL: postgresql://testshop_user:PASSWORD@HOSTNAME:5432/testshop
 ENVIRONMENT: production
 SECRET_KEY: your-secret-key-min-32-chars
 DEBUG: false
+STRIPE_SECRET_KEY: sk_live_... (optional)
+STRIPE_PUBLISHABLE_KEY: pk_live_... (optional)
+BREVO_API_KEY: xkeysib-... (optional)
 ```
 
 **Wichtig**: Copy-paste die `Database URL` von der PostgreSQL Service Seite!
@@ -299,7 +302,3 @@ pg_dump -U <user> -h <host> <database> > backup.sql
 - **FastAPI Docs**: https://fastapi.tiangolo.com
 - **SQLAlchemy Docs**: https://docs.sqlalchemy.org
 - **PostgreSQL Docs**: https://www.postgresql.org/docs/
-
----
-
-**Viel Erfolg beim Deployment! 🚀**

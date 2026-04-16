@@ -1,3 +1,6 @@
+<!-- Google Material Icons -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 <header class="site-header">
   <div class="top-bar">
     <span>Kostenloser Versand ab €50 | 30 Tage Rückgaberecht</span>
@@ -26,7 +29,7 @@
         <a href="/shop/products">Shop</a>
         <a href="/info/about">Über uns</a>
         <!--<a href="/shop/cart">Warenkorb</a>-->
-        <a href="/shop/orders" class="user-only" style="display:none;">Bestellungen</a>
+        <a href="/shop/profile" class="user-only" style="display:none;">Mein Konto</a>
         <a href="/shop/admin" class="admin-only" style="display:none;">Admin</a>
         <a href="/info/impressum">Impressum</a>
       </nav>
@@ -34,10 +37,14 @@
 
     <!-- Header Actions Block -->
     <div class="header-actions-block">
-      <button class="search-btn" title="Suchen">🔍</button>
-      <a href="/shop/login" class="btn-ghost auth-link" title="Mein Konto">👤</a>
+      <button class="search-btn" title="Suchen">
+        <span class="material-icons">search</span>
+      </button>
+      <a href="/shop/login" class="btn-ghost auth-link" title="Mein Konto">
+        <span class="material-icons">person</span>
+      </a>
       <a href="/shop/cart" class="cart-icon" title="Warenkorb">
-        🛒
+        <span class="material-icons">shopping_cart</span>
         <span class="badge" id="cart-badge">0</span>
       </a>
     </div>

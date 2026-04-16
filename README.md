@@ -18,7 +18,13 @@ OWRE steht für Ästhetik, Funktionalität und Wertschätzung des Handwerks. Der
 *   **"Über uns" Seite:** Detaillierte Mission und Hintergrundgeschichte der Marke.
 *   **Premium Shopping Cart:** Mit Vertrauens-Elementen ("Wusstest du schon?") und Up-Selling-Vorschlägen.
 *   **Inspirations-Fokus:** Storytelling-Blöcke direkt im Produkt-Grid und auf Detailseiten.
-*   **Advanced Newsletter:** Anmeldung mit Interessen-Auswahl (Double-Opt-In-Logik vorbereitet).
+*   **Mobile Optimierung:** Vollständig responsives Premium-Design, optimiert für Touch-Bedienung.
+
+### 🛍️ Checkout & Kunden-Dashboard
+*   **Stripe Integration:** Sichere Abwicklung von Bezahlvorgängen (Kreditkarte, Apple Pay, Klarna etc.) über Stripe Checkout Sessions.
+*   **Kunden-Profil (`/shop/profile`):** Übersichtliches Dashboard zur Verwaltung von Bestellungen und Sicherheitseinstellungen (Passwortänderung).
+*   **PDF Rechnungen:** Vollautomatische on-the-fly Generierung stilvoller und DSGVO-konformer PDF-Rechnungen (über `fpdf2`).
+*   **Brevo Newsletter:** Nahtlose API-Anbindung an Brevo, um Kunden-Abonnements asynchron im Hintergrund zu synchronisieren.
 
 ### 🛠️ Admin-Funktionen (`/shop/admin`)
 *   **Produkt-Management 2.0:** Vollständiger Bild-Upload vom Computer direkt auf den Server.
@@ -92,6 +98,3 @@ templates/               # Jinja2 Layouts (Mediterranean Theme)
 *   **ORM:** SQLAlchemy 2.0
 *   **Frontend:** Vanilla Javascript, Jinja2 Templates, Custom Modern CSS
 *   **Optimierung:** ReDoc fixiert auf OAS 3.0.3 für maximale Stabilität.
-
----
-*Created with ❤️ by Antigravity for OWRE.*

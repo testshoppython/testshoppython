@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mein Konto | OWRE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {% include "header.html" %}
+
+    <main class="page-content bg-light" style="padding: 4rem 0;">
+        <div class="container container-md">
+            <!-- Header -->
+            <div class="profile-header">
+                <div>
+                    <h1 style="color: var(--text-primary); font-size: 2.25rem;">Willkommen zurück!</h1>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem;" id="profile-greeting">Ihr persönliches Dashboard.</p>
+                </div>
+                <button onclick="auth.logout()" class="btn-secondary" style="border-radius: 4px;">Abmelden</button>
+            </div>
+
+            <!-- Dashboard Layout -->
+            <div class="profile-layout">
+                <!-- Sidebar -->
+                <aside class="profile-sidebar">
+                    <nav class="profile-nav">
+                        <button class="profile-tab active" data-tab="orders">Meine Bestellungen</button>
+                        <button class="profile-tab" data-tab="settings">Kontoeinstellungen</button>
+                    </nav>
+                </aside>
+
+                <!-- Content Area -->
+                <div class="profile-content-area">
+                    
+                    <!-- Orders Tab -->
+                    <div id="tab-orders" class="profile-tab-content active">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Letzte Bestellungen</h2>
+                        <div id="profile-orders-list">
+                            <p class="small-note">Bestellungen werden geladen...</p>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div id="tab-settings" class="profile-tab-content">
+                        <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Sicherheit</h2>
+                        <div class="panel" style="background:#fff; border: 1px solid var(--border); border-radius: 8px; padding: 2rem;">
+                            <h3 style="font-size: 1.1rem; margin-bottom: 1.5rem;">Passwort ändern</h3>
+                            <form id="password-change-form">
+                                <div class="input-group">
+                                    <label>Aktuelles Passwort</label>
+                                    <input type="password" id="pw-current" required>
+                                </div>
+                                <div class="input-group">
+                                    <label>Neues Passwort</label>
+                                    <input type="password" id="pw-new" required minlength="6">
+                                </div>
+                                <div class="input-group">
+                                    <label>Neues Passwort bestätigen</label>
+                                    <input type="password" id="pw-new-confirm" required minlength="6">
+                                </div>
+                                <button type="submit" class="btn-primary" style="margin-top: 1rem; width: 100%;">Passwort aktualisieren</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include "footer.html" %}
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

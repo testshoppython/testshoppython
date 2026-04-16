@@ -72,6 +72,36 @@ curl http://localhost:8000/users/profile/1
 curl http://localhost:8000/admin/stats
 ```
 
+### 11. Newsletter abonnieren (Brevo)
+```bash
+curl -X POST http://localhost:8000/newsletter/subscribe \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "kunde@example.de",
+    "interests": ["living", "news"]
+  }'
+```
+
+### 12. Stripe Checkout Session erstellen
+```bash
+curl -X POST "http://localhost:8000/payment/create-checkout-session?user_id=1"
+```
+
+### 13. PDF Rechnung herunterladen
+```bash
+curl -O -J http://localhost:8000/orders/1/invoice
+```
+
+### 14. Benutzer-Passwort ändern (Profil)
+```bash
+curl -X PUT http://localhost:8000/users/profile/1/password \
+  -H "Content-Type: application/json" \
+  -d '{
+    "current_password": "sicheres_passwort",
+    "new_password": "neues_sicheres_passwort"
+  }'
+```
+
 ## Shop Workflow Beispiel
 
 ### Kunde kauft Produkt

@@ -74,6 +74,10 @@ class UserUpdate(BaseModel):
     firstname: Optional[str] = None
     lastname: Optional[str] = None
     phone: Optional[str] = None
+    
+class UserUpdatePassword(BaseModel):
+    current_password: str
+    new_password: str
 
 class User(UserBase):
     id: int
@@ -151,3 +155,8 @@ class Order(OrderBase):
 # Order Update Schema
 class OrderUpdate(BaseModel):
     status: str
+
+# Newsletter
+class NewsletterSubscribeRequest(BaseModel):
+    email: EmailStr
+    interests: Optional[List[str]] = []

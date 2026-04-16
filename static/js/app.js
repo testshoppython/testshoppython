@@ -163,18 +163,42 @@ class CartManager {
     if (!auth.isLoggedIn()) { auth.toast('⚠️ Bitte einloggen', 'warning'); return; }
     await this.loadCart();
     if (!this.cart?.items.length) return;
+    
+    // Check selected payment method from UI if we are on cart page
+    let pm = 'Credit Card';
+    const checkedPm = document.querySelector('input[name="payment_method"]:checked');
+    if (checkedPm) { pm = checkedPm.value; }
+
+    const btn = document.getElementById('checkout');
+    if(btn) { btn.textContent = 'Lädt...'; btn.disabled = true; }
+
     try {
+      // 1. Try Stripe Checkout
+      const stripeRes = await fetch(`${this.apiBase}/payment/create-checkout-session?user_id=${this.userId}`, { method: 'POST' });
+      if (stripeRes.ok) {
+         const data = await stripeRes.json();
+         if (data.checkout_url) {
+             window.location.href = data.checkout_url;
+             return;
+         }
+      }
+      
+      // 2. Fallback to direct order if Stripe is not configured
       const res = await fetch(`${this.apiBase}/orders/?user_id=${this.userId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ payment_method: 'Credit Card', shipping_address_id: null })
+        body: JSON.stringify({ payment_method: pm, shipping_address_id: null })
       });
       if (!res.ok) throw new Error('Bestellung fehlgeschlagen');
+      
       await this.loadCart();
       this.updateUI();
-      auth.toast('🎉 Bestellung erfolgreich!', 'success');
-      setTimeout(() => window.location.href = '/shop/orders', 1500);
-    } catch (err) { auth.toast('Fehler', 'error'); }
+      auth.toast('🎉 Bestellung (Test) erfolgreich!', 'success');
+      setTimeout(() => window.location.href = '/shop/profile', 1500);
+    } catch (err) { 
+      auth.toast('Fehler beim Bezahlen', 'error'); 
+      if(btn) { btn.textContent = 'Sicher bezahlen'; btn.disabled = false; }
+    }
   }
 
   updateUI() {
@@ -276,8 +300,10 @@ class ProductManager {
           <p>${p.description ? p.description.substring(0, 100) + '...' : ''}</p>
           <p class="price">€${p.price.toFixed(2)}</p>
           <div class="card-actions">
-            <button class="btn-primary add-to-cart-btn" data-product-id="${p.id}">🛒 In den Warenkorb</button>
             <a href="/shop/product?id=${p.id}" class="btn-secondary">Details</a>
+            <button class="btn-primary add-to-cart-btn" data-product-id="${p.id}">
+              <span class="material-icons" style="font-size: 1.1rem; vertical-align: middle; margin-right: 4px;">shopping_cart</span> In den Warenkorb
+            </button>
           </div>
         </div>
       </article>
@@ -538,14 +564,82 @@ document.addEventListener('DOMContentLoaded', async () => {
   auth.updateUI();
   products.load();
 
-  if (document.getElementById('orders-list')) {
-    try {
-      const res = await fetch(`${API_BASE}/orders/user/${auth.getUserId()}`);
-      const oList = await res.json();
-      document.getElementById('orders-list').innerHTML = oList.length 
-        ? oList.map(o => `<div class="order-card" style="padding:1rem; border:1px solid #eee; border-radius:12px; margin-bottom:1rem;"><strong>#${o.order_number}</strong> - ${o.status} - €${o.total_price.toFixed(2)}</div>`).join('')
-        : '<p>Noch keine Bestellungen.</p>';
-    } catch (e) { }
+  // Profile Page Logic
+  if (document.getElementById('profile-orders-list')) {
+      if (!auth.isLoggedIn()) {
+          window.location.href = '/shop/login';
+          return;
+      }
+      
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('success') === 'true') {
+          auth.toast('🎉 Zahlung erfolgreich! Ihre Bestellung wird bearbeitet.', 'success');
+          window.history.replaceState({}, document.title, "/shop/profile");
+      }
+      
+      const greeting = document.getElementById('profile-greeting');
+      if(greeting && auth.user) greeting.textContent = `${auth.user.firstname || auth.user.username}, verwalten Sie hier Ihre Daten.`;
+
+      // Tabs Logic
+      const tabs = document.querySelectorAll('.profile-tab');
+      const tabsContent = document.querySelectorAll('.profile-tab-content');
+      tabs.forEach(tab => {
+          tab.onclick = () => {
+              tabs.forEach(t => t.classList.remove('active'));
+              tabsContent.forEach(tc => tc.classList.remove('active'));
+              tab.classList.add('active');
+              document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
+          };
+      });
+
+      // Load Orders
+      try {
+        const res = await fetch(`${API_BASE}/orders/user/${auth.getUserId()}`);
+        const oList = await res.json();
+        document.getElementById('profile-orders-list').innerHTML = oList.length 
+          ? oList.map(o => `
+            <div class="order-card" style="padding:1.5rem; background:#fff; border:1px solid var(--border); border-radius:12px; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <strong style="font-size:1.1rem;">#${o.order_number}</strong>
+                    <div style="color:var(--text-muted); font-size:0.9rem; margin-top:0.25rem;">
+                        Status: <span style="color:var(--accent-dark); font-weight:500;">${o.status.toUpperCase()}</span> | Total: €${o.total_price.toFixed(2)}
+                    </div>
+                </div>
+                <a href="${API_BASE}/orders/${o.id}/invoice" target="_blank" class="btn-secondary" style="font-size:0.8rem; padding:0.5rem 1rem;">📄 PDF Rechnung</a>
+            </div>`).join('')
+          : '<p>Noch keine Bestellungen.</p>';
+      } catch (e) { }
+      
+      // Password Change Logic
+      const pwForm = document.getElementById('password-change-form');
+      if (pwForm) {
+          pwForm.onsubmit = async (e) => {
+              e.preventDefault();
+              const current = document.getElementById('pw-current').value;
+              const newPw = document.getElementById('pw-new').value;
+              const confirmPw = document.getElementById('pw-new-confirm').value;
+              
+              if (newPw !== confirmPw) {
+                  auth.toast('Passwörter stimmen nicht überein.', 'warning');
+                  return;
+              }
+              
+              try {
+                  const res = await fetch(`${API_BASE}/users/profile/${auth.getUserId()}/password`, {
+                      method: 'PUT',
+                      headers: {'Content-Type': 'application/json'},
+                      body: JSON.stringify({ current_password: current, new_password: newPw })
+                  });
+                  if (res.ok) {
+                      auth.toast('✅ Passwort geändert!', 'success');
+                      pwForm.reset();
+                  } else {
+                      const err = await res.json();
+                      auth.toast(`❌ Fehler: ${err.detail}`, 'error');
+                  }
+              } catch(err) { auth.toast('Netzwerkfehler', 'error'); }
+          };
+      }
   }
 
   // Home Page Specific Logic: Limit to 4 products
@@ -655,6 +749,43 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.body.style.overflow = '';
       });
     });
+  }
+
+  // Newsletter Logic
+  const newsletterForm = document.getElementById('newsletter-form');
+  if (newsletterForm) {
+    newsletterForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('newsletter-email').value;
+      const checkboxes = newsletterForm.querySelectorAll('input[name="interest"]:checked');
+      const interests = Array.from(checkboxes).map(cb => cb.value);
+      
+      const btn = newsletterForm.querySelector('.newsletter-submit-btn');
+      const originalText = btn.textContent;
+      btn.textContent = 'Wird gesendet...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API_BASE}/newsletter/subscribe`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, interests })
+        });
+        
+        if (res.ok) {
+          auth.toast('✨ Erfolgreich angemeldet! Bitte checken Sie Ihre E-Mails.', 'success');
+          newsletterForm.reset();
+        } else {
+          const err = await res.json();
+          auth.toast(`❌ Fehler: ${err.detail || 'Newsletter-Anmeldung fehlgeschlagen'}`, 'error');
+        }
+      } catch (err) {
+        auth.toast('❌ Netzwerkfehler bei der Anmeldung.', 'error');
+      } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
+    };
   }
 
   await cart.loadCart(); cart.updateUI();

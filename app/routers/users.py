@@ -130,3 +130,21 @@ def delete_address(address_id: int, db: Session = Depends(get_db)):
     db.delete(address)
     db.commit()
     return {"detail": "Adresse gelöscht"}
+
+@router.put("/profile/{user_id}/password")
+def update_user_password(
+    user_id: int, 
+    pw_update: schemas.UserUpdatePassword, 
+    db: Session = Depends(get_db)
+):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User nicht gefunden")
+        
+    if not verify_password(pw_update.current_password, user.hashed_password):
+        raise HTTPException(status_code=400, detail="Altes Passwort ist nicht korrekt.")
+        
+    user.hashed_password = hash_password(pw_update.new_password)
+    db.add(user)
+    db.commit()
+    return {"detail": "Passwort erfolgreich geändert."}

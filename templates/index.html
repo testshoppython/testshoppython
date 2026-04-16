@@ -109,7 +109,7 @@
                     <h2>Werden Sie Teil der OWRE-Community</h2>
                     <p>Melden Sie sich an und erhalten Sie exklusive Einblicke in unsere Manufakturen, Wohntipps für ein mediterranes Zuhause und 10% Willkommensrabatt.</p>
                 </div>
-                <form class="newsletter-form" onsubmit="event.preventDefault(); auth.toast('Vielen Dank! Bitte bestätigen Sie Ihre E-Mail.', 'success');">
+                <form id="newsletter-form" class="newsletter-form">
                     <div class="interest-selection">
                         <p>Ich interessiere mich besonders für:</p>
                         <div class="checkbox-group">
@@ -119,8 +119,8 @@
                         </div>
                     </div>
                     <div class="input-group">
-                        <input type="email" placeholder="Ihre E-Mail-Adresse" required>
-                        <button type="submit" class="btn-primary">Jetzt exklusiv anmelden</button>
+                        <input type="email" id="newsletter-email" placeholder="Ihre E-Mail-Adresse" required>
+                        <button type="submit" class="newsletter-submit-btn btn-primary">Jetzt exklusiv anmelden</button>
                     </div>
                     <p class="dsgvo-note">Durch Absenden erklären Sie sich mit unserer <a href="/info/privacy">Datenschutzerklärung</a> einverstanden. Wir nutzen Double-Opt-In.</p>
                 </form>

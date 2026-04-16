@@ -164,3 +164,23 @@ def get_order_by_number(order_number: str, db: Session = Depends(get_db)):
             detail="Bestellung nicht gefunden"
         )
     return order
+
+from fastapi.responses import Response
+from ..services.pdf_generator import generate_invoice_pdf
+
+@router.get("/{order_id}/invoice")
+def download_invoice(order_id: int, db: Session = Depends(get_db)):
+    order = db.query(models.Order).filter(models.Order.id == order_id).first()
+    if not order:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Bestellung nicht gefunden"
+        )
+        
+    pdf_bytes = generate_invoice_pdf(order, order.items)
+    
+    headers = {
+        'Content-Disposition': f'attachment; filename="Rechnung_OWRE_{order.order_number}.pdf"'
+    }
+    
+    return Response(content=bytes(pdf_bytes), media_type="application/pdf", headers=headers)
