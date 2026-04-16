@@ -193,13 +193,31 @@ class CartManager {
       
       await this.loadCart();
       this.updateUI();
-      auth.toast('🎉 Bestellung (Test) erfolgreich!', 'success');
-      setTimeout(() => window.location.href = '/shop/profile', 1500);
+      
+      // Visual Success Feedback
+      this.showSuccessModal();
+      
     } catch (err) { 
       auth.toast('Fehler beim Bezahlen', 'error'); 
-      if(btn) { btn.textContent = 'Sicher bezahlen'; btn.disabled = false; }
+      if(btn) { btn.textContent = 'Jetzt sicher bestellen'; btn.disabled = false; }
     }
   }
+
+  showSuccessModal() {
+    const modal = document.createElement('div');
+    modal.className = 'success-modal-overlay';
+    modal.style.display = 'flex';
+    modal.innerHTML = `
+      <div class="success-modal-content">
+        <div class="success-icon">✓</div>
+        <h2>Vielen Dank!</h2>
+        <p>Ihre Bestellung wurde erfolgreich entgegengenommen. Ein Stück mediterrane Lebensfreude macht sich bald auf den Weg zu Ihnen.</p>
+        <button class="btn-primary" onclick="window.location.href='/shop/profile'">Zu meinen Bestellungen</button>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+
 
   updateUI() {
     this.updateBadge();
@@ -228,11 +246,18 @@ class CartManager {
   }
 
   calculateTotals() {
-    const subtotalEl = document.querySelector('.summary-panel .subtotal');
-    const totalEl = document.querySelector('.summary-panel .total');
-    const shippingEl = document.querySelector('.summary-panel .shipping');
+    const subtotalEl = document.querySelector('.summary-panel-premium .subtotal');
+    const totalEl = document.querySelector('.summary-panel-premium .total');
+    const shippingEl = document.querySelector('.summary-panel-premium .shipping');
     
-    if (!subtotalEl || !this.cart?.items.length) return;
+    if (!subtotalEl || !this.cart?.items.length) {
+        if (subtotalEl) {
+            subtotalEl.textContent = '€0.00';
+            if (shippingEl) shippingEl.textContent = '€0.00';
+            if (totalEl) totalEl.textContent = '€0.00';
+        }
+        return;
+    }
     
     const subtotal = this.cart.items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
     const shipping = subtotal >= 50 ? 0 : 4.99;
@@ -241,6 +266,7 @@ class CartManager {
     if (shippingEl) shippingEl.textContent = shipping === 0 ? 'kostenlos' : `€${shipping.toFixed(2)}`;
     if (totalEl) totalEl.textContent = `€${(subtotal + shipping).toFixed(2)}`;
   }
+
 
   updateBadge() {
     const badge = document.querySelector('.cart-icon .badge');
@@ -869,6 +895,41 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Highlight 'Shop' if on a product detail page
         link.classList.add('active');
     }
+  });
+
+  // Helper for Product Detail Page
+  window.changeMainImage = (src) => {
+    const mainImg = document.getElementById('main-image');
+    if (mainImg) {
+      mainImg.style.opacity = '0';
+      setTimeout(() => {
+        mainImg.src = src;
+        mainImg.style.opacity = '1';
+      }, 200);
+    }
+    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+    if (event && event.target) event.target.classList.add('active');
+  };
+
+  window.updateQty = (delta) => {
+    const input = document.getElementById('purchase-qty');
+    if (input) {
+      let val = parseInt(input.value) + delta;
+      if (val < 1) val = 1;
+      if (val > 99) val = 99;
+      input.value = val;
+    }
+  };
+
+  // Accordion Logic for Product Detail
+  document.querySelectorAll('.detail-tab-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.detail-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.detail-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const target = document.getElementById(btn.dataset.target);
+      if (target) target.classList.add('active');
+    };
   });
 
   await cart.loadCart(); cart.updateUI();

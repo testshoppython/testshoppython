@@ -4,13 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OWRE - Premium Aufbewahrungslösungen</title>
+    <title>OWRE - Premium Aufbewahrungslösungen & Mediterraner Lifestyle</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Entdecken Sie OWRE: Exklusive Aufbewahrungslösungen aus nachhaltigen Materialien. Verleihen Sie Ihrem Zuhause mediterrane Eleganz und perfekte Ordnung.">
+    <meta name="keywords" content="Aufbewahrung, Korb, Organizer, Wohndesign, Mediterran, Nachhaltig, Einrichten, OWRE">
+    <meta name="author" content="OWRE Lifestyle">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://owre.shop/">
+    <meta property="og:title" content="OWRE - Premium Aufbewahrungslösungen">
+    <meta property="og:description" content="Stilvolle Ordnung für ein schönes Zuhause. Entdecken Sie unsere handgefertigten Körbe und Organizer.">
+    <meta property="og:image" content="https://owre.shop/static/images/hero-bg.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://owre.shop/">
+    <meta property="twitter:title" content="OWRE - Premium Aufbewahrungslösungen">
+    <meta property="twitter:description" content="Stilvolle Ordnung für ein schönes Zuhause. Entdecken Sie unsere handgefertigten Körbe und Organizer.">
+    <meta property="twitter:image" content="https://owre.shop/static/images/hero-bg.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 
 <body>
     {% include "header.html" %}
@@ -52,7 +73,9 @@
             <div class="categories-grid">
                 <!-- Kategorie 1: Aufbewahrungskörbe -->
                 <article class="category-card">
-                    <img src="/static/images/baskets_001.png" alt="Aufbewahrungskörbe">
+                    <div class="category-image-wrapper">
+                        <img src="/static/images/baskets_001.png" alt="Aufbewahrungskörbe">
+                    </div>
                     <h3>Aufbewahrungskörbe</h3>
                     <p>Stilvolle Körbe für jeden Raum.</p>
                     <a href="/shop/products" class="btn-outline">Entdecken</a>
@@ -60,7 +83,9 @@
 
                 <!-- Kategorie 2: Aufbewahrungsboxen -->
                 <article class="category-card">
-                    <img src="/static/images/baskets_002.png" alt="Aufbewahrungsboxen">
+                    <div class="category-image-wrapper">
+                        <img src="/static/images/baskets_002.png" alt="Aufbewahrungsboxen">
+                    </div>
                     <h3>Aufbewahrungsboxen</h3>
                     <p>Praktische Boxen mit Deckel.</p>
                     <a href="/shop/products" class="btn-outline">Entdecken</a>
@@ -68,7 +93,9 @@
 
                 <!-- Kategorie 3: Organizer -->
                 <article class="category-card">
-                    <img src="/static/images/index_cat_organizer.png" alt="Organizer">
+                    <div class="category-image-wrapper">
+                        <img src="/static/images/index_cat_organizer.png" alt="Organizer">
+                    </div>
                     <h3>Organizer</h3>
                     <p>Schubladen und Regale für Ordnung.</p>
                     <a href="/shop/products" class="btn-outline">Entdecken</a>
@@ -76,11 +103,14 @@
 
                 <!-- Kategorie 4: Zubehör -->
                 <article class="category-card">
-                    <img src="/static/images/baskets_003.png" alt="Zubehör">
+                    <div class="category-image-wrapper">
+                        <img src="/static/images/baskets_003.png" alt="Zubehör">
+                    </div>
                     <h3>Zubehör</h3>
                     <p>Labels und weitere Helfer.</p>
                     <a href="/shop/products" class="btn-outline">Entdecken</a>
                 </article>
+
             </div>
         </section>
 

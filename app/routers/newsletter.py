@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, BackgroundTasks
 import httpx
 from sqlalchemy.orm import Session
 from .. import schemas, models
@@ -108,38 +108,60 @@ async def subscribe_newsletter(request: schemas.NewsletterSubscribeRequest, db: 
         db.add(new_sub)
         db.commit()
 
-    # 2. Brevo Contact Sync
-    if settings.brevo_api_key:
-        contact_url = "https://api.brevo.com/v3/contacts"
-        headers = {
-            "accept": "application/json",
-            "content-type": "application/json",
-            "api-key": settings.brevo_api_key
-        }
-        
-        payload = {
-            "email": request.email,
-            "updateEnabled": True,
-            "attributes": {
-                "INTERESTS": ", ".join(request.interests) if request.interests else "None"
-            }
-        }
-        
-        try:
-            async with httpx.AsyncClient() as client:
-                # Sync Contact
-                res_contact = await client.post(contact_url, json=payload, headers=headers)
-                logger.info(f"Brevo Contact Sync: {res_contact.status_code} - {res_contact.text}")
-                
-                # 3. Trigger Welcome Email
-                res_email = await send_welcome_email(request.email)
-                logger.info(f"Brevo Welcome Email Status: {res_email}")
-                
-        except Exception as exc:
-            logger.error(f"Brevo integration error: {exc}")
+async def sync_with_brevo(email: str, interests: list[str]):
+    """Background task to sync contact and send welcome email"""
+    if not settings.brevo_api_key:
+        return
 
-            # We don't fail the whole request if Brevo fails, as long as we saved locally?
-            # Actually, standard behavior is to notify success if at least one worked.
+    contact_url = "https://api.brevo.com/v3/contacts"
+    headers = {
+        "accept": "application/json",
+        "content-type": "application/json",
+        "api-key": settings.brevo_api_key
+    }
+    
+    payload = {
+        "email": email,
+        "updateEnabled": True,
+        "attributes": {
+            "INTERESTS": ", ".join(interests) if interests else "None"
+        }
+    }
+    
+    try:
+        async with httpx.AsyncClient() as client:
+            # Sync Contact
+            res_contact = await client.post(contact_url, json=payload, headers=headers)
+            logger.info(f"Brevo Contact Sync: {res_contact.status_code}")
+            
+            # Trigger Welcome Email
+            res_email = await send_welcome_email(email)
+            logger.info(f"Brevo Welcome Email Status: {res_email}")
+            
+    except Exception as exc:
+        logger.error(f"Brevo integration background error: {exc}")
+
+
+@router.post("/subscribe")
+async def subscribe_newsletter(
+    request: schemas.NewsletterSubscribeRequest, 
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db)
+):
+    # 1. Local Database Save (Immediate)
+    subscriber = db.query(models.NewsletterSubscriber).filter(models.NewsletterSubscriber.email == request.email).first()
+    if not subscriber:
+        new_sub = models.NewsletterSubscriber(
+            email=request.email,
+            interests=", ".join(request.interests) if request.interests else ""
+        )
+        db.add(new_sub)
+        db.commit()
+
+    # 2. Add Brevo Sync to Background Tasks
+    if settings.brevo_api_key:
+        background_tasks.add_task(sync_with_brevo, request.email, request.interests)
 
     return {"message": "Successfully subscribed to the newsletter!"}
+
 

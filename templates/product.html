@@ -19,110 +19,121 @@
     <span>{{ product.name if product else 'Produkt' }}</span>
   </nav>
 
-  <!-- Produkt-Hero: Bild + Info (Amazon-Layout) -->
-  <section class="product-hero">
+  <!-- Produkt-Hero: Bild + Info (Elegant Split Layout) -->
+  <section class="product-hero-elegant container">
     <div class="product-gallery">
-      <img id="main-image" src="{{ product.image_url if product else '/static/images/baskets_001.png' }}" 
-           alt="{{ product.name if product else 'Produktbild' }}" class="main-image">
+      <div class="main-image-wrapper">
+        <img id="main-image" src="{{ product.image_url if product else '/static/images/baskets_001.png' }}" 
+             alt="{{ product.name if product else 'Produktbild' }}" class="main-image fade-in">
+        <div class="image-overlay-badge">{{ product.category.name if product and product.category else 'OWRE Original' }}</div>
+      </div>
       <div class="thumbnail-strip">
-        <!-- Weitere Bilder dynamisch -->
         <img src="{{ product.image_url if product else '/static/images/baskets_001.png' }}" 
              class="thumbnail active" onclick="changeMainImage(this.src)">
+        {% if product and product.category_id == 1 %}
+        <img src="/static/images/room_boxes.png" class="thumbnail" onclick="changeMainImage(this.src)">
+        {% endif %}
       </div>
     </div>
     
-    <div class="product-info">
-      <span class="category-badge">{{ product.category.name if product and product.category else 'Aufbewahrung' }}</span>
-      <h1>{{ product.name if product else 'Produktname' }}</h1>
+    <div class="product-info-premium">
+      <div class="product-meta-top">
+        <span class="eyebrow">{{ product.category.name if product and product.category else 'Kollektion' }}</span>
+        <div class="rating-stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">☆</span>
+          <span class="rating-text">(4.8/5)</span>
+        </div>
+      </div>
+
+      <h1 class="product-title">{{ product.name if product else 'Exklusives Designobjekt' }}</h1>
       
-      <!-- Bewertungen (Amazon-Style) -->
-      <div class="rating">
-        <span class="stars">★★★★☆</span>
-        <span class="count">(128 Bewertungen)</span>
+      <div class="price-display-large">
+        <span class="amount">€{{ "%.2f"|format(product.price) if product else '0.00' }}</span>
+        <span class="tax-hint">inkl. MwSt., zzgl. Versand</span>
+      </div>
+
+      <div class="product-description-short">
+        <p>{{ product.description if product else 'Ein Meisterwerk der handgefertigten Aufbewahrung, das Funktionalität mit zeitloser Ästhetik verbindet.' }}</p>
       </div>
       
-      <!-- Preis-Block -->
-      <div class="price-block">
-        <span class="current-price">€{{ "%.2f"|format(product.price) if product else '0.00' }}</span>
-        {% if product and product.original_price %}
-          <span class="original-price">€{{ "%.2f"|format(product.original_price) }}</span>
-          <span class="discount">−{{ ((1 - product.price/product.original_price)*100)|int }}%</span>
-        {% endif %}
+      <div class="product-utility-grid">
+        <div class="utility-item">
+          <span class="material-icons">eco</span>
+          <span>Nachhaltig</span>
+        </div>
+        <div class="utility-item">
+          <span class="material-icons">auto_awesome</span>
+          <span>Handgefertigt</span>
+        </div>
+        <div class="utility-item">
+          <span class="material-icons">local_shipping</span>
+          <span>Express-Versand</span>
+        </div>
       </div>
-      
-      <!-- Lagerbestand -->
-      <p class="stock {% if product and product.stock < 5 %}low-stock{% endif %}">
-        {% if product %}
-          {% if product.stock > 10 %}
-            ✅ Auf Lager – Versand in 1-2 Werktagen
-          {% elif product.stock > 0 %}
-            ⚠️ Nur noch {{ product.stock }} auf Lager
-          {% else %}
-            ❌ Nicht vorrätig
-          {% endif %}
-        {% else %}
-          ℹ️ Verfügbarkeit wird geprüft...
-        {% endif %}
-      </p>
-      
-      <!-- Aktionen -->
-      <div class="action-buttons">
-        <button class="btn-primary add-to-cart-btn" 
+
+      <div class="purchase-actions">
+        <div class="quantity-selector">
+          <button class="qty-btn" onclick="updateQty(-1)">-</button>
+          <input type="number" id="purchase-qty" value="1" min="1" max="99">
+          <button class="qty-btn" onclick="updateQty(1)">+</button>
+        </div>
+        <button class="btn-primary add-to-cart-btn-large" 
                 data-product-id="{{ product.id if product else '' }}"
                 {% if product and product.stock <= 0 %}disabled{% endif %}>
-          🛒 {{ i18n.t('add_to_cart') }}
+          {{ 'In den Warenkorb' if product and product.stock > 0 else 'Nicht verfügbar' }}
         </button>
-        <button class="btn-secondary">❤️ Auf Merkzettel</button>
       </div>
-      
-      <!-- Trust-Badges -->
-      <ul class="trust-badges">
-        <li>🚚 Kostenloser Versand ab €50</li>
-        <li>🔄 30 Tage Rückgaberecht</li>
-        <li>🔒 Sicher bezahlen</li>
-      </ul>
-      
-      <!-- Kurzbeschreibung -->
-      <div class="short-description">
-        <p>{{ product.description if product else 'Produktbeschreibung folgt...' }}</p>
+
+      <div class="trust-icons-strip">
+        <img src="https://cdn.simpleicons.org/visa/1a1a1a" alt="Visa" title="Visa">
+        <img src="https://cdn.simpleicons.org/mastercard/1a1a1a" alt="Mastercard" title="Mastercard">
+        <img src="https://cdn.simpleicons.org/paypal/1a1a1a" alt="PayPal" title="PayPal">
+        <img src="https://cdn.simpleicons.org/applepay/1a1a1a" alt="Apple Pay" title="Apple Pay">
       </div>
     </div>
   </section>
 
-  <!-- NEU: Storytelling-Bereich -->
-  <section class="product-story-highlight">
-    <div class="container-narrow">
-      <span class="eyebrow center">Mehr als nur Ordnung</span>
-      <h2 class="center">Ein Stück Gelassenheit für Ihr Zuhause</h2>
-      <p class="center">Wir haben dieses OWRE Design entworfen, um den visuellen Lärm des Alltags zu reduzieren. Die dezenten, von Hand eingearbeiteten Muster erinnern an die sanften Strukturen mediterraner Küstenlandschaften. Er ist nicht nur ein Aufbewahrungsort, sondern ein Statement für ein entschleunigtes Leben.</p>
+  <!-- Mediterranean Storytelling Section -->
+  <section class="storytelling-focus">
+    <div class="container-narrow text-center">
+      <span class="eyebrow">Das OWRE Versprechen</span>
+      <h2>Mehr als nur ein Objekt</h2>
+      <p class="lead">Jedes Stück unserer Kollektion trägt die Seele mediterraner Handwerkskunst in sich. Gefertigt aus nachwachsenden Rohstoffen, verbindet es die Wärme der Natur mit der Klarheit modernen Designs.</p>
     </div>
   </section>
 
-  <!-- Details-Tabs -->
-  <section class="product-details">
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="description">Beschreibung</button>
-      <button class="tab-btn" data-tab="material">Material & Herkunft</button>
-      <button class="tab-btn" data-tab="care">Maße & Pflege</button>
+  <!-- Technical Details Tabs -->
+  <section class="details-accordion container">
+    <div class="details-header">
+      <button class="detail-tab-btn active" data-target="desc">Beschreibung</button>
+      <button class="detail-tab-btn" data-target="specs">Details & Maße</button>
+      <button class="detail-tab-btn" data-target="shipping">Versand & Retoure</button>
     </div>
-    <div class="tab-content active" id="description">
-      <p>{{ product.description if product else 'Ausführliche Beschreibung...' }}</p>
-      <p style="margin-top: 1rem;">Gefertigt aus 100% nachhaltigen Materialien, bringt dieses Stück die sanfte Textur des Südens in Ihr Wohnzimmer. Ideal für ein aufgeräumtes und stilvolles Ambiente.</p>
-    </div>
-    <div class="tab-content" id="material">
-      <ul>
-        <li>100% zertifizierte, nachhaltige Rohstoffe</li>
-        <li>Handgefertigt in enger Zusammenarbeit mit unseren Partner-Manufakturen</li>
-        <li>Farbstoffe auf Naturbasis, schadstofffrei und sicher für die ganze Familie</li>
-      </ul>
-    </div>
-    <div class="tab-content" id="care">
-      <ul>
-        <li>Maße: Standardmaße passend für gängige Regalsysteme</li>
-        <li>Pflege: Mit einem feuchten Tuch abwischbar oder Handwäsche bei 30°C</li>
-      </ul>
+    
+    <div class="detail-panels">
+      <div class="detail-panel active" id="desc">
+        <p>{{ product.description if product else 'Detaillierte Produktinformationen folgen...' }}</p>
+        <p>Unser Design-Team legt Wert auf haptische Qualitäten. Die Struktur dieses Produkts lädt zum Berühren ein und sorgt für eine beruhigende Atmosphäre in jedem Raum – ob im Bad, Schlafzimmer oder Wohnbereich.</p>
+      </div>
+      <div class="detail-panel" id="specs">
+        <ul class="specs-list">
+          <li><strong>Material:</strong> 100% Naturbelassene Fasern, nachhaltig geerntet</li>
+          <li><strong>Farbe:</strong> Sand / Elfenbein (Naturtöne)</li>
+          <li><strong>Handfertigung:</strong> Jedes Stück ist ein Unikat</li>
+          <li><strong>Maße:</strong> Optimiert für Standard-Regalsysteme (z.B. 33x33cm)</li>
+        </ul>
+      </div>
+      <div class="detail-panel" id="shipping">
+        <p>Wir versenden Ihre Schätze innerhalb von 24 Stunden nach Bestellung. Der Versand erfolgt klimaneutral mit unseren Logistikpartnern.</p>
+        <ul class="shipping-bullets">
+          <li>Kostenfreie Lieferung ab 50 € Bestellwert</li>
+          <li>30 Tage Rückgaberecht für ein risikoloses Einkaufserlebnis</li>
+          <li>Plastikfreie, recycelbare Verpackung</li>
+        </ul>
+      </div>
     </div>
   </section>
+
 </main>
 
 {% include "footer.html" %}

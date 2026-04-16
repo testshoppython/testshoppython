@@ -36,67 +36,71 @@
         </div>
       </div>
 
-      <div class="panel summary-panel">
-        <h2>Bestellübersicht</h2>
-        <div class="panel-content">
-          <p>Zwischensumme: <strong class="subtotal">€0.00</strong></p>
-          <p>Versand: <strong class="shipping">wird berechnet...</strong></p>
-          <hr style="margin: 1rem 0; border: 0; border-top: 1px solid var(--border);">
-          <p>Gesamt: <strong class="total" style="font-size: 1.25rem; color: var(--accent-dark);">€0.00</strong></p>
+      <div class="panel summary-panel-premium">
+        <h2 class="premium-title">Bestellübersicht</h2>
+        <div class="panel-content-premium">
+          <div class="summary-row">
+            <span>Zwischensumme</span>
+            <strong class="subtotal">€0.00</strong>
+          </div>
+          <div class="summary-row">
+            <span>Versand</span>
+            <strong class="shipping">wird berechnet...</strong>
+          </div>
           
-          <!-- Zahlungsvarianten -->
-          <div class="payment-options" style="margin: 1.5rem 0 1rem 0;">
-            <p style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--text-primary);">Zahlungsmethode</p>
-            <div class="payment-methods-grid" style="display: grid; gap: 0.5rem;">
-              <label class="payment-method-label" style="display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; transition: all 0.2s ease;">
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                  <input type="radio" name="payment_method" value="paypal" checked style="accent-color: var(--accent);">
-                  <span style="font-size: 0.95rem; font-weight: 500; color: var(--text-primary);">PayPal</span>
-                </div>
-                <img src="https://cdn.simpleicons.org/paypal/1a1a1a" alt="PayPal" style="height: 20px; opacity: 0.8;">
-              </label>
-
-              <label class="payment-method-label" style="display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; transition: all 0.2s ease;">
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                  <input type="radio" name="payment_method" value="creditcard" style="accent-color: var(--accent);">
-                  <span style="font-size: 0.95rem; font-weight: 500; color: var(--text-primary);">Kreditkarte</span>
-                </div>
-                <div style="display: flex; gap: 0.5rem; opacity: 0.8;">
-                  <img src="https://cdn.simpleicons.org/visa/1a1a1a" alt="Visa" style="height: 16px;">
-                  <img src="https://cdn.simpleicons.org/mastercard/1a1a1a" alt="Mastercard" style="height: 16px;">
-                </div>
-              </label>
-
-              <label class="payment-method-label" style="display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; transition: all 0.2s ease;">
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                  <input type="radio" name="payment_method" value="klarna" style="accent-color: var(--accent);">
-                  <span style="font-size: 0.95rem; font-weight: 500; color: var(--text-primary);">Klarna</span>
-                </div>
-                <img src="https://cdn.simpleicons.org/klarna/1a1a1a" alt="Klarna" style="height: 18px; opacity: 0.8;">
-              </label>
-
-              <label class="payment-method-label" style="display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; transition: all 0.2s ease;">
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                  <input type="radio" name="payment_method" value="applepay" style="accent-color: var(--accent);">
-                  <span style="font-size: 0.95rem; font-weight: 500; color: var(--text-primary);">Apple Pay</span>
-                </div>
-                <img src="https://cdn.simpleicons.org/applepay/1a1a1a" alt="Apple Pay" style="height: 22px; opacity: 0.8;">
-              </label>
-            </div>
-            
-            <style>
-              .payment-method-label:hover {
-                border-color: var(--accent);
-                background: var(--bg-secondary);
-              }
-              .payment-method-label:has(input:checked) {
-                border-color: var(--accent);
-                background: #fdfaf5; /* Sehr heller Akzent-Ton */
-              }
-            </style>
+          <div class="promo-code-box">
+            <input type="text" placeholder="Gutscheincode" id="promo-code">
+            <button class="btn-text">Einlösen</button>
           </div>
 
-          <button class="btn-primary" id="checkout" style="width: 100%;">Sicher bezahlen</button>
+          <div class="summary-total">
+            <span>Gesamtbetrag</span>
+            <div class="total-wrapper">
+              <strong class="total">€0.00</strong>
+              <small>inkl. MwSt.</small>
+            </div>
+          </div>
+          
+          <!-- Zahlungsvarianten Premium -->
+          <div class="payment-methods-premium">
+            <p class="section-label">Sicher bezahlen mit</p>
+            <div class="payment-grid-refined">
+              <label class="payment-option">
+                <input type="radio" name="payment_method" value="paypal" checked>
+                <div class="option-content">
+                  <img src="https://cdn.simpleicons.org/paypal/1a1a1a" alt="PayPal">
+                  <span>PayPal</span>
+                </div>
+              </label>
+
+              <label class="payment-option">
+                <input type="radio" name="payment_method" value="creditcard">
+                <div class="option-content">
+                  <img src="https://cdn.simpleicons.org/visa/1a1a1a" alt="Kreditkarte">
+                  <span>Karte</span>
+                </div>
+              </label>
+
+              <label class="payment-option">
+                <input type="radio" name="payment_method" value="applepay">
+                <div class="option-content">
+                  <img src="https://cdn.simpleicons.org/applepay/1a1a1a" alt="Apple Pay">
+                  <span>Apple Pay</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <button class="btn-primary-large" id="checkout">Jetzt sicher bestellen</button>
+          
+          <div class="security-badges-row">
+             <div class="security-badge"><span class="material-icons">lock</span> SSL verschlüsselt</div>
+             <div class="security-badge"><span class="material-icons">verified_user</span> Käuferschutz</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
           <p class="small-note" style="text-align: center; margin-top: 1rem;">Freuen Sie sich auf Ihr Paket! In 2-4 Werktagen zieht das Urlaubsgefühl bei Ihnen ein.</p>
           
           <div class="cart-upsell" style="margin-top: 2rem; border-top: 1px dashed var(--border); padding-top: 1rem;">
