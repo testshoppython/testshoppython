@@ -96,21 +96,10 @@ async def send_welcome_email(email: str):
             return str(e)
 
 
-@router.post("/subscribe")
-async def subscribe_newsletter(request: schemas.NewsletterSubscribeRequest, db: Session = Depends(get_db)):
-    # 1. Local Database Save
-    subscriber = db.query(models.NewsletterSubscriber).filter(models.NewsletterSubscriber.email == request.email).first()
-    if not subscriber:
-        new_sub = models.NewsletterSubscriber(
-            email=request.email,
-            interests=", ".join(request.interests) if request.interests else ""
-        )
-        db.add(new_sub)
-        db.commit()
-
 async def sync_with_brevo(email: str, interests: list[str]):
     """Background task to sync contact and send welcome email"""
     if not settings.brevo_api_key:
+        logger.warning("Brevo Sync skipped: No API key configured.")
         return
 
     contact_url = "https://api.brevo.com/v3/contacts"
@@ -120,6 +109,7 @@ async def sync_with_brevo(email: str, interests: list[str]):
         "api-key": settings.brevo_api_key
     }
     
+    # Attempt list: First with attributes, second without if it fails
     payload = {
         "email": email,
         "updateEnabled": True,
@@ -130,13 +120,25 @@ async def sync_with_brevo(email: str, interests: list[str]):
     
     try:
         async with httpx.AsyncClient() as client:
-            # Sync Contact
+            # 1. Sync Contact
             res_contact = await client.post(contact_url, json=payload, headers=headers)
-            logger.info(f"Brevo Contact Sync: {res_contact.status_code}")
             
-            # Trigger Welcome Email
+            if res_contact.status_code >= 400:
+                error_data = res_contact.text
+                logger.error(f"Brevo Contact Sync Error ({res_contact.status_code}): {error_data}")
+                
+                # If it's an attribute error, try one more time without INTERESTS
+                if "attribute" in error_data.lower():
+                    logger.info("Retrying Brevo sync without INTERESTS attribute...")
+                    fallback_payload = {"email": email, "updateEnabled": True}
+                    res_contact = await client.post(contact_url, json=fallback_payload, headers=headers)
+                    logger.info(f"Fallback Sync Status: {res_contact.status_code}")
+            else:
+                logger.info(f"Brevo Contact Sync Success: {res_contact.status_code}")
+            
+            # 2. Trigger Welcome Email
             res_email = await send_welcome_email(email)
-            logger.info(f"Brevo Welcome Email Status: {res_email}")
+            logger.info(f"Brevo Welcome Email Trigger: {res_email}")
             
     except Exception as exc:
         logger.error(f"Brevo integration background error: {exc}")
@@ -148,6 +150,10 @@ async def subscribe_newsletter(
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_db)
 ):
+    """
+    Subscribes a new user to the newsletter.
+    Saves to local DB immediately and syncs with Brevo in the background.
+    """
     # 1. Local Database Save (Immediate)
     subscriber = db.query(models.NewsletterSubscriber).filter(models.NewsletterSubscriber.email == request.email).first()
     if not subscriber:
@@ -161,6 +167,8 @@ async def subscribe_newsletter(
     # 2. Add Brevo Sync to Background Tasks
     if settings.brevo_api_key:
         background_tasks.add_task(sync_with_brevo, request.email, request.interests)
+    else:
+        logger.info("Brevo API key missing - skipping background sync.")
 
     return {"message": "Successfully subscribed to the newsletter!"}
 

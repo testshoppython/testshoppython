@@ -7,7 +7,7 @@ from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 from .database import Base, engine, SessionLocal
 from . import models
-from .routers import products, legal, users, cart, orders, admin, init, auth, newsletter, payment
+from .routers import products, legal, users, cart, orders, admin, init, auth, newsletter, payment, debug
 from .config import settings
 from .i18n import i18n
 
@@ -59,6 +59,7 @@ app.include_router(legal.router)
 app.include_router(auth.router)
 app.include_router(newsletter.router)
 app.include_router(payment.router)
+app.include_router(debug.router)
 
 
 @app.get("/", response_class=HTMLResponse)
