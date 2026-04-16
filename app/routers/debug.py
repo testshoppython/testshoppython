@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from .database import SessionLocal
-from .config import settings
+from ..database import SessionLocal
+from ..config import settings
 import httpx
 import logging
 
