@@ -28,6 +28,7 @@ if settings.stripe_secret_key:
 async def create_checkout_session(
     request: Request,
     user_id: int, 
+    promo_code: str = None,
     db: Session = Depends(get_db)
 ):
     if not settings.stripe_secret_key:
@@ -36,10 +37,12 @@ async def create_checkout_session(
             detail="Stripe credentials not configured."
         )
 
-    # Calculate cart total
-    cart_items = db.query(models.CartItem).filter(models.CartItem.user_id == user_id).all()
-    if not cart_items:
+    # Get cart for user
+    cart = db.query(models.Cart).filter(models.Cart.user_id == user_id).first()
+    if not cart or not cart.items:
         raise HTTPException(status_code=400, detail="Cart is empty")
+        
+    cart_items = cart.items
 
     line_items = []
     total_amount = 0
@@ -76,6 +79,22 @@ async def create_checkout_session(
             "quantity": 1,
         })
 
+    # Apply discount
+    discounts = []
+    if promo_code:
+        from .cart import VALID_COUPONS
+        code = promo_code.upper().strip()
+        if code in VALID_COUPONS:
+            c = VALID_COUPONS[code]
+            try:
+                if c["type"] == "percent":
+                    stripe_coupon = stripe.Coupon.create(percent_off=c["value"], duration="once")
+                else:
+                    stripe_coupon = stripe.Coupon.create(amount_off=int(c["value"]*100), currency="eur", duration="once")
+                discounts = [{"coupon": stripe_coupon.id}]
+            except Exception as ev:
+                logger.error(f"Error creating stripe coupon: {str(ev)}")
+
     # Prepare success/cancel URLs based on the request origin
     domain_url = f"{request.url.scheme}://{request.url.netloc}"
     
@@ -84,6 +103,7 @@ async def create_checkout_session(
             payment_method_types=["card", "paypal", "klarna"], # Enable popular methods
             line_items=line_items,
             mode="payment",
+            discounts=discounts if discounts else None,
             success_url=domain_url + "/shop/profile?session_id={CHECKOUT_SESSION_ID}&success=true",
             cancel_url=domain_url + "/shop/cart?canceled=true",
             client_reference_id=str(user_id)

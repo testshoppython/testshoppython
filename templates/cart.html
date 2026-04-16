@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Warenkorb | OWRE</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
   {% include "header.html" %}
   <main class="page-content">
@@ -27,12 +30,13 @@
         <div id="cart-items" class="panel-content">
           <p class="small-note">Warenkorb wird geladen...</p>
         </div>
-        
+
         <!-- NEU: Brand Reassurance -->
         <div class="cart-reassurance-box">
           <span class="eyebrow">Wussten Sie schon?</span>
           <h4>Nachhaltigkeit ist unser Kern</h4>
-          <p>Mit dieser Bestellung bei OWRE unterstützen Sie direkt faire Löhne in unseren Partner-Manufakturen. Wir versenden Ihr Paket plastikfrei und klimaneutral, damit die Natur so rein bleibt wie unsere Materialien.</p>
+          <p>Mit dieser Bestellung bei OWRE unterstützen Sie direkt faire Löhne in unseren Partner-Manufakturen. Wir
+            versenden Ihr Paket plastikfrei und klimaneutral, damit die Natur so rein bleibt wie unsere Materialien.</p>
         </div>
       </div>
 
@@ -47,10 +51,10 @@
             <span>Versand</span>
             <strong class="shipping">wird berechnet...</strong>
           </div>
-          
+
           <div class="promo-code-box">
             <input type="text" placeholder="Gutscheincode" id="promo-code">
-            <button class="btn-text">Einlösen</button>
+            <button class="btn-text" id="apply-promo-btn">Einlösen</button>
           </div>
 
           <div class="summary-total">
@@ -60,7 +64,7 @@
               <small>inkl. MwSt.</small>
             </div>
           </div>
-          
+
           <!-- Zahlungsvarianten Premium -->
           <div class="payment-methods-premium">
             <p class="section-label">Sicher bezahlen mit</p>
@@ -92,34 +96,45 @@
           </div>
 
           <button class="btn-primary-large" id="checkout">Jetzt sicher bestellen</button>
-          
+
           <div class="security-badges-row">
-             <div class="security-badge"><span class="material-icons">lock</span> SSL verschlüsselt</div>
-             <div class="security-badge"><span class="material-icons">verified_user</span> Käuferschutz</div>
+            <div class="security-badge"><span class="material-icons">lock</span> SSL verschlüsselt</div>
+            <div class="security-badge"><span class="material-icons">verified_user</span> Käuferschutz</div>
           </div>
         </div>
       </div>
     </section>
 
-          <p class="small-note" style="text-align: center; margin-top: 1rem;">Freuen Sie sich auf Ihr Paket! In 2-4 Werktagen zieht das Urlaubsgefühl bei Ihnen ein.</p>
-          
-          <div class="cart-upsell" style="margin-top: 2rem; border-top: 1px dashed var(--border); padding-top: 1rem;">
-             <p class="small-note">Passend zu Ihrer Auswahl: Unsere handgewebten Gästehandtücher oder kleine Organizer für die perfekte Ordnung.</p>
-             <a href="/shop/products" class="btn-text">Zum Shop hinzufügen</a>
-          </div>
-        </div>
-      </div>
+    <p class="small-note" style="text-align: center; margin-top: 1rem;">Freuen Sie sich auf Ihr Paket! In 2-4 Werktagen
+      zieht das Urlaubsgefühl bei Ihnen ein.</p>
+
+    <div class="cart-upsell" style="margin-top: 2rem; border-top: 1px dashed var(--border); padding-top: 1rem;">
+      <p class="small-note">Passend zu Ihrer Auswahl: Unsere handgewebten Gästehandtücher oder kleine Organizer für die
+        perfekte Ordnung.</p>
+    </div>
+    </div>
+    </div>
     </section>
 
     <section class="usp-section container">
       <div class="usp-grid">
-        <div class="usp-item"><span>🚚</span><h3>Kostenloser Versand</h3><p>Ab €50 Bestellwert.</p></div>
-        <div class="usp-item"><span>🔄</span><h3>30 Tage Rückgabe</h3><p>Risikofrei einkaufen.</p></div>
-        <div class="usp-item"><span>🌱</span><h3>Nachhaltig</h3><p>Umweltfreundliche Materialien.</p></div>
+        <div class="usp-item"><span>🚚</span>
+          <h3>Kostenloser Versand</h3>
+          <p>Ab €50 Bestellwert.</p>
+        </div>
+        <div class="usp-item"><span>🔄</span>
+          <h3>30 Tage Rückgabe</h3>
+          <p>Risikofrei einkaufen.</p>
+        </div>
+        <div class="usp-item"><span>🌱</span>
+          <h3>Nachhaltig</h3>
+          <p>Umweltfreundliche Materialien.</p>
+        </div>
       </div>
     </section>
   </main>
   {% include "footer.html" %}
   <script src="/static/js/app.js"></script>
 </body>
+
 </html>

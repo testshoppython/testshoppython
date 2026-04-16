@@ -1,42 +1,91 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Über uns | OWRE</title>
+    <title>Unsere Mission - Über OWRE | Premium Aufbewahrung</title>
+    <meta name="description"
+        content="Erfahren Sie mehr über OWRE. Wir verbinden traditionelles Handwerk mit modernem Design und nachhaltigen Materialien. Direktvertrieb ohne Zwischenhändler.">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="OWRE - Wahre Ästhetik liegt in der Wertschätzung">
+    <meta property="og:description"
+        content="Entdecken Sie die Geschichte hinter OWRE und unseren Fokus auf natürliche Materialien und faire Herstellung.">
+    <meta property="og:image" content="/static/images/about_us.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
+
 <body>
     {% include "header.html" %}
-    <main class="page-content">
 
-        <!-- Hero mit Bild + schwebendem Text-Panel -->
-        <section class="about-hero-bg" style="background-image: url('/static/images/about_us.png');">
-            <div class="about-text-panel">
-                <p>Bei OWRE kreieren wir hochwertige Home &amp; Living Produkte, die durch edle Naturmaterialien und ein beruhigendes, mediterran-skandinavisches Design überzeugen.</p>
-
-                <p>Durch unseren direkten Kontakt zu ausgewählten Manufakturen garantieren wir Ihnen nicht nur authentische, hochwertige Naturmaterialien, sondern auch eine rundum faire Herstellung. Weil uns Mensch und Natur gleichermaßen am Herzen liegen, arbeiten wir im Direktvertrieb eng mit unseren Produzenten zusammen.</p>
-
-                <p>Spüren Sie die Qualität nachhaltiger Handwerkskunst und lassen Sie jeden Tag zu einem kleinen Urlaub werden. Verwandeln Sie Ihre Räume in einen natürlichen Rückzugsort, an dem Sie dem Alltag entfliehen und pure Erholung finden können.</p>
-
-                <div style="margin-top: 2.5rem; text-align: center;">
-                    <a href="/shop/products" class="btn-primary">Kollektion entdecken</a>
+    <main>
+        <section class="page-hero" style="background-image: url('/static/images/about_us.png'); min-height: 85vh;">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <div class="panel-content animate-in" style="max-width: 800px; margin: 0 auto; text-align: center;">
+                    <span class="eyebrow" style="color: var(--accent);">Unsere Philosophie</span>
+                    <h1>Home & Living aus der Natur.</h1>
+                    <p style="font-size: 1.15rem; margin-bottom: 1.5rem; font-weight: 500;">
+                        Bei OWRE kreieren wir hochwertige Home & Living Produkte, die durch edle Naturmaterialien und
+                        ein beruhigendes, mediterran-skandinavisches Design überzeugen.
+                    </p>
+                    <p style="font-size: 1.05rem; margin-bottom: 1.5rem;">
+                        Durch unseren direkten Kontakt zu ausgewählten Manufakturen garantieren wir Ihnen nicht nur
+                        authentische, hochwertige Naturmaterialien, sondern auch eine rundum faire Herstellung. Weil uns
+                        Mensch und Natur gleichermaßen am Herzen liegen, arbeiten wir im Direktvertrieb eng mit unseren
+                        Produzenten zusammen.
+                    </p>
+                    <p style="font-size: 1.05rem; margin-bottom: 2.5rem;">
+                        Spüren Sie die Qualität nachhaltiger Handwerkskunst und lassen Sie jeden Tag zu einem kleinen
+                        Urlaub werden. Verwandeln Sie Ihre Räume in einen natürlichen Rückzugsort, an dem Sie dem Alltag
+                        entfliehen und pure Erholung finden können.
+                    </p>
+                    <div class="hero-actions" style="justify-content: center;">
+                        <a href="/shop/products" class="btn-outline" style="color: #fff; border-color: #fff;">Kollektion
+                            entdecken</a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section class="usp-section">
-            <div class="usp-grid">
-                <div class="usp-item"><span>🚚</span><h3>Direktvertrieb</h3><p>Vom Handwerk direkt zu Ihnen.</p></div>
-                <div class="usp-item"><span>🌱</span><h3>Naturmaterialien</h3><p>Baumwolle, Seegras, Leinen.</p></div>
-                <div class="usp-item"><span>🤝</span><h3>Faire Löhne</h3><p>Respekt für das Handwerk.</p></div>
+        <section style="background-color: var(--bg-primary); padding: 4rem 2rem;">
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+                <div
+                    style="background: white; padding: 3rem 2rem; text-align: center; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                    <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">🚚</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                        Direktvertrieb</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Vom Handwerk direkt zu Ihnen.</p>
+                </div>
+                <div
+                    style="background: white; padding: 3rem 2rem; text-align: center; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                    <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">🌱</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                        Naturmaterialien</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Baumwolle, Seegras, Leinen.</p>
+                </div>
+                <div
+                    style="background: white; padding: 3rem 2rem; text-align: center; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                    <div style="font-size: 2.5rem; margin-bottom: 1.5rem;">🤝</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 500;">
+                        Faire Löhne</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Respekt für das Handwerk.</p>
+                </div>
             </div>
         </section>
+
     </main>
+
     {% include "footer.html" %}
     <script src="/static/js/app.js"></script>
 </body>
+
 </html>

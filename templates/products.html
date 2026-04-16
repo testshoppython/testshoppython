@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kollektion: Premium Aufbewahrung & Design-Körbe | OWRE</title>
-    <meta name="description" content="Stöbern Sie in unserer Kollektion handgefertigter Aufbewahrungslösungen. Von minimalistischen Boxen bis zu rustikalen Körben – finden Sie das perfekte Stück für Ihr Zuhause.">
-    
+    <meta name="description"
+        content="Stöbern Sie in unserer Kollektion handgefertigter Aufbewahrungslösungen. Von minimalistischen Boxen bis zu rustikalen Körben – finden Sie das perfekte Stück für Ihr Zuhause.">
+
     <!-- Open Graph -->
     <meta property="og:title" content="OWRE Kollektion - Stilvolle Ordnung">
     <meta property="og:description" content="Handgefertigte Körbe und Organizer für ein harmonisches Zuhause.">
@@ -23,15 +24,16 @@
 <body>
     {% include "header.html" %}
     <main class="product-page garden-page">
-        <section class="page-hero compact" style="background-image: url('/static/images/shop_hero.png');">
+        <section class="page-hero"
+            style="background-image: url('/static/images/shop_hero.png'); width: 100%; min-height: 85vh;">
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h1>Ordnung in ihrer schönsten Form</h1>
                 <p>Entdecken Sie unsere Auswahl an handgefertigten Unikaten, die Funktionalität mit dem zeitlosen Design
                     des Südens vereinen. Jedes Stück erzählt eine Geschichte von Handwerkskunst und natürlicher Ruhe.
                 </p>
-                <div class="hero-actions">
-                    <a href="#products" class="btn-primary">Kollektionen entdecken</a>
+                <div class="hero-actions" style="justify-content: flex-start;">
+                    <a href="#products" class="btn-outline" style="color: #fff; border-color: #fff;">Kollektionen entdecken</a>
                 </div>
             </div>
         </section>

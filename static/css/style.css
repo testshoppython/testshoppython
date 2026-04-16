@@ -2867,3 +2867,66 @@ img {
   to { opacity: 1; transform: scale(1); }
 }
 
+
+/* ===== VISUAL DEPTH & GLASSMORPHISM ===== */
+.hero-full-bleed {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Parallax effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2xl) var(--spacing-xl);
+  overflow: hidden;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: var(--spacing-3xl);
+  max-width: 650px;
+  border-radius: 4px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  z-index: 5;
+  animation: fadeUp 1s ease-out;
+}
+
+.leaf-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://www.transparenttextures.com/patterns/leaf.png"); /* Placeholder texture */
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Custom SVG Shadow Overlay */
+.shadow-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox=\"0 0 1000 1000\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noiseFilter\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.65\" numOctaves=\"3\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noiseFilter)\"/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 3;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .glass-panel {
+    padding: var(--spacing-xl);
+    margin: 0 1rem;
+  }
+}
+

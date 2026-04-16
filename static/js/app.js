@@ -100,6 +100,8 @@ class CartManager {
     this.apiBase = API_BASE;
     this.userId = auth.getUserId();
     this.cart = null;
+    this.appliedCoupon = null;
+    this.discountAmount = 0;
   }
 
   async loadCart() {
@@ -174,7 +176,10 @@ class CartManager {
 
     try {
       // 1. Try Stripe Checkout
-      const stripeRes = await fetch(`${this.apiBase}/payment/create-checkout-session?user_id=${this.userId}`, { method: 'POST' });
+      const stripeUrl = this.appliedCoupon 
+        ? `${this.apiBase}/payment/create-checkout-session?user_id=${this.userId}&promo_code=${this.appliedCoupon.code}`
+        : `${this.apiBase}/payment/create-checkout-session?user_id=${this.userId}`;
+      const stripeRes = await fetch(stripeUrl, { method: 'POST' });
       if (stripeRes.ok) {
          const data = await stripeRes.json();
          if (data.checkout_url) {
@@ -187,7 +192,11 @@ class CartManager {
       const res = await fetch(`${this.apiBase}/orders/?user_id=${this.userId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ payment_method: pm, shipping_address_id: null })
+        body: JSON.stringify({ 
+            payment_method: pm, 
+            shipping_address_id: null,
+            promo_code: this.appliedCoupon ? this.appliedCoupon.code : null
+        })
       });
       if (!res.ok) throw new Error('Bestellung fehlgeschlagen');
       
@@ -245,26 +254,84 @@ class CartManager {
     this.calculateTotals();
   }
 
+  async applyCoupon(code) {
+    if (!code) return;
+    const btn = document.getElementById('apply-promo-btn');
+    if(btn) { btn.textContent = 'Lädt...'; btn.disabled = true; }
+    try {
+        const res = await fetch(`${this.apiBase}/cart/validate-coupon`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code })
+        });
+        const data = await res.json();
+        if (data.valid) {
+            this.appliedCoupon = { code: code, type: data.type, value: data.value };
+            auth.toast(data.message, 'success');
+            this.calculateTotals();
+        } else {
+            this.appliedCoupon = null;
+            auth.toast(data.message, 'error');
+            this.calculateTotals();
+        }
+    } catch(err) {
+        auth.toast('Fehler beim Überprüfen des Codes', 'error');
+    } finally {
+        if(btn) { btn.textContent = 'Einlösen'; btn.disabled = false; }
+    }
+  }
+
   calculateTotals() {
     const subtotalEl = document.querySelector('.summary-panel-premium .subtotal');
     const totalEl = document.querySelector('.summary-panel-premium .total');
     const shippingEl = document.querySelector('.summary-panel-premium .shipping');
+    
+    let discountRow = document.getElementById('discount-row');
     
     if (!subtotalEl || !this.cart?.items.length) {
         if (subtotalEl) {
             subtotalEl.textContent = '€0.00';
             if (shippingEl) shippingEl.textContent = '€0.00';
             if (totalEl) totalEl.textContent = '€0.00';
+            if (discountRow) discountRow.style.display = 'none';
         }
         return;
     }
     
     const subtotal = this.cart.items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
-    const shipping = subtotal >= 50 ? 0 : 4.99;
+    
+    this.discountAmount = 0;
+    if (this.appliedCoupon) {
+        if (this.appliedCoupon.type === 'percent') {
+            this.discountAmount = subtotal * (this.appliedCoupon.value / 100);
+        } else if (this.appliedCoupon.type === 'fixed') {
+            this.discountAmount = this.appliedCoupon.value;
+        }
+    }
+    
+    const totalAfterDiscount = Math.max(0, subtotal - this.discountAmount);
+    const shipping = totalAfterDiscount >= 50 || totalAfterDiscount === 0 ? 0 : 4.99;
     
     subtotalEl.textContent = `€${subtotal.toFixed(2)}`;
     if (shippingEl) shippingEl.textContent = shipping === 0 ? 'kostenlos' : `€${shipping.toFixed(2)}`;
-    if (totalEl) totalEl.textContent = `€${(subtotal + shipping).toFixed(2)}`;
+    
+    if (this.discountAmount > 0) {
+        if (!discountRow) {
+            discountRow = document.createElement('div');
+            discountRow.id = 'discount-row';
+            discountRow.className = 'summary-row discount-row';
+            discountRow.style.color = 'var(--accent-dark)';
+            
+            const shippingRow = shippingEl.closest('.summary-row');
+            shippingRow.parentNode.insertBefore(discountRow, shippingRow);
+        }
+        discountRow.innerHTML = `<span>Rabatt (${this.appliedCoupon.code})</span><strong>-€${this.discountAmount.toFixed(2)}</strong>`;
+        discountRow.style.display = 'flex';
+    } else if (discountRow) {
+        discountRow.style.display = 'none';
+    }
+    
+    if (totalEl) totalEl.textContent = `€${(totalAfterDiscount + shipping).toFixed(2)}`;
   }
 
 
@@ -817,6 +884,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const checkoutBtn = document.getElementById('checkout');
   if (checkoutBtn) checkoutBtn.onclick = () => cart.placeOrder();
+
+  const applyPromoBtn = document.getElementById('apply-promo-btn');
+  if (applyPromoBtn) {
+    applyPromoBtn.onclick = () => {
+        const code = document.getElementById('promo-code').value;
+        cart.applyCoupon(code);
+    };
+  }
 
   // Mobile Menu Logic
   const mobileToggle = document.getElementById('mobile-menu-toggle');

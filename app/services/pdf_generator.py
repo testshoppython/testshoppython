@@ -69,13 +69,26 @@ def generate_invoice_pdf(order: models.Order, items) -> bytes:
     
     # If shipping is needed (assuming < 50 has 4.99)
     subtotal = sum(i.price * i.quantity for i in items)
-    shipping = 4.99 if subtotal < 50 else 0.00
     
+    discount = getattr(order, 'discount_amount', 0)
+    promo_code = getattr(order, 'promo_code', None)
+    
+    total_after_discount = max(0, subtotal - discount)
+    shipping = 4.99 if total_after_discount < 50 and total_after_discount > 0 else 0.00
+    
+    pdf.cell(155, 8, 'Zwischensumme:', 0, 0, 'R')
+    pdf.cell(35, 8, f'{subtotal:.2f} EUR', 0, 1, 'R')
+    
+    if discount > 0:
+        pdf.set_text_color(180, 50, 50) # accent color
+        pdf.cell(155, 8, f'Rabatt ({promo_code}):', 0, 0, 'R')
+        pdf.cell(35, 8, f'-{discount:.2f} EUR', 0, 1, 'R')
+        pdf.set_text_color(0, 0, 0) # reset
+        
     if shipping > 0:
-        pdf.cell(155, 8, 'Zwischensumme:', 0, 0, 'R')
-        pdf.cell(35, 8, f'{subtotal:.2f} EUR', 0, 1, 'R')
         pdf.cell(155, 8, 'Versandkosten:', 0, 0, 'R')
         pdf.cell(35, 8, f'{shipping:.2f} EUR', 0, 1, 'R')
+        
         
     pdf.set_fill_color(250, 245, 235)
     pdf.cell(155, 12, 'GESAMTBETRAG:', 0, 0, 'R', 1)

@@ -3,6 +3,22 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from ..database import SessionLocal
 from .. import models, schemas
+from pydantic import BaseModel
+
+VALID_COUPONS = {
+    "WELCOME10": {"type": "percent", "value": 10},
+    "MINUS5": {"type": "fixed", "value": 5.0},
+    "OWRE20": {"type": "percent", "value": 20}
+}
+
+class CouponRequest(BaseModel):
+    code: str
+
+class CouponResponse(BaseModel):
+    valid: bool
+    type: str = None
+    value: float = None
+    message: str
 
 router = APIRouter(prefix="/cart", tags=["Cart"])
 
@@ -158,3 +174,11 @@ def get_cart_total(user_id: int, db: Session = Depends(get_db)):
         "item_count": item_count,
         "items_count": len(cart.items)
     }
+
+@router.post("/validate-coupon", response_model=CouponResponse)
+def validate_coupon(coupon: CouponRequest):
+    code = coupon.code.upper().strip()
+    if code in VALID_COUPONS:
+        c = VALID_COUPONS[code]
+        return CouponResponse(valid=True, type=c["type"], value=c["value"], message="Gutschein angewandt!")
+    return CouponResponse(valid=False, message="Ungültiger Gutscheincode")

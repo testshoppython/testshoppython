@@ -91,6 +91,8 @@ class Order(Base):
     status = Column(String, default="pending")  # pending, paid, shipped, delivered, cancelled
     payment_method = Column(String)
     shipping_address_id = Column(Integer, ForeignKey("addresses.id"), nullable=True)
+    promo_code = Column(String, nullable=True)
+    discount_amount = Column(Float, default=0)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     

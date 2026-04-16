@@ -66,6 +66,26 @@ def create_order(user_id: int, order: schemas.OrderCreate, db: Session = Depends
             'price': product.price
         })
     
+    # Apply discount
+    discount_amount = 0
+    if order.promo_code:
+        from .cart import VALID_COUPONS
+        code = order.promo_code.upper().strip()
+        if code in VALID_COUPONS:
+            coupon = VALID_COUPONS[code]
+            if coupon["type"] == "percent":
+                discount_amount = round(total_price * (coupon["value"] / 100), 2)
+            elif coupon["type"] == "fixed":
+                discount_amount = float(coupon["value"])
+    
+    final_price = total_price - discount_amount
+    if final_price < 0:
+        final_price = 0
+        
+    # Check for shipping cost
+    if final_price < 50 and final_price > 0:
+        final_price += 4.99
+    
     # Create order
     order_number = f"ORD-{datetime.utcnow().strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
     
@@ -85,7 +105,9 @@ def create_order(user_id: int, order: schemas.OrderCreate, db: Session = Depends
     db_order = models.Order(
         user_id=user_id,
         order_number=order_number,
-        total_price=total_price,
+        total_price=final_price,
+        discount_amount=discount_amount,
+        promo_code=order.promo_code,
         payment_method=order.payment_method,
         shipping_address_id=shipping_address_id,
         status="pending"

@@ -140,12 +140,15 @@ class OrderBase(BaseModel):
 class OrderCreate(OrderBase):
     items: Optional[List[CartItemBase]] = None
     shipping_address_id: Optional[int] = None
+    promo_code: Optional[str] = None
 
 class Order(OrderBase):
     id: int
     user_id: int
     order_number: str
     total_price: float
+    discount_amount: float = 0.0
+    promo_code: Optional[str] = None
     status: str
     created_at: datetime
     updated_at: datetime
